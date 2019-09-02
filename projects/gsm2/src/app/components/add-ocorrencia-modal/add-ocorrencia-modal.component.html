@@ -1,0 +1,221 @@
+<div id="modalAddOcorrencia"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="myModalLabel"
+    style="background-color:  rgba(0, 0, 0, 0.5);">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                    (click)="onClose();">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">Cadastrar Ocorrência Interna</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row form-group">
+                    <div *ngIf="produtos?.length" class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                        <label for="produto">
+                            Produto:
+                        </label>
+                        &nbsp;
+                        <span *ngIf="!ocorrencia.cdProduto" class="text-danger">
+                            Campo Obrigatório
+                        </span>
+                        <div class="dropdown">
+                            <button id="produto"
+                                class="btn btn-default dropdown-toggle form-control"
+                                type="button"
+                                data-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="true">
+                                <div class="label-combo">
+                                    {{produto?.valor}}
+                                </div>
+                                <div class="pull-right">
+                                    <span class="caret"></span>
+                                </div>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li *ngFor="let item of produtos;" class="clickable">
+                                    <a (click)="ocorrencia.cdProduto = item.codigo; produto = item; obterFuncionalidade(); obterCliente();">
+                                        {{item.valor}}
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div *ngIf="funcionalidades?.length" class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                        <label for="tipoOcorrencia">
+                            Funcionalidade:
+                        </label>
+                        &nbsp;
+                        <span *ngIf="!ocorrencia.cdFuncionalidade" class="text-danger">
+                            Campo Obrigatório
+                        </span>
+                        <div class="dropdown">
+                            <button id="tipoOcorrencia"
+                                class="btn btn-default dropdown-toggle form-control"
+                                type="button"
+                                data-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="true">
+                                <div class="label-combo">
+                                    {{funcionalidade?.valor}}
+                                </div>
+                                <div class="pull-right">
+                                    <span class="caret"></span>
+                                </div>
+                            </button>
+                            <ul class="dropdown-menu scrollable-menu">
+                                <li *ngFor="let item of funcionalidades;" class="clickable">
+                                    <a (click)="ocorrencia.cdFuncionalidade = item.codigo; funcionalidade = item;">
+                                        {{item.valor}}
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div *ngIf="clientes?.length" class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                        <label for="cliente">
+                            Cliente:
+                        </label>
+                        &nbsp;
+                        <span *ngIf="!ocorrencia.cdCliente" class="text-danger">
+                            Campo Obrigatório
+                        </span>
+                        <div class="dropdown">
+                            <button id="cliente"
+                                class="btn btn-default dropdown-toggle form-control"
+                                type="button"
+                                data-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="true">
+                                <div class="label-combo">
+                                    {{cliente?.valor}}
+                                </div>
+                                <div class="pull-right">
+                                    <span class="caret"></span>
+                                </div>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li *ngFor="let item of clientes;" class="clickable">
+                                    <a (click)="ocorrencia.cdCliente = item.codigo; cliente = item; obterSolicitante(ocorrencia.cdCliente);" >
+                                        {{item.valor}}
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div *ngIf="solicitantes?.length" class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                        <label>
+                            Solicitante
+                        </label>
+                        <div class="btn-group btn-block">
+                            <button type="button"
+                                class="btn btn-default btn-block dropdown-toggle"
+                                data-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="false">
+                                <div class="label-combo">
+                                    {{solicitante?.nome}}
+                                </div>
+                                <div class="pull-right">
+                                    <span class="caret"></span>
+                                </div>
+                            </button>
+                            <ul class="dropdown-menu scrollable-menu">
+                                <li *ngFor="let item of solicitantes;" class="clickable">
+                                    <a (click)="ocorrencia.cdUsuarioSolicitante = item.nrDocumento; solicitante = item;">
+                                        {{item.nome}}
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div *ngIf="produto?.valor === 'SIAPEC1' || produto?.valor === 'SIAPEC2'" class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                        <label>Replicar no SIAPEC3:</label>
+                        <br/>
+                        <label class="switch">
+                            <input type="checkbox" [(ngModel)]="ocorrencia.replicacaoSiapec1">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <label for="descricaoOrorrencia">
+                            Descrição
+                        </label>
+                        &nbsp;
+                        <span *ngIf="!ocorrencia.dsOcorrencia" class="text-danger">
+                            Campo Obrigatório
+                        </span>
+                        <angular-editor
+                            placeholder="Descreva aqui o problema..."
+                            [config]="editorConfig"
+                            [(ngModel)]="ocorrencia.dsOcorrencia">
+                        </angular-editor>
+                        <div class="pull-right" style="font-weight: 600;">{{ocorrencia.dsOcorrencia?.length}}/500</div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <span class="btn btn-default btn-file btn-block">
+                            <i class="fa fa-paperclip"></i>&nbsp;Adicionar Anexo
+                            <input type="file" name="img" class="form-control" (change)="lerUrlImagem($event);">
+                            <span class="badge" *ngIf="ocorrencia.anexos">{{ocorrencia.anexos.length}}</span>
+                        </span>
+                    </div>
+                    <hr>
+                </div>
+                <div class="row">
+                    <div *ngFor="let anexo of ocorrencia.anexos; let index = index;" class="col-xs-2 col-sm-2 col-md-1 col-lg-1"
+                        style="min-height: 50px;">
+                        <span *ngIf="anexo.dsExtensao === 'png' || anexo.dsExtensao === 'jpg' || anexo.dsExtensao === 'jpeg' || anexo.dsExtensao === 'gif'" (click)="preRemove(index);"
+                            class="fa-stack fa-md" style="color: #ffd54f;" title="{{anexo.dsNome}}" data-toggle="tooltip">
+                            <i class="fa fa-file-image-o fa-3x"></i>
+                            <i class="fa fa-times fa-stack-1x icon-remove"></i>
+                        </span>
+                        <span *ngIf="anexo.dsExtensao === 'pdf'" (click)="preRemove(index);" class="fa-stack fa-md" style="color: #e57373;" title="{{anexo.dsNome}}"
+                            data-toggle="tooltip">
+                            <i class="fa fa-file-pdf-o fa-3x"></i>
+                            <i class="fa fa-times fa-stack-1x icon-remove"></i>
+                        </span>
+                        <span *ngIf="anexo.dsExtensao === 'xls' || anexo.dsExtensao === 'xlsx' || anexo.dsExtensao === 'xlsm' || anexo.dsExtensao === 'csv'"
+                            (click)="preRemove(index);" class="fa-stack fa-md" style="color: #81c784;" title="{{anexo.dsNome}}" data-toggle="tooltip">
+                            <i class="fa fa-file-excel-o fa-3x"></i>
+                            <i class="fa fa-times fa-stack-1x icon-remove"></i>
+                        </span>
+                        <span
+                            *ngIf="anexo.dsExtensao === 'doc' || anexo.dsExtensao === 'docx' || anexo.dsExtensao === 'docm' || anexo.dsExtensao === 'txt'"
+                            (click)="preRemove(index);" class="fa-stack fa-md" style="color: #64b5f6;" title="{{anexo.dsNome}}" data-toggle="tooltip">
+                            <i class="fa fa-file-word-o fa-3x"></i>
+                            <i class="fa fa-times fa-stack-1x icon-remove"></i>
+                        </span>
+                        <span *ngIf="anexo.dsExtensao === 'rar' || anexo.dsExtensao === 'zip'" (click)="preRemove(index);" class="fa-stack fa-md"
+                            style="color: #90a4ae;" title="{{anexo.dsNome}}" data-toggle="tooltip">
+                            <i class="fa fa-file-zip-o fa-3x"></i>
+                            <i class="fa fa-times fa-stack-1x icon-remove"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button"
+                    class="btn btn-default"
+                    data-dismiss="modal"
+                    (click)="onClose();">
+                    Cancelar
+                </button>
+                <button type="button"
+                    class="btn btn-primary"
+                    (click)="salvarOcorrencia();">
+                    Gravar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

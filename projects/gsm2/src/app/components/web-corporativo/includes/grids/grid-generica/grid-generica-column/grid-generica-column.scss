@@ -1,0 +1,123 @@
+ grid-generica-column {
+    [col-12] {
+        padding: 0 5px;
+    }
+    .row{
+        margin-left: 0;
+        margin-right: 0;
+    }
+    
+    .titulo_grid1 {
+        font-size: 1.0em;
+        color: #9a9a9a;
+        text-align: left;
+        padding: 0 7px;
+    }
+    
+    .titulo_grid2 {
+        font-size: 0.8em;
+        color: #9a9a9a;
+        text-align: left;
+        padding: 0 7px;
+    }
+    
+    .conteudo_grid {
+        padding: 0 7px;
+        overflow: hidden !important;
+        display: -webkit-box !important;
+        -webkit-line-clamp: 2 !important;
+        -webkit-box-orient: vertical !important;
+    }
+
+    .conteudo_grid2{
+        padding: 0 7px;
+    }
+    
+    .grid {
+        padding: 0 10px !important;
+    }
+    
+    .cabecalho-grid {
+        padding: 12px 9px;
+        font-size: 0.9em;
+        background: #ecf0f1;
+        color: #444;
+        font-weight: bolder;
+        border-top-left-radius: 3px;
+        border-top-right-radius: 3px;
+        border-bottom-right-radius: 2px;
+        border-bottom-left-radius: 2px;
+        text-align: center;
+        border-top: 2px solid #0277bd
+
+    }
+    
+    .corpo-grid {
+        box-shadow: 1px 1px 10px #888888;
+        background: #cacaca;
+        border-radius: 3px;
+        /*background: #fff !important*/
+    }
+    /*.conteudo-grid {
+        padding: 10px 0
+    }*/
+    
+    .uf-grid {
+        text-align: center;
+        font-weight: bold;
+        color: #0277bd;
+        font-size: 2.0em
+    }
+    
+    .municipio-grid {
+        font-size: 1.0em;
+        color: #9a9a9a;
+        text-align: center
+    }
+    
+    .separador1-grid {
+        color: #ccc;
+        margin: 10px 0px;
+        /*margin: 7px 0;*/
+    }
+    
+    .separador2-grid {
+        color: #ccc;
+        padding-top: 7px;
+        border-top: 1px #ccc dashed;
+    }
+    
+    .sombra-grid {
+        background: #c5c5c5;
+        border-bottom-left-radius: 3px;
+        border-bottom-right-radius: 3px;
+        width: 93%;
+        height: 3px;
+        margin: 0 auto;
+    }
+    
+    .fechado .conteudo-grid {
+        display: none;
+    }
+    
+    .grid-destaque-cima {
+        background: #fff;
+        border-top-left-radius: 7px;
+        border-top-right-radius: 7px;
+        padding-top: 7px;
+        border-top: 1px #ccc dashed;
+    }
+    
+    .grid-destaque-baixo {
+        background: #fff;
+        border-bottom-left-radius: 7px;
+        border-bottom-right-radius: 7px;
+        padding-top: 10px;
+    }
+    
+    .principal {
+        margin-top: 15px;
+    }
+
+
+} //descomentar quando mobile

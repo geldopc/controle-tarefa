@@ -1,0 +1,29 @@
+<cabecalho></cabecalho>
+<div class="container-fluid principal">
+    <br/>
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-3">
+            <h3>Ocorrências {{painel}}</h3>
+        </div>
+    </div>
+    <div class="row">
+        <ol class="breadcrumb">
+            <li><a href="javascript:void(0)" (click)="pesquisarWS('A')" class="active">Alpha</a></li>
+            <li><a href="javascript:void(0)" (click)="pesquisarWS('B')">Beta</a></li>
+            <li><a href="javascript:void(0)" (click)="pesquisarWS('C')">Produção</a></li>
+        </ol>
+        <div class="progress">
+            <div class="progress-bar progress-bar-striped " *ngIf="verificar('A')" role="progressbar" style="width: 25%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+            <div class="progress-bar progress-bar-striped bg-info" *ngIf="verificar('B')" role="progressbar" style="width: 25%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+            <div class="progress-bar progress-bar-striped bg-success" *ngIf="verificar('P')" role="progressbar" style="width: 40%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+    </div>
+    <div class="row">
+            <grid-atualizacao-ocorrencias *ngIf="filtros.chamadosRetornoWS" [(gerarBuild)]="gerarBuild" [chamadosTemp]="filtros.chamadosRetornoWS" [filtros]="filtros"
+                (reCarregarGridChange)="pesquisarWS()">
+            </grid-atualizacao-ocorrencias>
+            <br/>
+            <br/>
+            <br/>
+    </div>
+</div>

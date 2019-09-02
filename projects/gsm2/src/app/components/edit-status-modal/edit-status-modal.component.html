@@ -1,0 +1,71 @@
+<div id="modalEditStatus"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="myModalLabel"
+    style="background-color: rgba(0, 0, 0, 0.5);">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">Alterar Status Ocorrência</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row form-group">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <label>
+                            Status
+                        </label>
+                        &nbsp;
+                        <span *ngIf="!statusSelecionado?.sigla" class="text-danger">
+                            Campo Obrigatório
+                        </span>
+                        <div class="btn-group btn-block">
+                            <button type="button"
+                                class="btn btn-default btn-block dropdown-toggle"
+                                data-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="false">
+                                <div class="label-combo">
+                                    {{statusSelecionado?.descricao}}
+                                </div>
+                                <div class="pull-right">
+                                    <span class="caret"></span>
+                                </div>
+                            </button>
+                            <ul class="dropdown-menu scrollable-menu">
+                                <li *ngFor="let item of listStatus;">
+                                    <a (click)="statusSelecionado = item;">
+                                        {{item?.descricao}}
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div *ngIf="checkAddMotivo();" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <label for="motivo">
+                            Motivo
+                        </label>
+                        &nbsp;
+                        <span *ngIf="checkStatusMotivoIsRequired() && !motivo" class="text-danger">
+                            Campo Obrigatório
+                        </span>
+                        <textarea id="motivo"
+                            class="form-control"
+                            rows="5"
+                            maxlength="600"
+                            placeholder="Escreva Aqui o Motivo..."
+                            [(ngModel)]="motivo">
+                        </textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" (click)="alterar();">Confirmar</button>
+            </div>
+        </div>
+    </div>
+</div>

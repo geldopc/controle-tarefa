@@ -1,0 +1,29 @@
+.panel-ocorrencia {
+    border-color: #ddd;
+    width: 60%;
+    position: fixed;
+    top: 0vh;
+    right: 0;
+    background: #fff;
+    z-index: 1030;
+    border-left: 1px solid #ddd;
+    height: 100%;
+    overflow-y: auto;
+    -webkit-box-shadow: 0 1px 6px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.5);
+}
+.scrollable-menu {
+    height: auto;
+    max-height: 200px;
+    overflow-x: hidden;
+}
+.label-combo {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 220px;
+    height: 21px;
+    float: left;
+}
+
+

@@ -1,0 +1,29 @@
+<!-- Ver documentacao: https://valor-software.com/ng2-charts/ -->
+<app-grafico-template [(titulo)]="titulocaixa" [(dadosC)]="dadosCustoms">
+    <div style="display: block; margin: 0 auto;" *ngIf="dadosCustoms.length > 0">
+        <div>
+            <div style="display: block">
+                <canvas baseChart
+                        [datasets]="barChartData"
+                        [labels]="labelsCustoms"
+                        [options]="barChartOptions"
+                        [legend]="barChartLegend"
+                        [chartType]="barChartType"
+                        (chartHover)="chartHovered($event)"
+                        (chartClick)="chartClicked($event)"></canvas>
+                </div>
+            <!-- <button ion-button (click)="randomize()">Atualzar</button> -->
+        </div>
+        <!-- Grafico aqui -->
+
+        <div class="row hand" *ngFor="let item of legendas; " (click)="selecionar(item)">
+            <div class="col-xs-11 col-sm-11 col-md-11 col-lg-11 col-left"><strong>{{item.label}}</strong></div>
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 col-right"><strong><span class="label col-cor" [style.background-color]="item.cor">{{item.dado}}</span></strong></div>
+        </div>
+
+        <div class="row total" *ngIf="isTotal === 'true'">
+            <div class="col-xs-11 col-sm-11 col-md-11 col-lg-11 col-left"><strong>TOTAL</strong></div>
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 col-right"><strong><span class="label col-cor" style.background-color="#fafafa">{{total}}</span></strong></div>
+        </div>
+    </div>
+</app-grafico-template>

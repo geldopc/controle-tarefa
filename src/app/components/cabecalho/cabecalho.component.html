@@ -1,0 +1,89 @@
+<!-- <div class="loading">
+  <p><i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw margin-bottom"></i></p>
+</div> -->
+<div class="top-bar wow fadeInDown">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <ul>
+          <li class="user">
+            <!-- <a href="" title="Acessar gsm" data-toggle="modal" data-target="#gsm"> -->
+            <a href="/gsm/index.html" title="Acessar gsm">
+              <div class="icon"></div>
+              <span>Suporte HelpDesk</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<header class="wow fadeIn">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="navbar navbar-default" role="navigation">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Alternar Navegação</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <div class="navbar-brand">
+              <a href="index.html" routerLinkActive="active">
+                <img src="assets/img/logo-small.png" style="width:57%" alt="SM Soluções para Gestão da Informação">
+              </a>
+            </div>
+          </div>
+
+          <nav class="navbar-collapse collapse">
+            <div class="menu-fixed-menu-container">
+              <ul class="ul_main">
+                <li>
+                  <a (focus)="aparecer()" (click)="aparecer()">A SM</a>
+                  <ul class="subul_main">
+                    <li>
+                      <a routerLink="/quemsomos" routerLinkActive="active">Quem somos</a>
+                    </li>
+                    <li>
+                      <a routerLink="/clientes" routerLinkActive="active">Clientes</a>
+                    </li>
+                    <li>
+                      <a routerLink="/casosdesucesso" routerLinkActive="active">Cases de sucesso</a>
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <a routerLink="/produtos" routerLinkActive="active">Produtos e Serviços</a>
+                </li>
+                <li class="active-modal">
+                  <a href="" title="Faça parte da sm" data-toggle="modal" data-target="#equip">Trabalhe Conosco</a>
+                </li>
+                <li>
+                  <a routerLink="/noticias" routerLinkActive="active">Notícias</a>
+                </li>
+                <li>
+                  <a routerLink="/contato" routerLinkActive="active">Contato</a>
+                </li>
+                <li class="visible-xs">
+                  <a href="mailto:contato@smsgi.com.br" title="contato@smsgi.com.br">
+                    <span>contato@smsgi.com.br</span>
+                  </a>
+                </li>
+                <li class="visible-xs">
+                  <a href="tel:+793042-7340" title="(79) 3243-7929 / (79) 3042-7340  ">
+                    <span>(79) 3243-7929 / (79) 3042-7340</span>
+                  </a>
+                </li>
+
+              </ul>
+            </div>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<app-modal-faca-parte-sm></app-modal-faca-parte-sm>

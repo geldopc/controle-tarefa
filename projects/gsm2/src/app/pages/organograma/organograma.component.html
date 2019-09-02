@@ -1,0 +1,187 @@
+<cabecalho>
+</cabecalho>
+<div class="lupa">
+    <button class="btn" (click)="minor()">
+        <i class="fa fa-search"  ></i>
+        <i class="fa fa-minus" style="font-size: 65%" aria-hidden="true"></i>
+    </button>
+    <button class="btn" (click)="plus()">
+        <i class="fa fa-search"  ></i>
+        <i class="fa fa-plus" style="font-size: 65%" aria-hidden="true"></i>
+    </button>
+</div>
+<div *ngIf="organograma.grupoGestor" class="container-fluid principal">
+    <div class="tree">
+        <ul>
+            <li>
+                <a (click)="openDemanda(organograma.grupoGestor.fiscalContrato, 'Fiscal do Contrato');">
+                    Fiscal do Contrato
+                    <br />
+                    <strong>
+                        {{organograma.grupoGestor && organograma.grupoGestor.fiscalContrato && organograma.grupoGestor.fiscalContrato.nome ? organograma.grupoGestor.fiscalContrato.nome.split(" ")[0] : 'Vago'}}
+                    </strong>
+                </a>
+                <ul>
+                    <li>
+                        <a (click)="openDemanda(organograma.grupoGestor.gerenteProjeto, 'Gerente de Projeto');">
+                            Gerente de Projeto
+                            <br />
+                            <strong>
+                                {{organograma.grupoGestor && organograma.grupoGestor.gerenteProjeto &&  organograma.grupoGestor.gerenteProjeto.nome ? organograma.grupoGestor.gerenteProjeto.nome.split(" ")[0] : 'Vago'}}
+                            </strong>
+                        </a>
+                        <ul>
+                            <li *ngIf="!removerAnimal">
+                                <a (click)="openDemanda(organograma.grupoGestor.veterinario, 'Veterinário');">
+                                    Veterinário
+                                    <br />
+                                    <strong>
+                                        {{organograma.grupoGestor && organograma.grupoGestor.veterinario && organograma.grupoGestor.veterinario.nome ? organograma.grupoGestor.veterinario.nome.split(" ")[0] : 'Vago'}}
+                                    </strong>
+                                </a>
+                                <ul>
+                                    <li *ngFor="let fp of organograma.listFocalPointAnimal;">
+                                        <a *ngIf="fp.programa.area === 'A' "
+                                            (click)="openDemanda(fp.gerentePrograma, fp.programa.dsPrograma, fp.programa.idPrograma);">
+                                            {{fp.programa.dsPrograma}}
+                                            <br />
+                                            <strong>
+                                                {{fp.gerentePrograma && fp.gerentePrograma.nome ? fp.gerentePrograma.nome.split(" ")[0] : 'Vago'}}
+                                            </strong>
+                                        </a>
+                                        <ul *ngIf="fp.listKeyUser && fp.listKeyUser.length">
+                                            <li *ngFor="let key of fp.listKeyUser;">
+                                                <a
+                                                    (click)="openDemanda(key.usuario, 'Key User: ' + fp.programa.dsPrograma);">
+                                                    {{key.usuario.nome}}
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li *ngIf="!removerVegetal">
+                                <a (click)="openDemanda(organograma.grupoGestor.agronomo, 'Agrônomo');">
+                                    Agrônomo
+                                    <br />
+                                    <strong>
+                                        {{organograma.grupoGestor && organograma.grupoGestor.agronomo && organograma.grupoGestor.agronomo.nome ? organograma.grupoGestor.agronomo.nome.split(" ")[0] : 'Vago'}}
+                                    </strong>
+                                </a>
+                                <ul>
+                                    <li *ngFor="let fp of organograma.listFocalPointVegetal;">
+                                        <a *ngIf="fp.programa.area === 'V'"
+                                            (click)="openDemanda(fp.gerentePrograma, fp.programa.dsPrograma, fp.programa.idPrograma);">
+                                            {{fp.programa.dsPrograma}}
+                                            <br />
+                                            <strong>
+                                                {{fp.gerentePrograma && fp.gerentePrograma.nome ? fp.gerentePrograma.nome.split(" ")[0] : 'Vago'}}
+                                            </strong>
+                                        </a>
+                                        <ul *ngIf="fp.listKeyUser && fp.listKeyUser.length">
+                                            <li *ngFor="let key of fp.listKeyUser;">
+                                                <a
+                                                    (click)="openDemanda(key.usuario, 'Key User: ' + fp.programa.dsPrograma);">
+                                                    {{key.usuario.nome}}
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li *ngIf="!removerOutros">
+                                <a (click)="openDemanda('', 'Outros');">
+                                    Outros
+                                </a>
+                                <ul>
+                                    <li *ngFor="let fp of organograma.listFocalPointOutros;">
+                                        <a *ngIf="fp.programa.area === 'O'"
+                                            (click)="openDemanda(fp.gerentePrograma, fp.programa.dsPrograma, fp.programa.idPrograma);">
+                                            {{fp.programa.dsPrograma}}
+                                            <br />
+                                            <strong>
+                                                {{fp.gerentePrograma && fp.gerentePrograma.nome ? fp.gerentePrograma.nome.split(" ")[0] : 'Vago'}}
+                                            </strong>
+                                        </a>
+                                        <ul *ngIf="fp.listKeyUser && fp.listKeyUser.length">
+                                            <li *ngFor="let key of fp.listKeyUser;">
+                                                <a
+                                                    (click)="openDemanda(key.usuario, 'Key User: ' + fp.programa.dsPrograma);">
+                                                    {{key.usuario.nome}}
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>
+<div *ngIf="usuarioLogado.funcionario" id="btnFloatBack" class="btnFloatBack" [routerLink]="['/painel/grupoGestor']"
+    title="voltar">
+    <i class="fa fa-angle-left icon-back"></i>
+</div>
+<div id="demandaUsuario" class="demanda">
+    <div class="container-fluid">
+        <div class="row">
+            <div *ngIf="usuario || funcao" class="col-xs-11 col-sm-11 col-md-11 col-lg-11">
+                <h4>{{usuario && usuario.nome ? 'Demandas: ' + usuario.nome : ''}} - {{funcao}}</h4>
+            </div>
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 text-right">
+                <i *ngIf="listGroup && listGroup.length"
+                    class="{{expandido ? 'fa fa-minus' : 'fa fa-plus'}} close-demanda" (click)="expandido = !expandido;"
+                    title="{{expandido ? 'Menos Detalhes' : 'Mais Detalhes'}}">
+                </i>
+                <i class="fa fa-close close-demanda" (click)="closeDemanda();" title="fechar"></i>
+            </div>
+        </div>
+        <div class="row">
+            <div *ngIf="expandido && listGroup && listGroup.length" class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="height: 47vh; overflow-y: scroll !important;">
+                <kendo-grid [data]="gridView" class="grid">
+                    <kendo-grid-column field="area" title="Tipo">
+                    </kendo-grid-column>
+                    <kendo-grid-column field="responsavel" title="Responsável">
+                        <ng-template kendoGridCellTemplate let-row>
+                            {{row.responsavel ? row.responsavel : 'Vago'}}
+                        </ng-template>
+                    </kendo-grid-column>
+                    <kendo-grid-column field="qtd" title="Total">
+                    </kendo-grid-column>
+                    <ng-template kendoGridDetailTemplate let-row
+                        [kendoGridDetailTemplateShowIf]="showOnlyBeveragesDetails">
+                        <div *ngFor="let status of row.list;" class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
+                            <blockquote>
+                                <p style="font-size: medium; font-weight: 500;">{{status.descricao}}</p>
+                                <strong>{{status.qtd}} </strong>
+                            </blockquote>
+                        </div>
+                    </ng-template>
+                </kendo-grid>
+            </div>
+            <span *ngIf="!expandido">
+                <div *ngFor="let status of listStatusView;" class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
+                    <blockquote>
+                        <p style="font-size: medium; font-weight: 500;">{{status.descricao}}</p>
+                        <strong>{{status.qtd}} = {{((status.qtd * 100) / totalTarefa).toFixed(2)}}%</strong>
+                    </blockquote>
+                </div>
+                <div *ngIf="totalTarefa" class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
+                    <blockquote>
+                        <p style="font-size: medium; font-weight: 500;">Total de Ocorrência</p>
+                        <strong>{{totalTarefa}}</strong>
+                    </blockquote>
+                </div>
+                <div *ngIf="listStatusView && listStatusView.length === 0"
+                    class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="alert alert-danger">
+                        Nenhuma Tarefa Demandada!
+                    </div>
+                </div>
+            </span>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,24 @@
+<ion-item>
+	<ion-label id="{{id}}Label" floating>
+		<small>
+			{{label}}
+			<span color="required-message">{{required == true ? '*' : ''}}</span>
+		</small>
+	</ion-label>
+	<ion-select
+		id="{{id}}Select"
+		(ionChange)="valueChanged()"
+		cancelText="Fechar"
+		okText="Confirmar"
+		multiple="multiple"
+		[(ngModel)]="selectedValue"
+		[required]="required"
+		#combo >
+		<ion-option text-wrap
+			*ngFor="let op of itensOptions"
+			value="{{op.selectValue}}">
+			{{op.showValue}}
+		</ion-option>
+	</ion-select>
+</ion-item>
+<span color="required-message">{{msg}}</span>

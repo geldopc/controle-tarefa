@@ -1,0 +1,425 @@
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <!-- <span class="icon-bar"></span> -->
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">GSM</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a [routerLink]="['/home-tecnico']">Em atendimento</a>
+                </li>
+                <li><a href="#">{{usuario.nome}}</a></li>
+                <!-- <li><a href="#">Perfil</a></li> -->
+                <li><a href="#">Sair</a></li>
+            </ul>
+            <!-- <form class="navbar-form navbar-right">
+                <input type="text" class="form-control" placeholder="Search...">
+            </form> -->
+        </div>
+    </div>
+</nav>
+<ion-content>
+    <br/>
+    <br/>
+    <br/>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
+                <dropdown-multiselect *ngIf="listFiltroProduto"
+                    [listaCombo]="listFiltroProduto"
+                    label="Produto"
+                    [(listaSelecionados)]="listSelecaoProduto">
+                </dropdown-multiselect>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
+                <dropdown-multiselect *ngIf="listFiltroFuncionalidade"
+                    [listaCombo]="listFiltroFuncionalidade"
+                    label="Funcionalidade"
+                    [(listaSelecionados)]="listSelecaoFuncionalidade">
+                </dropdown-multiselect>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
+                <dropdown-multiselect *ngIf="listFiltroCliente"
+                    [listaCombo]="listFiltroCliente"
+                    label="Cliente"
+                    [(listaSelecionados)]="listSelecaoCliente">
+                </dropdown-multiselect>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
+                <dropdown-multiselect *ngIf="listFiltroSolicitante"
+                    [listaCombo]="listFiltroSolicitante"
+                    label="Solicitante"
+                    [(listaSelecionados)]="listSelecaoSolicitante">
+                </dropdown-multiselect>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
+                <dropdown-multiselect *ngIf="listFiltroPrioridade1"
+                [listaCombo]="listFiltroPrioridade1"
+                label="1ª Prioridade"
+                    [(listaSelecionados)]="listSelecaoPrioridade1">
+                </dropdown-multiselect>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
+                <dropdown-multiselect *ngIf="listFiltroPrioridade2"
+                    [listaCombo]="listFiltroPrioridade2"
+                    label="2ª Prioridade"
+                    [(listaSelecionados)]="listSelecaoPrioridade2">
+                </dropdown-multiselect>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
+                <dropdown-multiselect *ngIf="listFiltroStatus"
+                    [listaCombo]="listFiltroStatus"
+                    label="Status"
+                    [(listaSelecionados)]="listSelecaoStatus">
+                </dropdown-multiselect>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
+                <dropdown-multiselect *ngIf="listFiltroSeveridade"
+                    [listaCombo]="listFiltroSeveridade"
+                    label="Severidade"
+                    [(listaSelecionados)]="listSelecaoSeveridade">
+                </dropdown-multiselect>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
+                <label>Data Inicial</label>
+                <input type="date"
+                    class="form-control filtro"
+                    placeholder="De"
+                    [(ngModel)]="dtInicio"/>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
+                <label>Data Final</label>
+                <input type="date"
+                    class="form-control filtro"
+                    placeholder="Até"
+                    [(ngModel)]="dtFim"/>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
+                <dropdown-multiselect *ngIf="listFiltroTecnico"
+                    [listaCombo]="listFiltroTecnico"
+                    [disabled]="disabledTecnico"
+                    label="Técnico"
+                    [(listaSelecionados)]="listSelecaoTecnico">
+                </dropdown-multiselect>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
+                <dropdown-multiselect *ngIf="listFiltroModalidade"
+                    [listaCombo]="listFiltroModalidade"
+                    label="Modalidade"
+                    [(listaSelecionados)]="listSelecaoModalidade">
+                </dropdown-multiselect>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
+                <label>
+                    Ocorrência Interna?
+                </label>
+                <div class="btn-group btn-block">
+                    <button type="button"
+                        class="btn btn-default btn-block dropdown-toggle filtro"
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false">
+                        <div class="label-combo">
+                            {{tipoOcorrenciaInterna.label}}
+                        </div>
+                        <div class="pull-right">
+                            <span class="caret"></span>
+                        </div>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li *ngFor="let item of listTipoOcorrenciaInterna;">
+                            <a (click)="tipoOcorrenciaInterna = item;">
+                                {{item.label}}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+                <div class="btn-group" role="group" aria-label="...">
+                    <button type="button"
+                        class="btn btn-primary btn-sm"
+                        (click)="obterOcorrencia();">
+                        <i class="fa fa-search"></i>&nbsp;Pesquisar
+                    </button>
+                    <button type="button"
+                        class="btn btn-info btn-sm"
+                        title="Recarregar com os valores iniciais"
+                        (click)="limparFiltros(); setarDefaultPesquisa(); obterOcorrencia();">
+                        <i class="fa fa-refresh"></i>
+                    </button>
+                    <button type="button"
+                        class="btn btn-default btn-sm"
+                        (click)="limparFiltros();">
+                        <i class="fa fa-close"></i>&nbsp;Limpar
+                    </button>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                <input type="text"
+                    class="form-control"
+                    placeholder="Pesquisa rápida..."
+                    (keyup)="pesquisaRapida($event);">
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+                <div class="btn-group pull-right" role="group" aria-label="...">
+                    <button type="button"
+                        class="btn btn-success btn-sm"
+                        data-toggle="modal"
+                        data-target="#modalAddOcorrencia"
+                        (click)="novaOcorrencia = true;">
+                        <i class="fa fa-plus"></i>&nbsp;Nova Ocorrência
+                    </button>
+                </div>
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <ul class="nav nav-tabs nav-justified">
+                    <li role="presentation" class="active">
+                        <a data-toggle="tab" href="#tarefa">
+                            <i class="fa fa-tasks"></i>&nbsp;Ocorrências
+                        </a>
+                    </li>
+                    <li role="presentation">
+                        <a data-toggle="tab" href="#info">
+                            <i class="fa fa-area-chart"></i>&nbsp;Informações
+                        </a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <br />
+                    <div id="tarefa" class="tab-pane fade in active">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                <div *ngIf="usuario?.nrDocumento === 'admin' || usuario?.inSituacao"
+                                    class="btn-check-all btn-group"
+                                    role="group"
+                                    aria-label="...">
+                                    <button type="button"
+                                        class="btn btn-{{ocorrencias?.length && ocorrenciasSelecionadas?.length === ocorrencias?.length ? 'success' : 'default'}} btn-xs"
+                                        (click)="addOrDelAllOcorrencia();">
+                                        <i class="fa fa-check"></i>
+                                    </button>
+                                    <button disabled
+                                        type="button"
+                                        class="btn btn-default btn-xs btn-toolbar">
+                                        {{ocorrenciasSelecionadas?.length}} Selecionada(s)
+                                    </button>
+                                    <button *ngIf="ocorrenciasSelecionadas?.length"
+                                        type="button"
+                                        class="btn btn-default btn-xs btn-toolbar"
+                                        title="Alterar Severidade e Prioridade"
+                                        data-toggle="modal"
+                                        data-target="#modalEditPrioridade">
+                                        <i class="fa fa-arrow-circle-o-up"></i>&nbsp;Prioridade
+                                    </button>
+                                    <button *ngIf="ocorrenciasSelecionadas?.length"
+                                        type="button"
+                                        class="btn btn-default btn-xs btn-toolbar"
+                                        title="Alterar Distribuição de Técnico"
+                                        (click)="alterarTecnico(); "
+                                        data-toggle="modal"
+                                        data-target="#modalAlterarTecnico">
+                                        <i class="fa fa-user"></i>&nbsp;Técnico
+                                    </button>
+                                    <button *ngIf="ocorrenciasSelecionadas?.length"
+                                        type="button"
+                                        class="btn btn-default btn-xs btn-toolbar"
+                                        title="Alterar Status"
+                                        data-toggle="modal"
+                                        data-target="#modalEditStatus">
+                                        <i class="fa fa-tag"></i>&nbsp;Status
+                                    </button>
+                                    <button hidden *ngIf="ocorrenciasSelecionadas?.length"
+                                        type="button"
+                                        class="btn btn-default btn-xs btn-toolbar"
+                                        (click)="limparFiltros();">
+                                        <i class="fa fa-laptop"></i>&nbsp;Homologar
+                                    </button>
+                                    <button *ngIf="ocorrencias?.length"
+                                        type="button"
+                                        class="btn btn-default btn-xs btn-toolbar"
+                                        title="Gerar Planilha de Ocorrências"
+                                        (click)="gerarCsv();">
+                                        <i class="fa fa-file-excel-o"></i>&nbsp;&nbsp;CSV
+                                    </button>
+                                    <button *ngIf="checkListMerge()"
+                                        type="button"
+                                        class="btn btn-default btn-xs btn-toolbar"
+                                        (click)="gerarVersao();">
+                                        <i class="fa fa-code-fork icon-toolbar"></i>&nbsp;Merge da {{tipoAtualizacao}}
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                <div class="btn-check-all btn-group pull-right" role="group" aria-label="...">
+                                    <button type="button"
+                                        class="btn btn-primary btn-xs btn-toolbar"
+                                        [countUp]="totalOcorrencia">0
+                                    </button>
+                                    <button type="button"
+                                        class="btn btn-primary btn-xs btn-toolbar">
+                                        Resultado(s)
+                                    </button>
+                                    <button
+                                        type="button"
+                                        title="Exibir descrição da ocorrência =("
+                                        class="btn btn-{{exibeDescricao ? 'info' : 'primary'}}  btn-xs btn-toolbar"
+                                        (click)="exibeDescricao = !exibeDescricao;">
+                                        <i class="fa fa-commenting-o icon-toolbar"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Ocorrência</th>
+                                            <th>Responsável</th>
+                                            <th>Cadastro</th>
+                                            <th>Funcionalidade</th>
+                                            <th class="text-right">Status</th>
+                                            <th class="text-right">Severidade</th>
+                                            <th class="text-right">Complexidade</th>
+                                            <th *ngIf="exibeDescricao">descrição</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody *ngIf="ocorrencias">
+                                        <tr *ngFor="let item of ocorrencias | paginate: { itemsPerPage: 10, currentPage: page }; let i = index;">
+                                            <td>
+                                                <div class="btn-group" role="group" aria-label="...">
+                                                    <button *ngIf="usuario?.nrDocumento === 'admin' || usuario?.inSituacao"
+                                                        type="button"
+                                                        class="btn btn-{{ocorrenciaSelecionada(item) ? 'success' : 'default'}} btn-xs"
+                                                        (click)="addOrDelOcorrencia(item);">
+                                                        <i class="fa fa-check"></i>
+                                                    </button>
+                                                    <button type="button"
+                                                        class="label-id btn btn-{{item.idOcorrencia === ocorrencia?.idOcorrencia ? 'primary' : 'default'}} btn-xs"
+                                                        (click)="ocorrencia = item;">
+                                                        {{item?.idOcorrencia}}
+                                                    </button>
+                                                    <button type="button"
+                                                        class="label-id btn btn-{{item.idOcorrencia === ocorrencia?.idOcorrencia ? 'info' : 'default'}} btn-xs"
+                                                        (click)="ocorrencia = item;">
+                                                        {{item?.dsProduto}}
+                                                    </button>
+                                                    <button type="button"
+                                                        class="label-id btn btn-{{item.idOcorrencia === ocorrencia?.idOcorrencia ? 'info' : 'default'}} btn-xs"
+                                                        (click)="ocorrencia = item;">
+                                                        {{item?.dsSigla ? item?.dsSigla : 'SM'}}
+                                                    </button>
+                                                </div>
+                                            </td>
+                                            <td>{{item?.dsUsuarioSolicitante}}</td>
+                                            <td>{{item?.dtSolicitacao.toLocaleDateString()}}</td>
+                                            <td>{{item?.dsFuncionalidade}}</td>
+                                            <td align="right">
+                                                <button disabled
+                                                    type="button"
+                                                    class="label-status btn btn-info btn-xs text-capitalize"
+                                                    (click)="ocorrencia = item;">
+                                                    <!-- {{item?.dsStatus && item?.dsStatus.split(' ').length === 3 ?
+                                                        item?.dsStatus.split(' ')[1] + ' ' + item?.dsStatus.split(' ')[2] :
+                                                        item?.dsStatus && item?.dsStatus.split(' ').length === 2 ?
+                                                        item?.dsStatus.split(' ')[1] :
+                                                        item?.dsStatus
+                                                    }} -->
+                                                    {{item?.dsStatus}}
+                                                </button>
+                                            </td>
+                                            <td align="right">
+                                                <button disabled
+                                                    type="button"
+                                                    class="label-severidade btn btn-{{obterCorSeveridade(item?.dsNivelSeveridade)}} btn-xs"
+                                                    (click)="ocorrencia = item;">
+                                                    {{item?.dsNivelSeveridade}}
+                                                </button>
+                                            </td>
+                                            <td align="right">
+                                                <button disabled
+                                                    type="button"
+                                                    class="label-complexidade btn btn-{{obterCorComplexidade(item?.inNivelComplexidade)}} btn-xs"
+                                                    (click)="ocorrencia = item;">
+                                                    {{obterComplexidade(item?.inNivelComplexidade)}}
+                                                </button>
+                                            </td>
+                                            <td *ngIf="exibeDescricao" [innerHTML]="item.dsOcorrencia"></td>
+                                            <!-- <td>
+                                                <div class="btn-group" role="group" aria-label="...">
+                                                    <button type="button" class="label-id btn btn-danger btn-xs">
+                                                        {{item?.nrPrioridade1}}
+                                                    </button>
+                                                    <button type="button" class="label-id btn btn-warning btn-xs">
+                                                        {{item?.nrPrioridade2}}
+                                                    </button>
+                                                </div>
+                                            </td> -->
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <pagination-controls
+                                    (pageChange)="page = $event"
+                                    maxSize="10"
+                                    directionLinks="true"
+                                    autoHide="true"
+                                    responsive="true"
+                                    previousLabel="Anterior"
+                                    nextLabel="Próximo"
+                                    screenReaderPaginationLabel="Paginação"
+                                    screenReaderPageLabel="Página"
+                                    screenReaderCurrentLabel="You're on page">
+                                </pagination-controls>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="info" class="tab-pane fade">
+                        <app-dashboard-tarefa *ngIf="ocorrencias"
+                            [ocorrencias]="ocorrencias"
+                            [listStatus]="listFiltroStatus"
+                            [listCliente]="listFiltroCliente"
+                            [listFuncionalidade]="listFiltroFuncionalidade"
+                            [listProduto]="listFiltroProduto">
+                        </app-dashboard-tarefa>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ion-content>
+<app-detalhe-ocorrencia *ngIf="ocorrencia?.idOcorrencia"
+    (close)="fechar();"
+    [ocorrencia]="ocorrencia">
+</app-detalhe-ocorrencia>
+<app-edit-status-modal *ngIf="ocorrenciasSelecionadas?.length"
+    [ocorrencias]="ocorrenciasSelecionadas"
+    (refresh)="refreshGrid($event);">
+</app-edit-status-modal>
+<app-edit-prioridade-modal *ngIf="ocorrenciasSelecionadas?.length"
+    [ocorrencias]="ocorrenciasSelecionadas"
+    (refresh)="refreshGrid($event);">
+</app-edit-prioridade-modal>
+<app-add-ocorrencia-modal *ngIf="novaOcorrencia"
+    (refresh)="refreshGrid($event);">
+</app-add-ocorrencia-modal>
+<alterar-tecnicos-distribuicoes *ngIf="realocar"
+    [realocar]="realocar"
+    (refresh)="refreshGrid($event);"
+    [ocorrenciasSelecionadas]="ocorrenciasSelecionadas">
+</alterar-tecnicos-distribuicoes>

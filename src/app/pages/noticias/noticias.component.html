@@ -1,0 +1,27 @@
+<app-cabecalho></app-cabecalho>
+
+<section class="bread wow fadeIn">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <ul>
+                    <li>
+                        <a routerLink="/inicio" routerLinkActive="active">Home</a>
+                    </li>
+                    <li>Notícias</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="standard notices-home notices-intern wow fadeIn">
+   <div class="container">
+        <div *ngFor="let item of noticias">
+            <app-noticias-miniatura [noticia]="item"></app-noticias-miniatura>            
+        </div>
+    </div>  
+</section>
+  
+<app-onde-estamos></app-onde-estamos>
+<app-rodape></app-rodape>

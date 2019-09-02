@@ -1,0 +1,40 @@
+ <!-- Modal -->
+ <div id="gsm" class="modal fade in" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <!-- <button type="button" id="fecharmodal" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button> -->
+        <h4 class="modal-title" id="myModalLabel">Logar-se ao <span>GSM</span></h4>
+      </div>
+      <div class="modal-body">
+          <div class="row">
+            <div id="login" class="col-sm-4 col-sm-offset-4">
+                <form id="formReativo" [formGroup]="reactiveForm" >
+                  <sm-mensagem [mensagem]="mensagem" [cor]="cor"></sm-mensagem>
+                  <div *ngIf="!reactiveForm.value.email" >
+                    <label for="">Usuário</label>
+                    <input type="text" name="username" formControlName="username" plcadeholde="Digite o seu usuário">
+                  </div>
+                  <div *ngIf="reactiveForm.value.email" >
+                    <div class="email">
+                        Por favor confirme o email listado abaixo, caso esteja correto uma nova senha temporária será enviada.
+                        <ul>
+                            <li><span>{{maskedEmail}}</span></li>
+                        </ul>
+                    </div>
+                    <label for="">Confirmar e-mail</label>
+                    <input type="text" name="email" formControlName="confirmEmail" plcadeholde="Digite o email">
+                  </div>
+
+                  <re-captcha #captchaRef="reCaptcha" formControlName="recaptchaReactive" (resolved)="$event " ></re-captcha>
+                  <!-- <input type="submit"  (click)="submit($event);" value="Fazer login" class="btn-normal btn-red"> -->
+                  <input type="button" [ngClass]="{'disabled': !reactiveForm.valid }" (click)="consultarUsuario($event)" value="{{textoBotao}}" class="btn-normal btn-red">
+                  <!-- <input type="button"  (click)="captchaRef.execute(); " value="{{textoBotao}}" class="btn-normal btn-red"> -->
+
+                </form>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>

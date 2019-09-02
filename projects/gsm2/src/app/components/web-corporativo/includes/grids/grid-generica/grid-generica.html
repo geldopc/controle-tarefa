@@ -1,0 +1,28 @@
+<div class="form-group principal">
+    <ng-template ngFor let-linha [ngForOf]="grid" let-i="index">
+        <div class="corpo-grid fechado">
+            <div class="cabecalho-grid" (click)="fecharAbrirModulo($event.currentTarget)">
+                <ion-grid>
+                    <ion-row>
+                        <ion-col col-6 style="text-align: left">
+                            {{linha?.titulo}}
+                        </ion-col>
+                        <ion-col col-6 style="text-align: right">
+                            {{linha?.labelEvidencia}}: {{linha?.textoEvidencia}}
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+            </div>
+            <div class="conteudo-grid">
+                <div class="grid-destaque-baixo">
+                    <ion-grid>
+                        <ng-container *ngTemplateOutlet="lineContentTmpl, context: { $implicit: linha }"></ng-container>
+                    </ion-grid>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+    <div *ngIf="!grid" class="no-results">
+        <sm-conteudo-nao-encontrado></sm-conteudo-nao-encontrado>
+    </div>
+</div>

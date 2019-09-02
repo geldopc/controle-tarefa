@@ -1,0 +1,328 @@
+
+<ul class="nav nav-tabs nav-justified">
+    <li class="active"><a data-toggle="pill" href="#home">Modalidade</a></li>
+    <li><a data-toggle="pill" href="#menu1">Status</a></li>
+    <li><a data-toggle="pill" href="#menu2">Técnico</a></li>
+    <li><a data-toggle="pill" href="#menu3">Produto</a></li>
+    <li><a data-toggle="pill" href="#menu4">Cliente</a></li>
+    <li><a data-toggle="pill" href="#menu5">Funcionalidade</a></li>
+</ul>
+
+<div class="tab-content">
+    <div id="home" class="tab-pane fade in active">
+        <div class="row">
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                <div class="progress">
+                    <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" aria-valuenow="16"
+                        aria-valuemin="0" aria-valuemax="100" [style.width]="0">
+                        <span class="sr-only">{{wi}} Complete</span>
+                    </div>
+                    <span class="progress-type">WI</span>
+                    <span class="progress-completed">{{wi.length}}</span>
+                </div>
+                <div class="progress">
+                    <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" aria-valuenow="138"
+                        aria-valuemin="0" aria-valuemax="100" [style.width]="0">
+                        <span class="sr-only">{{banco}} Complete (danger)</span>
+                    </div>
+                    <span class="progress-type">Banco de dados</span>
+                    <span class="progress-completed">{{banco.length}}</span>
+                </div>
+                <div class="progress">
+                    <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" aria-valuenow="3"
+                        aria-valuemin="0" aria-valuemax="100" [style.width]="0">
+                        <span class="sr-only">{{java}} Complete (warning)</span>
+                    </div>
+                    <span class="progress-type">Java</span>
+                    <span class="progress-completed">{{java.length}}</span>
+                </div>
+                <div class="progress">
+                    <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" aria-valuenow="11"
+                        aria-valuemin="0" aria-valuemax="100" [style.width]="0">
+                        <span class="sr-only">{{angweb}} Complete (success)</span>
+                    </div>
+                    <span class="progress-type">Angular Web</span>
+                    <span class="progress-completed">{{angweb.length}}</span>
+                </div>
+                <div class="progress">
+                    <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" aria-valuenow="11"
+                        aria-valuemin="0" aria-valuemax="100" [style.width]="0">
+                        <span class="sr-only">{{angWebGuiaUso}} Complete (success)</span>
+                    </div>
+                    <span class="progress-type">Angular Guia De Uso</span>
+                    <span class="progress-completed">{{angWebGuiaUso.length}}</span>
+                </div>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                <div class="progress">
+                    <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" aria-valuenow="11"
+                        aria-valuemin="0" aria-valuemax="100" [style.width]="0">
+                        <span class="sr-only">{{angWebFiscalizacao}} Complete (success)</span>
+                    </div>
+                    <span class="progress-type">Angular Fiscalização</span>
+                    <span class="progress-completed">{{angWebFiscalizacao.length}}</span>
+                </div>
+                <div class="progress">
+                    <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" aria-valuenow="11"
+                        aria-valuemin="0" aria-valuemax="100" [style.width]="0">
+                        <span class="sr-only">{{angWebBi}} Complete (success)</span>
+                    </div>
+                    <span class="progress-type">Angular BI</span>
+                    <span class="progress-completed">{{angWebBi.length}}</span>
+                </div>
+                <div class="progress">
+                    <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" aria-valuenow="11"
+                        aria-valuemin="0" aria-valuemax="100" [style.width]="0">
+                        <span class="sr-only">{{angWebAtend}} Complete (success)</span>
+                    </div>
+                    <span class="progress-type">Angular Atend. Produtor</span>
+                    <span class="progress-completed">{{angWebAtend.length}}</span>
+                </div>
+                <div class="progress">
+                    <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" aria-valuenow="11"
+                        aria-valuemin="0" aria-valuemax="100" [style.width]="0">
+                        <span class="sr-only">{{angmobile}} Complete (success)</span>
+                    </div>
+                    <span class="progress-type">Angular Mobile</span>
+                    <span class="progress-completed">{{angmobile.length}}</span>
+                </div>
+                <div class="progress">
+                    <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" aria-valuenow="11"
+                        aria-valuemin="0" aria-valuemax="100" [style.width]="0">
+                        <span class="sr-only">{{angportaldeservicos}} Complete (success)</span>
+                    </div>
+                    <span class="progress-type">Portal de serviços</span>
+                    <span class="progress-completed">{{angportaldeservicos.length}}</span>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                <div class="text-left">
+                    <p class="title-type-dev text-uppercase label-tecnologia">Total de Ocorrências: {{ocorrencias ?
+                        ocorrencias.length : 0}}</p>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                <div class="text-left">
+                    <p class="title-type-dev text-uppercase label-tecnologia">Total de Tarefas: {{totalDistribuicao}}</p>
+                </div>
+            </div>
+            <!-- <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" style="border-left-style: groove;" *ngFor="let prod of totalTipos; let i = index;">
+                    <p class="value-type-dev numero-tecnologia">{{prod.qtd}}</p>
+                    <p class="title-type-dev text-uppercase label-tecnologia"> <i class="fa fa-circle"></i> {{prod.titulo}}</p>
+                </div>
+            </div> -->
+        </div>
+    </div>
+    <div id="menu1" class="tab-pane fade">
+        <div class="row">
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+
+                <div class="progress">
+                    <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" aria-valuenow="138"
+                        aria-valuemin="0" aria-valuemax="100" [style.width]="0">
+                        <span class="sr-only">{{banco}} Complete (danger)</span>
+                    </div>
+                    <span class="progress-type">Aguard. Distribuição</span>
+                    <span class="progress-completed">{{listAguardDist.length}}</span>
+                </div>
+                <div class="progress">
+                    <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" aria-valuenow="3"
+                        aria-valuemin="0" aria-valuemax="100" [style.width]="0">
+                        <span class="sr-only">{{java}} Complete (warning)</span>
+                    </div>
+                    <span class="progress-type">Aguard. Viabilidade</span>
+                    <span class="progress-completed">{{listAguardViab.length}}</span>
+                </div>
+                <div class="progress">
+                    <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" aria-valuenow="11"
+                        aria-valuemin="0" aria-valuemax="100" [style.width]="0">
+                        <span class="sr-only">{{angweb}} Complete (success)</span>
+                    </div>
+                    <span class="progress-type">Em Desenvolvimento</span>
+                    <span class="progress-completed">{{listDesenvolvimento.length}}</span>
+                </div>
+                <div class="progress">
+                    <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" aria-valuenow="16"
+                        aria-valuemin="0" aria-valuemax="100" [style.width]="0">
+                        <span class="sr-only">{{wi}} Complete</span>
+                    </div>
+                    <span class="progress-type">Aguard. Atualização Alfa</span>
+                    <span class="progress-completed">{{listAguardAt.length}}</span>
+                </div>
+                <div class="progress">
+                    <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" aria-valuenow="11"
+                        aria-valuemin="0" aria-valuemax="100" [style.width]="0">
+                        <span class="sr-only">{{angportaldeservicos}} Complete (success)</span>
+                    </div>
+                    <span class="progress-type">Gerando Versão Alfa</span>
+                    <span class="progress-completed">{{listGerandoVersaoAlfa.length}}</span>
+                </div>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                <div class="progress">
+                    <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" aria-valuenow="11"
+                        aria-valuemin="0" aria-valuemax="100" [style.width]="0">
+                        <span class="sr-only">{{angportaldeservicos}} Complete (success)</span>
+                    </div>
+                    <span class="progress-type">Em  Homologação Alfa</span>
+                    <span class="progress-completed">{{listHomologacaoAlfa.length}}</span>
+                </div>
+                <div class="progress">
+                    <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" aria-valuenow="11"
+                        aria-valuemin="0" aria-valuemax="100" [style.width]="0">
+                        <span class="sr-only">{{angportaldeservicos}} Complete (success)</span>
+                    </div>
+                    <span class="progress-type">Aguard. atualização Beta</span>
+                    <span class="progress-completed">{{listAguardBeta.length}}</span>
+                </div>
+                <div class="progress">
+                    <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" aria-valuenow="11"
+                        aria-valuemin="0" aria-valuemax="100" [style.width]="0">
+                        <span class="sr-only">{{angportaldeservicos}} Complete (success)</span>
+                    </div>
+                    <span class="progress-type">Gerando Versão Beta</span>
+                    <span class="progress-completed">{{listGerandoVersaoBeta.length}}</span>
+                </div>
+                <div class="progress">
+                    <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" aria-valuenow="11"
+                        aria-valuemin="0" aria-valuemax="100" [style.width]="0">
+                        <span class="sr-only">{{angmobile}} Complete (success)</span>
+                    </div>
+                    <span class="progress-type">Aguard. Homologação Beta</span>
+                    <span class="progress-completed">{{listHomoBeta.length}}</span>
+                </div>
+                <div class="progress">
+                    <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" aria-valuenow="16"
+                        aria-valuemin="0" aria-valuemax="100" [style.width]="0">
+                        <span class="sr-only">{{wi}} Complete</span>
+                    </div>
+                    <span class="progress-type">Em Homologação Cliente</span>
+                    <span class="progress-completed">{{listHomoCliente.length}}</span>
+                </div>
+                <div class="progress">
+                    <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" aria-valuenow="16"
+                        aria-valuemin="0" aria-valuemax="100" [style.width]="0">
+                        <span class="sr-only">{{wi}} Complete</span>
+                    </div>
+                    <span class="progress-type">Aguard. Atualização Prod</span>
+                    <span class="progress-completed">{{listAguardProd.length}}</span>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                <div class="text-left">
+                    <p class="title-type-dev text-uppercase label-tecnologia">Total de Ocorrências: {{ocorrencias ? ocorrencias.length : 0}}</p>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                <div class="text-left">
+                    <p class="title-type-dev text-uppercase label-tecnologia">Total de Tarefas: {{totalDistribuicao}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="menu2" class="tab-pane fade">
+        <div class="row">
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" *ngFor="let item of listTecnico">
+                <div class="progress">
+                    <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" aria-valuenow="16"
+                        aria-valuemin="0" aria-valuemax="100" [style.width]="0">
+                        <span class="sr-only">{{wi}} Complete</span>
+                    </div>
+                    <span class="progress-type">{{item.nome}}</span>
+                    <span class="progress-completed">{{item.qtd}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                <div class="text-left">
+                    <p class="title-type-dev text-uppercase label-tecnologia">Total de Ocorrências: {{ocorrencias ? ocorrencias.length : 0}}</p>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                <div class="text-left">
+                    <p class="title-type-dev text-uppercase label-tecnologia">Total de Tarefas: {{totalDistribuicao}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="menu3" class="tab-pane fade">
+        <div class="row">
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" *ngFor="let item of listProduto">
+                <div class="progress">
+                    <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" aria-valuenow="16"
+                        aria-valuemin="0" aria-valuemax="100" [style.width]="0">
+                        <span class="sr-only">{{wi}} Complete</span>
+                    </div>
+                    <span class="progress-type">{{item.nome}}</span>
+                    <span class="progress-completed">{{item.qtd}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                <div class="text-left">
+                    <p class="title-type-dev text-uppercase label-tecnologia">Total de Ocorrências: {{ocorrencias ? ocorrencias.length : 0}}</p>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                <div class="text-left">
+                    <p class="title-type-dev text-uppercase label-tecnologia">Total de Tarefas: {{totalDistribuicao}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="menu4" class="tab-pane fade">
+        <div class="row">
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" *ngFor="let item of listCliente">
+                <div class="progress">
+                    <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" aria-valuenow="16"
+                        aria-valuemin="0" aria-valuemax="100" [style.width]="0">
+                        <span class="sr-only">{{wi}} Complete</span>
+                    </div>
+                    <span class="progress-type">{{item.nome}}</span>
+                    <span class="progress-completed">{{item.qtd}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                <div class="text-left">
+                    <p class="title-type-dev text-uppercase label-tecnologia">Total de Ocorrências: {{ocorrencias ? ocorrencias.length : 0}}</p>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                <div class="text-left">
+                    <p class="title-type-dev text-uppercase label-tecnologia">Total de Tarefas: {{totalDistribuicao}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="menu5" class="tab-pane fade">
+            <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" *ngFor="let item of listFuncionalidade">
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" aria-valuenow="16"
+                            aria-valuemin="0" aria-valuemax="100" [style.width]="0">
+                            <span class="sr-only">{{wi}} Complete</span>
+                        </div>
+                        <span class="progress-type">{{item.nome}}</span>
+                        <span class="progress-completed">{{item.qtd}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                    <div class="text-left">
+                        <p class="title-type-dev text-uppercase label-tecnologia">Total de Ocorrências: {{ocorrencias ? ocorrencias.length : 0}}</p>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                    <div class="text-left">
+                        <p class="title-type-dev text-uppercase label-tecnologia">Total de Tarefas: {{totalDistribuicao}}</p>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>

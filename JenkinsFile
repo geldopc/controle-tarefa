@@ -1,0 +1,60 @@
+stage 'Checkout Producao'
+ node('master') {
+    deleteDir()
+   checkout scm;
+    sh 'npm install'
+
+}
+
+stage 'Checkout GSM-fontes'
+node('master') {
+    sh 'sudo rm -rf /tmp/gsm_fontes'
+    sh 'cd /tmp/ ; if [ ! -d gsm_fontes ]; then git clone http://jenkins:rzcCUHFdsyfzxeDZh6LY@gitlab.smsgi.com.br/java/gsm-classes.git -b ${nomeVersao} gsm_fontes; fi'
+    sh 'echo $(pwd)'
+    sh 'cd /tmp/gsm_fontes ; sudo git pull origin ${nomeVersao} --force'
+    sh 'cd /tmp/gsm_fontes ; sudo git config credential.helper cache "timeout=30000"'
+}
+
+// stage 'Checkout Gsm-angular'
+// node('master') {
+//     sh 'cd /tmp/ ; if [ ! -d gsm_angular ]; then git clone http://jenkins:rzcCUHFdsyfzxeDZh6LY@gitlab.smsgi.com.br/web/sitesm-angular.git -b ${nomeVersao} gsm_angular; fi'
+//     sh 'echo $(pwd)'
+//     sh '/var/lib/jenkins/workspace/Sitesm_GSM/gsm-angular ; sudo git fetch origin'
+//     sh '/var/lib/jenkins/workspace/Sitesm_GSM/gsm-angular ; sudo git pull origin ${nomeVersao} --force'
+//     sh '/var/lib/jenkins/workspace/Sitesm_GSM/gsm-angular ; sudo git config credential.helper cache "timeout=30000"'
+// }
+
+stage 'NgBuild GSM-angular'
+node('master') {
+    sh 'sudo chown -R jenkins:jenkins /var/lib/jenkins/workspace/Sitesm_GSM/gsm-angular ;'
+    sh 'npm install'
+    sh 'echo "GSM@angular"'
+    def retGsm = sh(
+      returnStatus: true, // This is the key bit!
+      script: '''cd /var/lib/jenkins/workspace/Sitesm_GSM/gsm-angular ;  node --max-old-space-size=8240  /usr/bin/ng build --project=gsm2 --prod --aot=true; if [ ${?} == "0" ]; then exit 1; else exit 2; fi'''
+    //   script: '''cd /var/lib/jenkins/workspace/Sitesm_GSM/gsm-angular ; node --max-old-space-size=8240  /usr/bin/ng build --project=gsm2; if [ ${?} == "0" ]; then exit 1; else exit 2; fi'''
+    )
+  // ret can be any number/range, does not have to be 2.
+    if (retGsm == 1) {
+      sh 'cd /var/lib/jenkins/workspace/Sitesm_GSM/gsm-angular ; /usr/bin/rsync -avzh --delete-before --exclude WEB-INF --exclude META-INF dist/gsm/* /tmp/gsm_fontes/src/main/webapp/ ;'
+      sh 'cd /tmp/gsm_fontes ; sudo mvn clean install ;'
+      sh 'echo "Deu certo o build GSM 10 segundos"'
+      sh 'sleep 3'
+      sh "ssh -o 'StrictHostKeyChecking no' -o 'ServerAliveInterval=600' producao@192.168.20.102 'sudo chown -R producao /var/tomcat/webapps/'"
+      //sh "ssh -o 'StrictHostKeyChecking no' -o 'ServerAliveInterval=600' producao@192.168.20.102 'sudo rm -rf /var/tomcat/webapps/gsm/'"
+      sh 'cd /tmp/gsm_fontes ; /usr/bin/rsync -avzh /tmp/gsm_fontes/target/*.war producao@192.168.20.102:/var/tomcat/webapps/'
+      sh 'cd /tmp/gsm_fontes ; sudo git fetch origin'
+      sh 'cd /tmp/gsm_fontes ; sudo git pull origin ${nomeVersao} --force'
+     // sh 'cd /tmp/gsm_fontes ; git add . --all'
+     // sh 'cd /tmp/gsm_fontes ; git commit -m "versao estável da GSM-angular:: $(date)"'
+
+     // sh 'cd /tmp/gsm_fontes ; git push -u origin ${nomeVersao}'
+      sh 'echo "id_controle_atualizacao_tarefa:: " + ${id_controle_atualizacao_tarefa}';
+      currentBuild.result = 'SUCCESS'
+    } else if (retGsm != 0) {
+      currentBuild.result = 'UNSTABLE'
+      // If you do not manually error the status will be set to "failed", but the
+      // pipeline will still run the next stage.
+      error("NgBuild Gsm falhou com codigo ${retGsm}")
+    }
+}

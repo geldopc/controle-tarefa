@@ -1,0 +1,67 @@
+{
+  "noticias":[
+    {
+      "imagem_destaque": "assets/img/noticias/6a-conferencia-salvador-2018-1.jpeg",
+      "imagem_leitura": "assets/img/noticias/6a-conferencia-salvador-2018-2.jpeg",
+      "data": "Wed Jun 06 2018 00:00:00 GMT-0300 (-03)",
+      "titulo_destaque": "Presidente da SM Soluções, Sylvio Maggessi, ministra palestra na 6ª Conferência Nacional e 1ª Internacional em Defesa Agropecuária",
+      "subtitulo_destaque": "Salvador-BA 2018",
+
+      "texto_noticia_interno": "<p>Ocorreu nos dias 05 a 07 de julho em Salvador, no Bahia Othon Palace, a 6ª Conferência Nacional de Defesa Agropecuária (CNDA) e a 1ª Internacional. O evento teve como tema “Moderniza Defesa: processos, serviços e sustentabilidade” e reuniu entidades como a Secretaria de Agricultura, Pecuária, Irrigação, Pesca e Aquicultura (SEAGRI), a Agência de Defesa Agropecuária da Bahia (ADAB), Sociedade Brasileira de defesa Agropecuária (SBDA), a Sociedade de medicina Veterinária da Bahia (SMVBA), além de outras instituições.</p> <p>O Diretor Presidente da SM, Sylvio Maggessi, foi um dos palestrantes convidados para falar sobre o tema “Ciência e Tecnologia a Serviço da Defesa Agropecuária“, ministrando a palestra sobre Aperfeiçoamento das Capacidades da Defesa Agropecuária através da TI, um dos pré-requisitos para o novo PNEFA. </p>",
+      "tem_fonte": "false",
+
+      "url_fonte": ""
+    },
+    {
+      "imagem_destaque": "assets/img/noticias/apresentacao-adepara-destaque.jpeg",
+      "imagem_leitura": "assets/img/noticias/apresentacao-adepara-leitura.jpeg",
+      "data": "Thu May 17 2018 00:00:00 GMT-0300 (-03)",
+      "titulo_destaque": "Lançamento do SIAPEC3 no Pará",
+      "subtitulo_destaque": "A intenção é gerar mais agilidade ao produtor e diminuir a burocracia.",
+
+
+      "texto_noticia_interno": "<p>Agora o Sistema de Integração Agropecuária (SIAPEC) passa a ser integrado com a Secretaria Estadual da Fazenda (Sefaz). Essa ação facilitará, por exemplo, a emissão da guia de transporte de animais. O objetivo é garantir maior agilidade ao produtor e menos burocracia no sistema de informação do Governo.</p>        <p>Em reunião realizada na última terça-feira (03), na Sefaz, o diretor-geral da ADAB, Paulo Cezar, apresentou ao chefe de gabinete da secretaria, Adriano Chagas, que o programa esta pronto para ser executado. Hoje nós apresentamos essa alternativa que facilitará todo o processo. Vamos encaminhar formalmente para a Sefaz como será feito o procedimento, junto ao sistema de arrecadação, para que os técnicos do parque tecnológico coloquem o sistema em pleno funcionamento, pontuou. </p>        <p>O produtor não vai precisar sair de casa para ir na ADAB ou na SEFAZ. Conseguirá fazer tudo de casa ou escritório, através desse sistema online, concluiu Paulo Cezar. Nós próximos dias os dois órgãos vão se reunir para capacitar e colocar em prática essa ação.</p>",
+
+      "tem_fonte": "false",
+      "url_fonte": "http://www.adab.ba.gov.br/2017/10/1545/ADAB-e-SEFAZ-dao-uniformidade-ao-SIAPEC.html"
+    },
+    {
+      "imagem_destaque": "assets/img/noticias/reuniao-adab-frente.jpg",
+      "imagem_leitura": "assets/img/noticias/reuniao-adab-fundo.jpg",
+      "data": "Wed Oct 04 2017 00:00:00 GMT-0300 (-03)",
+      "titulo_destaque": "ADAB e SEFAZ dão uniformidade ao SIAPEC",
+      "subtitulo_destaque": "A intenção é gerar mais agilidade ao produtor e diminuir a burocracia.",
+
+
+      "texto_noticia_interno": "<p>Agora o Sistema de Integração Agropecuária (SIAPEC) passa a ser integrado com a Secretaria Estadual da Fazenda (Sefaz). Essa ação facilitará, por exemplo, a emissão da guia de transporte de animais. O objetivo é garantir maior agilidade ao produtor e menos burocracia no sistema de informação do Governo.</p> <p>Em reunião realizada na última terça-feira (03), na Sefaz, o diretor-geral da ADAB, Paulo Cezar, apresentou ao chefe de gabinete da secretaria, Adriano Chagas, que o programa esta pronto para ser executado. Hoje nós apresentamos essa alternativa que facilitará todo o processo. Vamos encaminhar formalmente para a Sefaz como será feito o procedimento, junto ao sistema de arrecadação, para que os técnicos do parque tecnológico coloquem o sistema em pleno funcionamento, pontuou. </p>        <p>O produtor não vai precisar sair de casa para ir na ADAB ou na SEFAZ. Conseguirá fazer tudo de casa ou escritório, através desse sistema online, concluiu Paulo Cezar. Nós próximos dias os dois órgãos vão se reunir para capacitar e colocar em prática essa ação.</p>",
+
+      "tem_fonte": "true",
+      "url_fonte": "http://www.adab.ba.gov.br/2017/10/1545/ADAB-e-SEFAZ-dao-uniformidade-ao-SIAPEC.html"
+    },
+    {
+      "imagem_destaque": "assets/img/noticias/assinatura-contrato-frente.jpg",
+      "imagem_leitura": "assets/img/noticias/assinatura-contrato-fundo.jpg",
+      "data": "Wed Aug 23 2017 00:00:00 GMT-0300 (-03)",
+      "titulo_destaque": "Assinatura do contrato para implantação do SIAPEC3 no Pará",
+      "subtitulo_destaque": "Novo sistema vai agilizar o trabalho e gerar economia para produtores rurais.",
+
+
+      "texto_noticia_interno": "<p>A assinatura do contrato para implantação do novo Sistema de Integração Agropecuária (Siapec-3), nesta quarta-feira (23), entre a Agência de Defesa Agropecuária do Pará (Adepará) e a SM Soluções para Gestão da Informação, marca um importante avanço para os produtores rurais do Estado. Com o novo sistema, o produtor vai ganhar em agilidade e economia ao evitar deslocamentos e menos burocracia na hora de comercializar o rebanho bovino.</p>          <p>Todas as unidades da Adepará estão conectadas ao sistema, que é on-line e parametrizado (com elementos de controle) de informações. Em 2016, foram emitidas mais de 550 Guias de Trânsito Animal Eletrônicas (e-GTAs) por meio do sistema controlado pela Adepará. Apenas para a finalidade de engorda, cerca de 6,5 milhões de bovídeos (bovinos e bubalinos) foram movimentados dentro do Estado, com mais de 180 mil documentos oficiais emitidos.</p>          <p>O diretor geral da Adepará, Luiz Pinto, destacou que mesmo sendo um novo sistema, ele ainda vai continuar exercendo a função de controle sanitário. Queremos criar a total autonomia do produtor do agronegócio para que ele possa desenvolver o seu trabalho com toda segurança, mas de forma independente. Vamos descentralizar e fazer com que a Adepará possa ter tempo de fazer a sua atividade fim, que é realizar a defesa agropecuária por meio da fiscalização e educação sanitária, explicou o diretor.</p>          <p>Ainda segundo Luiz Pinto, esse sistema vai tornar a Adepará agência modelo no Brasil. Isso significa avanço para o Pará e uma conquista para os produtores, pois agora eles poderão emitir a nota fiscal na fazenda deles. Esse sistema vai revolucionar toda a sistemática dos produtores, completou.</p>          <p>Segundo Sylvio Maggessi, diretor da empresa idealizadora do sistema, o diferencial da nova versão é a forma de operar o sistema. É um portal de serviços que vai descentralizar o atendimento ao público alvo da defesa agropecuária. Por exemplo, atualmente, quando o produtor quer utilizar o serviço da Adepará, tem que ir até o escritório para fazer cadastro, notificação de vacinação, emissão de Guia de Trânsito Animal, etc. Com o Siapec 3, ele vai poder fazer tudo isso direto pela internet, utilizando um computador convencional ou um smartphone ressaltou.</p>          <p>O contrato tem duração de um ano e prevê a implantação do sistema com novos módulos, como de agrotóxicos, termos, arrecadação, além de funcionar de forma integrada com a emissão da Nota Fiscal Avulsa Eletrônica (NFA-e) e a Guia de Trânsito Animal (GTA). Esperamos dentro de alguns meses ter esse sistema todo configurado e testado. Vamos ter uma equipe de homologação para depois fazer o treinamento e ativar o novo sistema, disse Luiz Pinto.</p>          <p>A integração da NFA, emitida pela Sefa, à GTA, de responsabilidade da agrodefesa, permite ao produtor emitir, simultaneamente, os documentos fiscais e sanitários utilizados nas operações com gado no Estado, facilitando suas movimentações e comercializações.</p>",
+      "tem_fonte": "true",
+      "url_fonte": "http://www.adepara.pa.gov.br/artigos/novo-sistema-vai-agilizar-o-trabalho-e-gerar-economia-para-produtores-rurais"
+    },
+    {
+      "imagem_destaque": "assets/img/noticias/lancamento-siapec3-frente.jpg",
+      "imagem_leitura": "assets/img/noticias/lancamento-siapec3-fundo.jpg",
+      "data": "Wed Jul 12 2017 00:00:00 GMT-0300 (-03)",
+      "titulo_destaque": "Lançamento do SIAPEC3 na 31ª EXPOAMA",
+      "subtitulo_destaque": "O lançamento ocorreu na manhã desta quarta-feira, 12 de Julho.",
+
+
+      "texto_noticia_interno": "<p>Foi lançado nesta quarta-feira, 12/07, em Marabá, o Sistema de Integração Agropecuária - SIAPEC3. Estiveram presentes no lançamento a Federação da Agricultura e Pecuária do Pará (FAEPA), o Governo do Estado do Pará, através da Agência de Defesa Agropecuária do Estado do Pará (ADEPARÁ) e da Secretaria de Estado da Fazenda (SEFA). O evento fez parte da programação da 31ª edição da Exposição Agropecuária de Marabá (Expoama), considerada uma das maiores feiras de agronegócios da região e referência no Estado.</p>          <p>Para o presidente da FAEPA, Carlos Xavier, o evento mostra-se propício para divulgar aos produtores rurais a importância, a facilidade e a agilidade que o sistema trará para o processo de comercialização de seus animais. Essa plataforma tecnológica integra a emissão de documentos como a GTA(Guia de Trânsito Animal), do boleto referente ao recolhimento da contribuição do produtor rural ao FUNDEPEC, e da Nota Fiscal Eletrônica, explica.</p>          <p>Também estiveram presentes produtores rurais e representantes da Secretaria de Desenvolvimento Agropecuário e da Pesca (SEDAP) e da Superintendência do Desenvolvimento da Amazônia (SUDAM) além de Sylvio Maggessi, diretor Presidente da SM Soluções para Gestão da Informação - Sistema SIAPEC. </p>",
+      "tem_fonte": "true",
+
+      "url_fonte": "http://www.sudam.gov.br/index.php/ultimas-noticias/17-ultimas-noticias/1099-lancamento-de-plataforma-tecnologica-garante-beneficios-ao-setor-produtivo-do-para"
+    }
+  ]
+}

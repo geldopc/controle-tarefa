@@ -1,0 +1,36 @@
+
+canvas {
+    height: 713px;
+}
+.col-left{
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+.col-right{
+    text-align: right;
+}
+.col-cor {
+    width: 35px;
+    height: 16px;
+    border-radius: 5px;
+    margin-left: 5px;
+}
+.col-xs-11 {
+    width: 78.667%;
+}
+.row {
+    margin: 1vh 0 0 0;
+}
+.total{
+    background: #ddd;
+    font-size: 1.4em;
+    padding-right: 2vh;
+}
+.label{
+    color: #150202;
+    font-size: 100%;
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+}

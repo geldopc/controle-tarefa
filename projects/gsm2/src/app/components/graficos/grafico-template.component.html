@@ -1,0 +1,21 @@
+<!-- Ver documentacao: https://valor-software.com/ng2-charts/ -->
+
+<div class="box">
+    <div class="box-header with-border">
+        <h4 class="box-title" style="text-align: center !important; white-space: normal;">
+        <strong>
+            <i class="fa fa-pie-chart" aria-hidden="true"></i>
+            {{titulocaixa}}
+        </strong>
+        </h4>
+    </div>
+
+  <ng-content></ng-content>
+
+  <ion-card style="display: block" *ngIf="dadosC.length == 0" >
+    <ion-card-content>
+      Não houve dados gerados nesta(s) pesquisa
+    </ion-card-content>
+  </ion-card>
+  <!-- legenda -->
+</div>

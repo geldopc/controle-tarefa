@@ -1,0 +1,223 @@
+<cabecalho>
+</cabecalho>
+<div class="container-fluid principal">
+    <br/>
+    <div class="row text-center">
+        <div class="col-md-4">
+            <div class="btn-group">
+                <div class="btn btn-primary" mwlCalendarPreviousView
+                    [view]="view"
+                    [(viewDate)]="viewDate"
+                    (viewDateChange)="closeOpenMonthViewDay()">
+                    Anterior
+                </div>
+                <div class="btn btn-primary" mwlCalendarToday
+                    [(viewDate)]="viewDate">
+                    Hoje
+                </div>
+                <div class="btn btn-primary" mwlCalendarNextView
+                    [view]="view"
+                    [(viewDate)]="viewDate"
+                    (viewDateChange)="closeOpenMonthViewDay()">
+                    Próximo
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <h3 class="text-capitalize">{{ viewDate | calendarDate:(view + 'ViewTitle'):'pt-PT' }}</h3>
+        </div>
+        <div class="col-md-4">
+            <div class="btn-group">
+                <div class="btn btn-primary" (click)="setView(CalendarView.Month)"
+                    [class.active]="view === CalendarView.Month">
+                    Mês
+                </div>
+                <div class="btn btn-primary" (click)="setView(CalendarView.Week)"
+                    [class.active]="view === CalendarView.Week">
+                    Semana
+                </div>
+                <div class="btn btn-primary" (click)="setView(CalendarView.Day)"
+                    [class.active]="view === CalendarView.Day">
+                    Dia
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div [ngSwitch]="view">
+        <mwl-calendar-month-view *ngSwitchCase="CalendarView.Month"
+            [viewDate]="viewDate"
+            [events]="events"
+            [refresh]="refresh"
+            [activeDayIsOpen]="activeDayIsOpen"
+            (dayClicked)="dayClicked($event.day)"
+            [locale]="locale"
+            (eventClicked)="handleEvent('Clicked', $event.event)"
+            (eventTimesChanged)="eventTimesChanged($event)">
+        </mwl-calendar-month-view>
+        <mwl-calendar-week-view *ngSwitchCase="CalendarView.Week"
+            [viewDate]="viewDate"
+            [events]="events"
+            [locale]="locale"
+            [refresh]="refresh"
+            (eventClicked)="handleEvent('Clicked', $event.event)"
+            (eventTimesChanged)="eventTimesChanged($event)">
+        </mwl-calendar-week-view>
+        <mwl-calendar-day-view *ngSwitchCase="CalendarView.Day"
+            [viewDate]="viewDate"
+            [events]="events"
+            [refresh]="refresh"
+            (eventClicked)="handleEvent('Clicked', $event.event)"
+            [locale]="locale"
+            (eventTimesChanged)="eventTimesChanged($event)">
+        </mwl-calendar-day-view>
+    </div>
+    <div class="fab-button">
+        <span class="fa fa-plus fa-3x"></span>
+    </div>
+
+    <!-- Everything you see below is just for the demo, you don't need to include it in your app -->
+
+    <!-- <br /><br /><br />
+
+    <h3>
+        Edit events
+        <button class="btn btn-primary pull-right" (click)="addEvent()">
+            Add new
+        </button>
+        <div class="clearfix"></div>
+    </h3> -->
+
+    <!-- <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Primary color</th>
+                    <th>Secondary color</th>
+                     <th>Starts at</th>
+                    <th>Ends at</th>
+                    <th>Remove</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let event of events">
+                    <td>
+                        <input type="text" class="form-control" [(ngModel)]="event.title" (keyup)="refresh.next()" />
+                    </td>
+                    <td>
+                        <input type="color" [(ngModel)]="event.color.primary" (change)="refresh.next()" />
+                    </td>
+                    <td>
+                        <input type="color" [(ngModel)]="event.color.secondary" (change)="refresh.next()" />
+                    </td>
+                     <td>
+                        <input class="form-control" type="text" mwlFlatpickr [(ngModel)]="event.start"
+                            (ngModelChange)="refresh.next()" [altInput]="true" [convertModelValue]="true"
+                            [enableTime]="true" dateFormat="Y-m-dTH:i" altFormat="F j, Y H:i" placeholder="Not set" />
+                    </td>
+                    <td>
+                        <input class="form-control" type="text" mwlFlatpickr [(ngModel)]="event.end"
+                            (ngModelChange)="refresh.next()" [altInput]="true" [convertModelValue]="true"
+                            [enableTime]="true" dateFormat="Y-m-dTH:i" altFormat="F j, Y H:i" placeholder="Not set" />
+                    </td>
+                    <td>
+                        <button class="btn btn-danger" (click)="deleteEvent(event)">
+                            Delete
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div> -->
+
+    <!-- <ng-template #modalContent let-close="close">
+        <div class="modal-header">
+            <h5 class="modal-title">Event action occurred</h5>
+            <button type="button" class="close" (click)="close()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div>
+                Action:
+                <pre>{{ modalData?.action }}</pre>
+            </div>
+            <div>
+                Event:
+                <pre>{{ modalData?.event | json }}</pre>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary" (click)="close()">
+                OK
+            </button>
+        </div>
+    </ng-template> -->
+</div>
+<app-detalhe-ocorrencia
+    (close)="fechar();"
+    [hidden]="!ocorrencia"
+    [ocorrencia]="ocorrencia">
+</app-detalhe-ocorrencia>
+<div id="demandaUsuario" class="demanda">
+    <div class="container-fluid">
+        <!-- <div class="row">
+            <div *ngIf="usuario || funcao" class="col-xs-11 col-sm-11 col-md-11 col-lg-11">
+                <h4>teste</h4>
+            </div>
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 text-right">
+                <i *ngIf="true"
+                    class="{{expandido ? 'fa fa-minus' : 'fa fa-plus'}} close-demanda" (click)="expandido = !expandido;"
+                    title="{{expandido ? 'Menos Detalhes' : 'Mais Detalhes'}}">
+                </i>
+                <i class="fa fa-close close-demanda" (click)="closeDemanda();" title="fechar"></i>
+            </div>
+        </div> -->
+        <!-- <div class="row">
+            <div *ngIf="expandido && listGroup && listGroup.length" class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="height: 47vh; overflow-y: scroll !important;">
+                 <kendo-grid [data]="gridView" class="grid">
+                    <kendo-grid-column field="area" title="Tipo">
+                    </kendo-grid-column>
+                    <kendo-grid-column field="responsavel" title="Responsável">
+                        <ng-template kendoGridCellTemplate let-row>
+                            {{row.responsavel ? row.responsavel : 'Vago'}}
+                        </ng-template>
+                    </kendo-grid-column>
+                    <kendo-grid-column field="qtd" title="Total">
+                    </kendo-grid-column>
+                    <ng-template kendoGridDetailTemplate let-row
+                        [kendoGridDetailTemplateShowIf]="showOnlyBeveragesDetails">
+                        <div *ngFor="let status of row.list;" class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
+                            <blockquote>
+                                <p style="font-size: medium; font-weight: 500;">{{status.descricao}}</p>
+                                <strong>{{status.qtd}} </strong>
+                            </blockquote>
+                        </div>
+                    </ng-template>
+                </kendo-grid>
+            </div>
+            <span *ngIf="!expandido">
+                <div *ngFor="let status of listStatusView;" class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
+                    <blockquote>
+                        <p style="font-size: medium; font-weight: 500;">{{status.descricao}}</p>
+                        <strong>{{status.qtd}} = {{((status.qtd * 100) / totalTarefa).toFixed(2)}}%</strong>
+                    </blockquote>
+                </div>
+                <div *ngIf="totalTarefa" class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
+                    <blockquote>
+                        <p style="font-size: medium; font-weight: 500;">Total de Ocorrência</p>
+                        <strong>{{totalTarefa}}</strong>
+                    </blockquote>
+                </div>
+                <div *ngIf="listStatusView && listStatusView.length === 0"
+                    class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="alert alert-danger">
+                        Nenhuma Tarefa Demandada!
+                    </div>
+                </div>
+            </span>
+        </div> -->
+    </div>
+</div>

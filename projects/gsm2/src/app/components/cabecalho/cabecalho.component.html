@@ -1,0 +1,319 @@
+<nav class="navbar navbar-fixed-top navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+            </button>
+            <img *ngIf="usuario.funcionario" [routerLink]="['/home-tecnico']" src="assets/images/logo-gsm-branco.png"
+                style="width: 5vh; margin: 1vh;" class="clickable" />
+            <img *ngIf="!usuario.funcionario && usuario.cdCliente" [routerLink]="['/home']"
+                src="assets/images/logo-gsm-branco.png" style="width: 5vh; margin: 1vh;" class="clickable" />
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li class="" *ngIf="!mostrar">
+                    <a [routerLink]="['/painel/administracao']"
+                        *ngIf="usuario.nrDocumento == 'admin' || usuario.nrDocumento == '03802530543'">Painel
+                        admin. <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="" *ngIf="!usuario.funcionario">
+                    <a [routerLink]="['/home']">Home <span
+                            class="sr-only">(current)</span></a>
+                </li>
+                <li class="" *ngIf="!usuario.funcionario">
+                    <a [routerLink]="['/home-ocorrencia-finalizada']">
+                        Ocorrências Finalizadas
+                        <span class="sr-only">(current)</span>
+                    </a>
+                </li>
+                <li class="" *ngIf="!usuario.funcionario">
+                    <a [routerLink]="['/painel/organograma']">
+                        Organograma
+                        <span class="sr-only">(current)</span>
+                    </a>
+                </li>
+                <li class="" *ngIf="!mostrar">
+                    <a [routerLink]="['/painel/info-estado']"
+                        *ngIf="usuario.nrDocumento == '03802530543'">
+                        Informação Estado
+                        <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="" *ngIf="!mostrar">
+                    <a [routerLink]="['/painel/agenda']"
+                        *ngIf="usuario.nrDocumento == '03802530543'">
+                        Agenda
+                        <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="" *ngIf="!mostrar && (usuario.inSituacao || usuario.funcionario)">
+                    <a [routerLink]="['/home-tecnico']">Em atendimento <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="" *ngIf="!mostrar && usuario.inSituacao">
+                    <a [routerLink]="['/tecnico-aguardando-viabilidade']">Aguard. Atendimento <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="" *ngIf="!mostrar && (usuario.inSituacao || usuario.funcionario)">
+                    <a [routerLink]="['/tecnico-ocorrencias-finalizadas']">Finalizados <span
+                            class="sr-only">(current)</span></a>
+                </li>
+                <li>
+                    <a [routerLink]="['/controle-tarefa']">Dashboard</a>
+                </li>
+                <li class="dropdown" *ngIf="usuario.funcionario">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                        aria-expanded="false">Cadastros <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <button id="novo-usuario" type="button" class="btn-cadastrar-usuario" data-toggle="modal"
+                                data-target="#modalCadastroUsuario" (click)="inicializarNovoUsuario();">
+                                <i class="fa fa-plus"></i>&nbsp;Usuário
+                            </button>
+                        </li>
+                        <li>
+                            <button id="idGrupoGestor" type="button" class="btn-cadastrar-usuario"
+                                [routerLink]="['/painel/grupoGestor']">
+                                <i class="fa fa-sitemap"></i>&nbsp;Grupo Gestor
+                            </button>
+                        </li>
+                        <!-- <li>
+                            <button type="button" class="btn-cadastrar-usuario"
+                                [routerLink]="['/cadastros/programaFuncionalidade']">
+                                <i class="fa fa-plus"></i>&nbsp;Programa
+                            </button>
+                        </li> -->
+                    </ul>
+                </li>
+                <li class="dropdown" *ngIf="possuiPermissaoOrganograma">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                        aria-expanded="false">Cadastros <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <button id="idGrupoGestor" type="button" class="btn-cadastrar-usuario"
+                                [routerLink]="['/painel/grupoGestorCliente']">
+                                <i class="fa fa-sitemap"></i>&nbsp;Grupo Gestor
+                            </button>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav pull-right">
+                <li class="dropdown">
+                    <a *ngIf="infoUser">
+                        {{infoUser}}
+                    </a>
+                    <a *ngIf="!infoUser && usuario.perfis && usuario.perfis.length" class="dropdown-toggle"
+                        data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        {{usuario.nome}}
+                        <span class="caret"></span>
+                    </a>
+                    <ul *ngIf="!infoUser" class="dropdown-menu area-perfil">
+                        <li *ngFor="let p of usuario.perfis">
+                            <h6 class="perfil-text">
+                                {{p}}
+                            </h6>
+                        </li>
+                        <!-- <li *ngIf="usuario.inGerenteProjeto">
+                            <h6 class="perfil-text">
+                                Gerente de Projeto
+                            </h6>
+                        </li>
+                        <li *ngIf="usuario.inVeterinario">
+                            <h6 class="perfil-text">
+                                Veterinário Responsável
+                            </h6>
+                        </li>
+                        <li *ngIf="usuario.inAgronomo">
+                            <h6 class="perfil-text">
+                                Agrônomo Responsável
+                            </h6>
+                        </li >
+                        <li *ngIf="usuario.inFocalPoint">
+                            <h6 class="perfil-text">
+                                Focal Point
+                            </h6>
+                        </li>
+                        <li *ngIf="usuario.inKeyUser">
+                            <h6 class="perfil-text">
+                                Key User
+                            </h6>
+                        </li>
+                        <li *ngIf="usuario.funcionario">
+                            <h6 class="perfil-text">
+                                Funcionário SM
+                            </h6>
+                        </li> -->
+                    </ul>
+                </li>
+                <li class="active">
+                    <a (click)="sair();" class="clickable">Sair</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- Modal Cadastro de Usuário-->
+<div *ngIf="novoUsuario" id="modalCadastroUsuario" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="myModalLabel" style="background-color: rgba(0, 0, 0, 0.5);">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">Cadastrar Novo Usuário</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                        <strong>Funcionário SM?</strong>
+                        <label class="switch">
+                            <input type="checkbox" [(ngModel)]="novoUsuario.funcionario" (click)="setCliente();">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                        <label for="homologador">
+                            Cliente:
+                            <span class="required-message">*&nbsp;{{reqMsgCliente}}</span>
+                        </label>
+                        <div class="dropdown">
+                            <button id="homologador" [disabled]="labelClienteFiltro === 'SM'"
+                                class="btn btn-default dropdown-toggle form-control" type="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                {{labelClienteFiltro}}
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li *ngFor="let item of clientes;">
+                                    <a *ngIf="item.valor !== 'SM'"
+                                        (click)="novoUsuario.cdCliente = item.codigo; labelClienteFiltro = item.valor;">
+                                        {{item.valor}}
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                        <label for="cpf-cnpj">
+                            CPF/CNPJ:
+                            <span class="required-message">*&nbsp;{{reqMsgDoc}}{{msgUsuario}}</span>
+                        </label>
+                        <input type="text"
+                            class="form-control pull-left"
+                            (blur)="verificarUsuario(novoUsuario.nrDocumento)"
+                            [(ngModel)]="novoUsuario.nrDocumento" />
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                        <label for="nome">
+                            E-mail:
+                            <span class="required-message">*&nbsp;{{reqMsgEmail}}</span>
+                        </label>
+                        <input type="email" class="form-control pull-left" [(ngModel)]="novoUsuario.dsEmail"
+                            [pattern]="emailPattern" />
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <label for="nome">
+                            Nome:
+                            <span class="required-message">*&nbsp;{{reqMsgNome}}</span>
+                        </label>
+                        <input type="text" class="form-control pull-left" [(ngModel)]="novoUsuario.nome" />
+                    </div>
+                    <!-- <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                        <label for="perfil">Perfil:
+                        </label>
+                        <div class="dropdown">
+                            <button id="produto" class="btn btn-default dropdown-toggle form-control" type="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                {{filtrosPesquisaTecnico.filtros.produto.show}}
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li *ngFor="let key of filtrosPesquisaTecnico.filtros.produtos;">
+                                    <a (click)="filtrosPesquisaTecnico.filtros.produto = key">
+                                        {{key.show}}
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div> -->
+                    <!-- <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                        <strong>Situação?</strong>
+                        <label class="switch">
+                            <input type="checkbox" [(ngModel)]="novoUsuario.inSituacao">
+                            <span class="slider"></span>
+                        </label>
+                    </div> -->
+                    <!-- <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                        <strong>Ativo?</strong>
+                        <label class="switch">
+                            <input type="checkbox" [(ngModel)]="novoUsuario.inAtivo">
+                            <span class="slider"></span>
+                        </label>
+                    </div> -->
+                    <!-- <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                        <strong>Veterinário responsável?</strong>
+                        <label class="switch">
+                            <input type="checkbox" [(ngModel)]="novoUsuario.inVeterinarioResponsavel">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                        <strong>Agrônomo responsável?</strong>
+                        <label class="switch">
+                            <input type="checkbox" [(ngModel)]="novoUsuario.inAgronomoResponsavel">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                        <strong>Focal point Animal?</strong>
+                        <label class="switch">
+                            <input type="checkbox" [(ngModel)]="novoUsuario.inFocalPointAnimal">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                        <strong>Focal point Vegetal?</strong>
+                        <label class="switch">
+                            <input type="checkbox" [(ngModel)]="novoUsuario.inFocalPointVegetal">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                        <strong>Key user Animal?</strong>
+                        <label class="switch">
+                            <input type="checkbox" [(ngModel)]="novoUsuario.inKeyUserAnimal">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                        <strong>Key user Vegetal?</strong>
+                        <label class="switch">
+                            <input type="checkbox" [(ngModel)]="novoUsuario.inKeyUserVegetal">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                        <strong>Gerente do Projeto?</strong>
+                        <label class="switch">
+                            <input type="checkbox" [(ngModel)]="novoUsuario.inGerenteProjeto">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                        <strong>Fiscal do contrato?</strong>
+                        <label class="switch">
+                            <input type="checkbox" [(ngModel)]="novoUsuario.inFiscalContrato">
+                            <span class="slider"></span>
+                        </label>
+                    </div> -->
+                </div>
+            </div>
+            <br />
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal"
+                    (click)="inicializarNovoUsuario();">Cancelar</button>
+                <button type="button" class="btn btn-primary" (click)="gravarUsuario();">Gravar</button>
+            </div>
+        </div>
+    </div>
+</div>

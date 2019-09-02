@@ -1,0 +1,58 @@
+<div id="modalEditarOcorrencia" *ngIf="ocorrencias" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="background-color: rgba(0, 0, 0, 0.5);">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">Mudar Prioridade</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row form-group">
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                        <label for="prioridadeUm">Prioridade 1:
+                            <span class="required-message">*&nbsp;{{reqMsgPrioridadeUm}}</span>
+                        </label>
+                        <input type="number" class="form-control" [(ngModel)]="prioridadeUm"/>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                        <label for="prioridadeDois">Prioridade 2:
+                            <span class="required-message">*&nbsp;{{reqMsgPrioridadeDois}}</span>
+                        </label>
+                        <input type="number" class="form-control" [(ngModel)]="prioridadeDois"/>
+                    </div>
+                    <!-- daqui pra baixo vai ser pro usuario da sm -->
+                    <!-- <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                        <label for="dataSolicitacao">Data da solicitação:
+                            <span class="required-message">*&nbsp;{{reqMsgTipo}}</span>
+                        </label>
+                        <div class="dropdown">
+                            <input disabled id="dataSolicitacao" class="form-control" type="text" [(ngModel)]="filtros.ocorrencia.dtAbertura">
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                        <label for="dev1">Técnico</label>
+                        <div class="dropdown">
+                            <button class="btn btn-default dropdown-toggle form-control" type="button" id="dev1" data-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="true">
+                                {{filtros.desenvolvedorSm.show}}
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li *ngFor="let item of filtros.listUsuarioSm;">
+                                    <a (click)="usuarioSM = item">
+                                        {{item.nome}}
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+            <div class="modal-footer footer-full-page">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" (click)="alterarPrioridade();">Confirmar</button>
+            </div>
+        </div>
+    </div>
+</div>

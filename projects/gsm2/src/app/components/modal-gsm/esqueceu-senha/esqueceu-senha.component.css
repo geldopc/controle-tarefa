@@ -1,0 +1,127 @@
+app-modal-gsm {
+  background-color: rgba(37, 43, 51, 1);
+}
+#gsm.modal .modal-content {
+  background: transparent;
+  box-shadow: none;
+  border: 0;
+}
+#gsm.modal .close {
+  opacity: 0.8;
+  color: #fff;
+  text-shadow: 0 1px 0 #000;
+}
+#gsm.modal .modal-header {
+  border: 0;
+}
+#gsm.modal h4 {
+  text-align: center;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 300;
+  letter-spacing: 2px;
+}
+#gsm.modal h4 span {
+  display: block;
+  font-size: 92px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+#gsm.modal label {
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 6px;
+  font-weight: 300;
+}
+#gsm.modal input {
+  margin-bottom: 30px;
+}
+#gsm.modal .btn-normal {
+  width: 100%;
+  margin-bottom: 6px;
+}
+#gsm.modal a {
+  color: #fff;
+}
+#gsm.modal {
+  display: block;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1050;
+  overflow: hidden;
+  -webkit-overflow-scrolling: touch;
+  outline: 0;
+  background-color: rgba(37, 43, 51, 1);
+  width: 100%;
+}
+#gsm.modal .modal-backdrop {
+  background: rgba(37, 43, 51, 1);
+}
+#gsm.modal .modal-backdrop.in {
+  opacity: 0.92;
+}
+#gsm.modal .modal-dialog {
+  width: 100% !important;
+}
+#gsm.modal .email{
+    color: #252b33;
+    background: #fffed1;
+    padding: 0.5em;
+    border-radius: 5px;
+    font-size: 1.1em;
+}
+#gsm.modal .email ul{
+    color: #ea4c00;
+    font-size: 1.7em;
+}
+#gsm.modal .btn-red {
+  color: #fff ;
+  background: #e4373d ;
+  border: 1px solid #c5171d;
+}
+.disabled {
+    color: #bfbfbf !important;
+    background: #8e575a !important;
+    border: 1px solid #ab6b6e !important;
+}
+#gsm.modal .btn-normal {
+  padding: 10px !important;
+  text-align: center;
+  text-transform: uppercase;
+  border-radius: 3px !important;
+  box-shadow: 0px 0px 11px -1px rgba(0,0,0,0.12) !important;
+  transition: 300ms all;
+}
+#gsm.modal .txt-right {
+  text-align: right;
+}
+#gsm.modal span {
+  font-size: 0.83em;
+}
+
+#gsm.modal input[type="text"], input[type="email"], input[type="tel"], input[type="password"] {
+  outline: none;
+  border: none;
+  resize: none;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px;
+  font-size: 14px;
+  transition: 0.2s;
+  background-color: #fff;
+}
+@media only screen and (max-width: 766px) {
+  #gsm.modal {
+    width: 100%;
+  }
+  .modal-body{
+    padding: 0px
+  }
+  #login{
+    padding-right: 35px !important;
+  }
+}
+

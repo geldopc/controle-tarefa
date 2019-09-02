@@ -1,0 +1,15 @@
+.label-combo {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 90%;
+    float: left;
+}
+textarea {
+    resize: vertical;
+}
+// .table-striped>tbody>tr>td {
+//     font-size: x-small;
+//     font-weight: 600;
+//     color: #212121bf;
+// }

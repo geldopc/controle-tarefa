@@ -1,0 +1,227 @@
+{
+    "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+    "version": 1,
+    "newProjectRoot": "projects",
+    "projects": {
+        "sitesm-angular": {
+            "root": "",
+            "sourceRoot": "src",
+            "projectType": "application",
+            "prefix": "app",
+            "schematics": {},
+            "architect": {
+                "build": {
+                    "builder": "@angular-devkit/build-angular:browser",
+                    "options": {
+                        "outputPath": "dist/sitesm-angular",
+                        "index": "src/index.html",
+                        "main": "src/main.ts",
+                        "polyfills": "src/polyfills.ts",
+                        "tsConfig": "src/tsconfig.app.json",
+                        "assets": [
+                            "src/assets",
+                            "src/manifest.json",
+                            "src/manifest.json"
+                        ],
+                        "styles": [
+                            "src/styles.css"
+                        ],
+                        "scripts": []
+                    },
+                    "configurations": {
+                        "production": {
+                            "fileReplacements": [
+                                {
+                                    "replace": "src/environments/environment.ts",
+                                    "with": "src/environments/environment.prod.ts"
+                                }
+                            ],
+                            "optimization": true,
+                            "outputHashing": "all",
+                            "sourceMap": false,
+                            "extractCss": true,
+                            "namedChunks": false,
+                            "aot": true,
+                            "extractLicenses": true,
+                            "vendorChunk": false,
+                            "buildOptimizer": true,
+                            "serviceWorker": true
+                        }
+                    }
+                },
+                "serve": {
+                    "builder": "@angular-devkit/build-angular:dev-server",
+                    "options": {
+                        "browserTarget": "sitesm-angular:build"
+                    },
+                    "configurations": {
+                        "production": {
+                            "browserTarget": "sitesm-angular:build:production"
+                        }
+                    }
+                },
+                "extract-i18n": {
+                    "builder": "@angular-devkit/build-angular:extract-i18n",
+                    "options": {
+                        "browserTarget": "sitesm-angular:build"
+                    }
+                },
+                "test": {
+                    "builder": "@angular-devkit/build-angular:karma",
+                    "options": {
+                        "main": "src/test.ts",
+                        "polyfills": "src/polyfills.ts",
+                        "tsConfig": "src/tsconfig.spec.json",
+                        "karmaConfig": "src/karma.conf.js",
+                        "styles": [
+                            "src/styles.css"
+                        ],
+                        "scripts": [],
+                        "assets": [
+                            "src/assets",
+                            "src/manifest.json",
+                            "src/manifest.json"
+                        ]
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-devkit/build-angular:tslint",
+                    "options": {
+                        "tsConfig": [
+                            "src/tsconfig.app.json",
+                            "src/tsconfig.spec.json"
+                        ],
+                        "exclude": [
+                            "**/node_modules/**"
+                        ]
+                    }
+                }
+            }
+        },
+        "gsm2": {
+            "root": "projects/gsm2/",
+            "sourceRoot": "projects/gsm2/src",
+            "projectType": "application",
+            "prefix": "page",
+            "schematics": {},
+            "architect": {
+                "build": {
+                    "builder": "@angular-devkit/build-angular:browser",
+                    "options": {
+                        "outputPath": "dist/gsm",
+                        "index": "projects/gsm2/src/index.html",
+                        "main": "projects/gsm2/src/main.ts",
+                        "polyfills": "projects/gsm2/src/polyfills.ts",
+                        "tsConfig": "projects/gsm2/tsconfig.app.json",
+                        "assets": [
+                            "projects/gsm2/src/favicon.ico",
+                            "projects/gsm2/src/assets",
+                            "projects/gsm2/src/manifest.json",
+                            "projects/gsm2/src/manifest.json"
+                        ],
+                        "styles": [
+                            "projects/gsm2/src/styles.css",
+                            "projects/gsm2/src/theme/variables.scss",
+                            "node_modules/@progress/kendo-theme-material/dist/all.css"
+                        ],
+                        "scripts": [
+                            "node_modules/jquery/dist/jquery.js"
+                        ]
+                    },
+                    "configurations": {
+                        "production": {
+                            "fileReplacements": [
+                                {
+                                    "replace": "projects/gsm2/src/environments/environment.ts",
+                                    "with": "projects/gsm2/src/environments/environment.prod.ts"
+                                }
+                            ],
+                            "optimization": true,
+                            "outputHashing": "all",
+                            "sourceMap": false,
+                            "extractCss": true,
+                            "namedChunks": false,
+                            "aot": true,
+                            "extractLicenses": true,
+                            "vendorChunk": false,
+                            "buildOptimizer": true,
+                            "serviceWorker": true
+                        }
+                    }
+                },
+                "serve": {
+                    "builder": "@angular-devkit/build-angular:dev-server",
+                    "options": {
+                        "browserTarget": "gsm2:build"
+                    },
+                    "configurations": {
+                        "production": {
+                            "browserTarget": "gsm2:build:production"
+                        }
+                    }
+                },
+                "extract-i18n": {
+                    "builder": "@angular-devkit/build-angular:extract-i18n",
+                    "options": {
+                        "browserTarget": "gsm2:build"
+                    }
+                },
+                "test": {
+                    "builder": "@angular-devkit/build-angular:karma",
+                    "options": {
+                        "main": "projects/gsm2/src/test.ts",
+                        "polyfills": "projects/gsm2/src/polyfills.ts",
+                        "tsConfig": "projects/gsm2/tsconfig.spec.json",
+                        "karmaConfig": "projects/gsm2/karma.conf.js",
+                        "styles": [
+                            "projects/gsm2/src/styles.css",
+                            "projects/gsm2/src/theme/variables.scss"
+                        ],
+                        "scripts": [],
+                        "assets": [
+                            "projects/gsm2/src/favicon.ico",
+                            "projects/gsm2/src/assets",
+                            "projects/gsm2/src/manifest.json",
+                            "projects/gsm2/src/manifest.json"
+                        ]
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-devkit/build-angular:tslint",
+                    "options": {
+                        "tsConfig": [
+                            "projects/gsm2/tsconfig.app.json",
+                            "projects/gsm2/tsconfig.spec.json"
+                        ],
+                        "exclude": [
+                            "**/node_modules/**"
+                        ]
+                    }
+                }
+            }
+        },
+        "gsm2-e2e": {
+            "root": "projects/gsm2-e2e/",
+            "projectType": "application",
+            "architect": {
+                "e2e": {
+                    "builder": "@angular-devkit/build-angular:protractor",
+                    "options": {
+                        "protractorConfig": "projects/gsm2-e2e/protractor.conf.js",
+                        "devServerTarget": "gsm2:serve"
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-devkit/build-angular:tslint",
+                    "options": {
+                        "tsConfig": "projects/gsm2-e2e/tsconfig.e2e.json",
+                        "exclude": [
+                            "**/node_modules/**"
+                        ]
+                    }
+                }
+            }
+        }
+    },
+    "defaultProject": "sitesm-angular"
+}

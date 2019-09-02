@@ -1,0 +1,527 @@
+<cabecalho>
+</cabecalho>
+<div class="container-fluid principal">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <h1 class="title">
+                <span class="fa fa-sitemap"></span>&nbsp;Grupo Gestor
+            </h1>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <button type="button"
+                class="btn btn-success pull-right"
+                style="margin-top: 10px;"
+                data-toggle="modal"
+                data-target="#modalGrupoGestor"
+                (click)="novoGrupoGestor();">
+                <i class="fa fa-plus"></i>&nbsp;Grupo Gestor
+            </button>
+        </div>
+    </div>
+    <div *ngIf="clientes && clientes.length" class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <kendo-grid
+                [data]="gridView"
+                class="grid"
+                [pageSize]="pageSize"
+                [skip]="skip"
+                [pageable]="true"
+                (pageChange)="pageChange($event);">
+                <kendo-grid-messages
+                    pagerPage="Página"
+                    pagerOf="de"
+                    pagerItems="items"
+                    pagerItemsPerPage="itens por página"
+                    noRecords="Nenhum resultado encontrado">
+                </kendo-grid-messages>
+                <kendo-grid-command-column title="Editar" width="100">
+                    <ng-template kendoGridCellTemplate let-row>
+                        <i *ngIf="validaPermissaoEdicao(row.cdCliente);"
+                            class="fa fa-pencil opcao-grid"
+                            data-toggle="modal"
+                            data-target="#modalGrupoGestor"
+                            title="Editar"
+                            (click)="editarGrupoGestor(row);">
+                        </i>
+                        <i *ngIf="validaPermissaoEdicao(row.cdCliente);"
+                            class="fa fa-sitemap opcao-grid"
+                            title="Organograma"
+                            (click)="irParaOrganograma(row.cdCliente);">
+                        </i>
+                    </ng-template>
+                </kendo-grid-command-column>
+                <kendo-grid-column
+                    field="cliente.dsCliente"
+                    title="Cliente">
+                </kendo-grid-column>
+                <kendo-grid-column
+                    field="fiscalContrato.nome"
+                    title="Fiscal do Contrato">
+                </kendo-grid-column>
+                <kendo-grid-column
+                    field="gerenteProjeto.nome"
+                    title="Gerente de Projeto">
+                </kendo-grid-column>
+                <kendo-grid-column
+                    field="veterinario.nome"
+                    title="Veterinário">
+                </kendo-grid-column>
+                <kendo-grid-column
+                    field="agronomo.nome"
+                    title="Agrônomo">
+                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                        <!-- {{dataItem.agronomo.nome}} - {{rowIndex}} -->
+                        <span class="{{dataItem.agronomo && dataItem.agronomo.nome ? '' : 'text-danger'}}">
+                            {{dataItem.agronomo && dataItem.agronomo.nome ? dataItem.agronomo.nome : "Vago"}}
+                        </span>
+                    </ng-template>
+                </kendo-grid-column>
+                <ng-template kendoGridDetailTemplate let-row>
+                    <div class="row">
+                        <div *ngFor="let item of row.listFocalPoint;"
+                            class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                            <div *ngIf="!focalPoint || !focalPoint.idFocalPoint ||
+                                        (focalPoint.grupoGestor && focalPoint.grupoGestor.idGrupoGestor !== row.idGrupoGestor)"
+                                class="alert alert-info text-center"
+                                role="alert">
+                                <a class="alert-link clickable"
+                                    (click)="focalPoint = item;">
+                                    <i data-toggle="tooltip" data-placement="bottom" 
+                                        title="{{item.programa.area === 'A' ? 'Animal' : item.programa.area === 'V' ? 'Vegetal' : 'Outros'}}"
+                                        class="{{item.programa.area === 'A' ? 'fa fa-paw' : item.programa.area === 'V' ? 'fa fa-pagelines' : 'fa fa-dot-circle-o'}}"></i>
+                                    &nbsp;
+                                    <span title="Exibir Key User" data-toggle="tooltip" data-placement="bottom">
+                                        {{item.programa.dsPrograma}}
+                                    </span>
+                                </a>
+                                <br/>
+                                <small class="{{item.gerentePrograma && item.gerentePrograma.nome ? '' : 'text-danger'}}">
+                                    {{item.gerentePrograma && item.gerentePrograma.nome ? item.gerentePrograma.nome : 'Vago'}}
+                                    <!-- {{item.gerentePrograma.nome}} -->
+                                </small>
+                                <br/>
+                                <i *ngIf="validaPermissaoEdicao(row.cdCliente);"
+                                    class="fa fa-pencil opcao-focal"
+                                    data-toggle="modal"
+                                    data-target="#modalAddFocalPoint"
+                                    data-placement="bottom"
+                                    title="Editar Focal Point"
+                                    (click)="preEditFocalPoint(row, item);">
+                                </i>
+                                <i *ngIf="validaPermissaoEdicao(row.cdCliente);"
+                                    class="fa fa-user-plus opcao-focal"
+                                    data-toggle="modal"
+                                    data-target="#modalAddKeyUser"
+                                    data-placement="bottom"
+                                    title="Adicionar Key User"
+                                    (click)="preAddKeyUser(row, item);">
+                                </i>
+                                <i *ngIf="validaPermissaoEdicao(row.cdCliente);"
+                                    class="fa fa-close opcao-focal"
+                                    data-toggle="tooltip"
+                                    data-placement="bottom"
+                                    title="Excluir Focal Point"
+                                    (click)="preDelFocalPoint(item);">
+                                </i>
+                            </div>
+                        </div>
+                        <div *ngIf="validaPermissaoEdicao(row.cdCliente) && (!focalPoint || !focalPoint.idFocalPoint ||
+                                    (focalPoint.grupoGestor && focalPoint.grupoGestor.idGrupoGestor !== row.idGrupoGestor))"
+                            class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                            <div class="alert alert-success text-center" role="alert">
+                                <i class="fa fa-plus"></i>
+                                <br/>
+                                <a href="#"
+                                    class="alert-link"
+                                    data-toggle="modal"
+                                    data-target="#modalAddFocalPoint"
+                                    (click)="preAddFocalPoint(row);">
+                                    Adicionar Focal Point
+                                </a>
+                            </div>
+                        </div>
+                        <div *ngIf="focalPoint && focalPoint.idFocalPoint &&
+                                    (focalPoint.grupoGestor && focalPoint.grupoGestor.idGrupoGestor === row.idGrupoGestor)"
+                            class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <ol class="breadcrumb">
+                                <li>
+                                    <a class="clickable" (click)="focalPoint = null;">
+                                        <i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i>
+                                        FOCAL POINT
+                                    </a>
+                                </li>
+                                <li class="active">{{focalPoint.programa.dsPrograma}}</li>
+                                <li class="active">{{focalPoint.gerentePrograma.nome}}</li>
+                            </ol>
+                        </div>
+                        <span *ngIf="focalPoint && focalPoint.idFocalPoint &&
+                                    (focalPoint.grupoGestor && focalPoint.grupoGestor.idGrupoGestor === row.idGrupoGestor)">
+                            <div *ngFor="let item of focalPoint.listKeyUser;"
+                                class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                                <div class="alert alert-info text-center" role="alert">
+                                    <small>{{item.usuario.nome}}</small>
+                                    <br/>
+                                    <i *ngIf="validaPermissaoEdicao(row.cdCliente);"
+                                        class="fa fa-close opcao-focal"
+                                        data-toggle="tooltip"
+                                        data-placement="bottom"
+                                        title="Excluir Key User"
+                                        (click)="preDelKeyUser(item, focalPoint);">
+                                    </i>
+                                </div>
+                            </div>
+                        </span>
+                        <div *ngIf="validaPermissaoEdicao(row.cdCliente) && (focalPoint && focalPoint.idFocalPoint &&
+                                    (focalPoint.grupoGestor && focalPoint.grupoGestor.idGrupoGestor === row.idGrupoGestor))"
+                            class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                            <div class="alert alert-success text-center" role="alert">
+                                <i class="fa fa-plus"></i>
+                                <br/>
+                                <a class="alert-link clickable"
+                                    data-toggle="modal"
+                                    data-target="#modalAddKeyUser"
+                                    (click)="preAddKeyUser(row, focalPoint);">
+                                    Adicionar Key User
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </ng-template>
+            </kendo-grid>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div id="modalGrupoGestor"
+    class="modal fade"
+    tabindex="-1"
+    style="background-color: rgba(0, 0, 0, 0.5);"
+    role="dialog"
+    aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    {{grupoGestor.idGrupoGestor ? 'Editar' : 'Cadastrar'}} Grupo Gestor
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div *ngIf="(clientesTemp && clientesTemp.length) || grupoGestor.idGrupoGestor"
+                    class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 margin-b10">
+                        <label for="homologador">
+                            Cliente:
+                            <span class="required-message">*&nbsp;{{reqMsgCliente}}</span>
+                        </label>
+                        <div class="dropdown">
+                            <button id="homologador"
+                                class="btn btn-default dropdown-toggle form-control text-uppercase"
+                                type="button"
+                                data-toggle="dropdown"
+                                [disabled]="grupoGestor.idGrupoGestor"
+                                aria-haspopup="true"
+                                aria-expanded="true">
+                                {{labelCliente ? labelCliente : 'Selecione...'}}
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li *ngFor="let item of clientesTemp;">
+                                    <a (click)="grupoGestor.cdCliente = item.codigo; labelCliente = item.valor; limparGrupoGestor(); obterUsuarios();">
+                                        {{item.valor}}
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 margin-b10">
+                        <label for="homologador">
+                            Fiscal do Contrato:
+                            <span class="required-message">*&nbsp;{{reqMsgFiscalContrato}}</span>
+                        </label>
+                        <div class="dropdown">
+                            <button id="homologador"
+                                [disabled]="!grupoGestor.cdCliente"
+                                class="btn btn-default dropdown-toggle form-control text-uppercase"
+                                type="button"
+                                data-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="true">
+                                {{labelFiscalContrato ? labelFiscalContrato : 'Selecione...'}}
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li *ngFor="let item of usuarios;">
+                                    <a (click)="grupoGestor.cdFiscalContrato = item.idUsuario; labelFiscalContrato = item.nome;">
+                                        {{item.nome}}
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 margin-b10">
+                        <label for="homologador">
+                            Gerente de Projeto:
+                            <span class="required-message">*&nbsp;{{reqMsgGerenteProjeto}}</span>
+                        </label>
+                        <div class="dropdown">
+                            <button id="homologador"
+                                [disabled]="!grupoGestor.cdCliente"
+                                class="btn btn-default dropdown-toggle form-control text-uppercase"
+                                type="button"
+                                data-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="true">
+                                {{labelGerenteProjeto ? labelGerenteProjeto : 'Selecione...'}}
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li *ngFor="let item of usuarios;">
+                                    <a (click)="grupoGestor.cdGerenteProjeto = item.idUsuario; labelGerenteProjeto = item.nome;">
+                                        {{item.nome}}
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 margin-b10">
+                        <label for="homologador">
+                            Veterinário:
+                            <span class="required-message">*&nbsp;{{reqMsgVeterinario}}</span>
+                        </label>
+                        <div class="dropdown">
+                            <button id="homologador"
+                                [disabled]="!grupoGestor.cdCliente"
+                                class="btn btn-default dropdown-toggle form-control text-uppercase"
+                                type="button"
+                                data-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="true">
+                                {{labelVeterinario ? labelVeterinario : 'Selecione...'}}
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li *ngFor="let item of usuarios;">
+                                    <a (click)="grupoGestor.cdVeterinario = item.idUsuario; labelVeterinario = item.nome;">
+                                        {{item.nome}}
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 margin-b10">
+                        <label for="homologador">
+                            Agrônomo:
+                            <!-- <span class="required-message">*&nbsp;{{reqMsgAgronomo}}</span> -->
+                        </label>
+                        <div class="dropdown">
+                            <button id="homologador"
+                                [disabled]="!grupoGestor.cdCliente"
+                                class="btn btn-default dropdown-toggle form-control text-uppercase"
+                                type="button"
+                                data-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="true">
+                                {{labelAgronomo ? labelAgronomo : 'Selecione...'}}
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li *ngFor="let item of usuarios;">
+                                    <a (click)="grupoGestor.cdAgronomo = item.idUsuario; labelAgronomo = item.nome;">
+                                        {{item.nome}}
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="(!clientesTemp || clientesTemp.length === 0) && !grupoGestor.idGrupoGestor" class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <div class="alert alert-danger">
+                            <h3>Todos clientes já possuem grupo gestor!</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="(clientesTemp && clientesTemp.length) || grupoGestor.idGrupoGestor" class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" (click)="manterGrupoGestor();">Gravar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="modalAddFocalPoint"
+    class="modal fade"
+    tabindex="-1"
+    style="background-color: rgba(0, 0, 0, 0.5);"
+    role="dialog"
+    aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" *ngIf="focalPoint">
+            <div class="modal-header">
+                <button type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">{{focalPoint.idFocalPoint ? 'Editar' : 'Adicionar'}} Focal Pointer</h4>
+            </div>
+            <div class="modal-body">
+                <div *ngIf="grupoGestor && grupoGestor.cliente" class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 margin-b10">
+                        <p class="h4">
+                            <i class="fa fa-map-marker"></i>
+                            {{grupoGestor.cliente.dsCliente}}
+                        </p>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 margin-b10">
+                        <label for="area">
+                            Área:
+                            <span class="required-message">*&nbsp;{{reqMsgArea}}</span>
+                        </label>
+                        <div class="dropdown">
+                            <button id="area"
+                                [disabled]="focalPoint.idFocalPoint"
+                                class="btn btn-default dropdown-toggle form-control text-uppercase"
+                                type="button"
+                                data-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="true">
+                                {{area.descricao ? area.descricao : 'Selecione...'}}
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li *ngFor="let item of areas;">
+                                    <a (click)="area = item; focalPoint.programa.area = item.valor; limparFocalPoint(); filtrarPrograma();">
+                                        {{item.descricao}}
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 margin-b10">
+                        <label for="programa">
+                            Programa:
+                            <span class="required-message">*&nbsp;{{reqMsgPrograma}}</span>
+                        </label>
+                        <div class="dropdown">
+                            <button id="programa"
+                                [disabled]="focalPoint.idFocalPoint"
+                                class="btn btn-default dropdown-toggle form-control text-uppercase"
+                                type="button"
+                                data-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="true">
+                                {{labelPrograma ? labelPrograma : 'Selecione...'}}
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li *ngFor="let item of programasTemp;">
+                                    <a (click)="focalPoint.cdPrograma = item.idPrograma; labelPrograma = item.dsPrograma;">
+                                        {{item.dsPrograma}}
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 margin-b10">
+                        <label for="gerentePrograma">
+                            Gerente do Programa:
+                            <!-- <span class="required-message">*&nbsp;{{reqMsgGerentePrograma}}</span> -->
+                        </label>
+                        <div class="dropdown">
+                            <button id="gerentePrograma"
+                                [disabled]="!focalPoint.cdPrograma"
+                                class="btn btn-default dropdown-toggle form-control text-uppercase"
+                                type="button"
+                                data-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="true">
+                                {{labelGerentePrograma ? labelGerentePrograma : 'Selecione...'}}
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li *ngFor="let item of usuarios;">
+                                    <a (click)="focalPoint.cdGerentePrograma = item.idUsuario; labelGerentePrograma = item.nome;">
+                                        {{item.nome}}
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" (click)="gravarFocalPoint();">Gravar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="modalAddKeyUser"
+    class="modal fade"
+    tabindex="-1"
+    style="background-color: rgba(0, 0, 0, 0.5);"
+    role="dialog"
+    aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    Adicionar Key User
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div *ngIf="focalPoint && focalPoint.programa && focalPoint.gerentePrograma" class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 margin-b10">
+                        <div class="alert alert-info text-center">
+                            <strong>{{focalPoint.programa.dsPrograma}}</strong>
+                            <br/>
+                            <small>{{focalPoint.gerentePrograma.nome}}</small>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 margin-b10">
+                        <label for="usuarioKeyUser">
+                            Key User:
+                            <span class="required-message">*&nbsp;{{reqMsgKeyUser}}</span>
+                        </label>
+                        <div class="dropdown">
+                            <button id="usuarioKeyUser"
+                                class="btn btn-default dropdown-toggle form-control text-uppercase"
+                                type="button"
+                                data-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="true">
+                                {{labelKeyUser ? labelKeyUser : 'Selecione...'}}
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li *ngFor="let item of usuarios;">
+                                    <a (click)="keyUser.cdUsuario = item.idUsuario; keyUser.usuario = item; labelKeyUser = item.nome;">
+                                        {{item.nome}}
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" (click)="addKeyUser();">Gravar</button>
+            </div>
+        </div>
+    </div>
+</div>

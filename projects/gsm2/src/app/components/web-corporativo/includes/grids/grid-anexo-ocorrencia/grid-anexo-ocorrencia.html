@@ -1,0 +1,37 @@
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <span type="button"
+            class="btn btn-success btn-sm btn-file">
+            <i class="fa fa-paperclip"></i>&nbsp;Adicionar Anexo
+            <input type="file" name="img" class="form-control" (change)="lerUrlImagem($event);">
+        </span>
+    </div>
+    <div *ngIf="!ocorrencia?.anexos || !ocorrencia?.anexos.length" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <app-empty-grid message="Nenhum Anexo"></app-empty-grid>
+    </div>
+    <div *ngIf="ocorrencia?.anexos && ocorrencia?.anexos.length" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Descrição</th>
+                    <th>Tipo</th>
+                    <th class="text-right">Download</th>
+                </tr>
+            </thead>
+            <tbody *ngIf="ocorrencia?.anexos">
+                <tr *ngFor="let anexo of ocorrencia.anexos; let i = index;" class="text-left">
+                    <td>{{anexo.dsNome}}</td>
+                    <td>{{anexo.dsExtensao}}</td>
+                    <td align="right">
+                        <button class="btn btn-primary btn-sm"
+                            (click)="downloadAnexo(anexo.idOcorrenciaAnexo, anexo.dsExtensao);">
+                            <span class="button-inner">
+                                <i class="fa fa-download"></i>
+                            </span>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,14 @@
+<!-- Ver documentacao: https://valor-software.com/ng2-charts/ -->
+<app-grafico-template [(titulo)]="titulocaixa" [(dadosC)]="dadosCustoms">
+        <div style="display: block; margin: 0 auto;" *ngIf="dadosCustoms.length > 0">
+        <!-- Grafico aqui -->
+                <canvas baseChart
+                        [data]="pieChartData"
+                        [labels]="pieChartLabels"
+                        [chartType]="pieChartType"
+                        (chartHover)="chartHovered($event)"
+                        (chartClick)="chartClicked($event)"></canvas>
+        
+        <!-- Grafico aqui -->
+        </div>        
+</app-grafico-template>

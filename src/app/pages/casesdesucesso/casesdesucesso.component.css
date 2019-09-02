@@ -1,0 +1,11 @@
+.standard{
+    padding: 25px 0;
+}
+.standard ul, .standard ol {
+    font-size: 16px;
+    color: #646466;
+    margin-bottom: 20px;
+}
+.standard ul {
+    margin-left: 20px;
+}

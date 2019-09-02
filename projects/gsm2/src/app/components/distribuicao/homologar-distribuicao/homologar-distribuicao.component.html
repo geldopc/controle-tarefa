@@ -1,0 +1,77 @@
+<div id="modalHomologarDistribuicao" *ngIf="ocorrenciaGsm.distribuicoes" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="background-color: rgba(0, 0, 0, 0.5);">
+        <div class="modal-dialog modal-lg " role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Homologar tarefa</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9" *ngIf="ocorrenciaGsm.distribuicoes && ocorrenciaGsm.distribuicoes.length > 0">
+                            <label for="usuario">Distribuição reprovada</label>
+                            <div class="dropdown">
+                                <button class="btn btn-default dropdown-toggle form-control" type="button" id="usuario" data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="true">
+                                    {{distribuicao?.idOcorrenciaDistribuicao}} - {{distribuicao?.tipoTarefa}} - {{distribuicao?.dsUsuarioAtendimento}}
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li *ngFor="let dist of ocorrenciaGsm.distribuicoes;">
+                                        <a *ngIf="dist" (click)="distribuicao = dist;">
+                                            {{dist?.idOcorrenciaDistribuicao}} -
+                                            {{dist?.tipoTarefa}} -
+                                            {{dist?.dsUsuarioAtendimento}}
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3" *ngIf="distribuicao">
+                            <label for="usuario">Novo prazo de entrega</label>
+                            <input type="date" class="form-control pull-left" [(ngModel)]="distribuicao.dtprevisaoEntrega" />
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" *ngIf="branches && branches.length > 0">
+                            <label for="usuario">Branch</label>
+                            <div class="dropdown">
+                                <button disabled class="btn btn-default dropdown-toggle form-control" type="button" id="usuario" data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="true">
+                                    {{branch.valor}}
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li *ngFor="let item of branches;">
+                                        <a (click)="branch = item; distribuicao.cdBranch = item.codigo;">
+                                            {{item.valor}}
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" *ngIf="distribuicao">
+                            <label for="descricaoReabertura">Comentário Técnico:
+                            </label>
+                            <textarea id="descricaoReabertura" class="form-control" rows="10" maxlength="10000" placeholder="Escreva Aqui o Comentário Técnico..."
+                                [(ngModel)]="distribuicao.dsComentarioTecnico">
+                                </textarea>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="distribuicao" class="modal-footer">
+                    <button type="button"
+                        class="btn btn-success btn-xs pull-left"
+                        role="button"
+                        data-toggle="collapse"
+                        (click)="aprovarDistribuicao(distribuicao.idOcorrenciaDistribuicao)">
+                        <i class="fa fa-check"></i>&nbsp;Aprovar
+                    </button>
+                    <button type="button"
+                        class="btn btn-danger btn-xs pull-left"
+                        (click)="reprovarDistribuicao(distribuicao)">
+                        <i class="fa fa-stop"></i>&nbsp;Reprovar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>

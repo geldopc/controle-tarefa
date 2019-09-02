@@ -1,0 +1,151 @@
+<ion-header>
+    <ion-navbar hideBackButton color="danger">
+        <ion-title>
+            GSM
+        </ion-title>
+        <ion-buttons end>
+                <span style="color: #ffffff">{{usuario.nome}}</span>
+            <button ion-button icon-left (click)="sair();">
+                    <span class="button-inner" style="margin-top: -22%;">
+                            <i _ngcontent-c4="" class="fa fa-arrow-circle-o-left"></i>&nbsp;Sair
+                    </span>
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+
+<ion-content>
+    <div class="container">
+            <a class="navbar-brand">
+                    <i class="fa fa-exclamation-circle"></i>
+                    Registrar Ocorrência
+                </a>
+        <br/>
+        <nav class="navbar navbar-default hidden-xs" style="margin-top: 2%;">
+            <div class="navbar-header">
+                <!-- <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
+                    aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button> -->
+                
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6  col-sm-offset-3 col-lg-offset-3">
+                <span id="label">
+                    <b>Data de abertura: </b>{{ocorrencia.dtAbertura }}</span>
+            </div>
+        </nav>
+
+        <!-- mobile  -->
+        <nav class="navbar navbar-default visible-xs-* hidden-sm hidden-md hidden-lg" style="margin-top: 6%;">
+            <div class="navbar-header">
+            </div>
+            <div class="col-sm-6 col-md-6 col-lg-6  col-sm-offset-3 col-lg-offset-3">
+                <span id="label">
+                    <b>Data de abertura: </b>{{ocorrencia.dtAbertura }}</span>
+            </div>
+        </nav>
+       <!-- fim mobile  -->
+
+        <div class="row">
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                <ion-item class="form-group">
+                    <ion-label floating>Produto
+                    </ion-label>
+                    <ion-select [(ngModel)]="ocorrencia.cdProdutoServico" (ionChange)="selecionarTipoOcorrencia()" #produto>
+                        <ion-option *ngFor="let key of produtos" [value]="key.select">{{key.show}}</ion-option>
+                    </ion-select>
+                </ion-item>
+                <!-- <span color="required-message">{{tiposRevendaMsg}}</span> -->
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                <ion-item class="form-group">
+                    <ion-label floating>Tipo da Ocorrência
+                        <!-- <span color="required-message">*</span> -->
+                    </ion-label>
+                    <ion-select [(ngModel)]="ocorrencia.cdTipoOcorrencia" #tipoOcorrencia>
+                        <ion-option *ngFor="let key of tiposOcorrencia" [value]="key.idTipoOcorrencia">{{key.dsTipoOcorrencia}}</ion-option>
+                    </ion-select>
+                </ion-item>
+                <!-- <span color="required-message">{{tiposRevendaMsg}}</span> -->
+            </div>
+        </div>
+        <br/>
+
+        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModalAnexo">
+            Adicionar Anexo
+        </button> 
+
+        <div class="row hidden-xs">
+            <div class="form-group" style="width:100%; margin-top: 5%;">
+                <label for="descricao">Descrição da ocorrência</label>
+                <textarea id="descricao" type="text" class="form-control validate" style="width:100%; height:400px;" [(ngModel)]="ocorrencia.dsProblema"
+                    maxlength="10000"></textarea>
+            </div>
+        </div>
+
+<!-- mobile  -->
+        <div class="row visible-xs-* hidden-sm hidden-md hidden-lg">
+            <div class="form-group" style="width:100%; margin-top: 5%;">
+                <label for="descricao">Descrição da ocorrência</label>
+                <textarea id="descricao" type="text" class="form-control validate" style="width:100%; height:150px;" [(ngModel)]="ocorrencia.dsProblema"
+                    maxlength="10000"></textarea>
+            </div>
+        </div>
+<!-- fim mobile  -->
+
+        <div class="container">
+            <ion-grid>
+                <ion-row>
+                    <ion-col col-12>
+                        <button ion-button color="green-confirmar" (click)="salvar()">Confirmar</button>
+                        <button ion-button color="danger" (click)="voltar()">Voltar</button>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </div>
+
+    </div>
+
+    
+     <!-- <div class="visible-xs-* hidden-sm hidden-md hidden-lg">
+        <br>
+        <br>
+        <br>
+        <br>
+    </div>
+   -->
+
+</ion-content>
+
+<!-- Modal Anexo -->
+<div class="modal fade" id="myModalAnexo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">Adicionar Anexo</h4>
+            </div>
+            <div class="modal-body">
+                    <input type="file" name="img">
+                    <br>                                    
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary">Adicionar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    
+

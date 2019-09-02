@@ -1,0 +1,124 @@
+<div id="listAtualizacoes" class="panel-ocorrencia">
+    <div class="container-fluid">
+        <div class="row">
+
+            <div class="col-xs-11 col-sm-11 col-md-11 col-lg-11">
+                <h3 class="pull-left">
+                    <span class="label label-primary">
+                        <i class="fa fa-hashtag"></i>
+                        &nbsp;{{ocorrencia.idOcorrencia}}
+                    </span>
+                </h3>
+            </div>
+
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+                <i class="fa fa-times fa-2x pull-right" (click)="fecharAtualizacoes();" style="cursor: pointer; color: gray; margin-top: 10px;"></i>
+            </div>
+
+            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                <div class="label-title">
+                    Produto
+                </div>
+                <h6>{{ocorrencia.dsProduto}}</h6>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                <div class="label-title">
+                    Cliente
+                </div>
+                <h6>{{consultar.dsCliente}}</h6>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                <div class="label-title">
+                    Funcionalidade
+                </div>
+                <h6>{{ocorrencia.dsFuncionalidade}}</h6>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                <div class="label-title">
+                    Status
+                </div>
+                <h6>{{ocorrencia.dsStatus}}</h6>
+            </div>
+            <!-- daqui pra baixo vai ser pro usuario da sm -->
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-3">
+                <label for="dataSolicitacao">De:
+                    <span class="required-message">*&nbsp; {{reqMsgDe}}</span>
+                </label>
+                <div class="dropdown">
+                    <input id="dataSolicitacao" class="form-control" (change)="filterHistorico()" type="date" [(ngModel)]="consultar.dtDe">
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-3">
+                <label for="dataSolicitacao">Até:
+                    <span class="required-message">*&nbsp; {{reqMsgAte}}</span>
+                </label>
+                <div class="dropdown">
+                    <input id="dataSolicitacao" class="form-control" (change)="filterHistorico()" type="date" [(ngModel)]="consultar.dtAte">
+                </div>
+            </div>
+            <hr/>
+            <div style="position: relative; top: 2vh" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <ul class="nav nav-pills">
+                    <li role="presentation" class="active">
+                        <a data-toggle="pill" href="#atualizacoes">Atualizações</a>
+                    </li>
+                    <li role="presentation">
+                        <a data-toggle="pill">Builds</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <br/>
+                    <div id="builds" class="tab-pane fade">
+                        <div class="table-responsive">
+                            <table class="table table-striped" *ngIf="(listBuilds && listBuilds.length > 0)" style="height: 35vh; overflow-y: scroll">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Cliente</th>
+                                        <th>Modalidade</th>
+                                        <th>Versão</th>
+                                        <th>Status</th>
+                                        <th>Tag</th>
+                                        <th>Inicio</th>
+                                        <th>Fim;</th>
+                                        <th>Jenkins</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let build of listBuilds; let j = index;" class="text-left">
+
+                                        <td>{{build.idControleAtualizacao}}</td>
+                                        <td>{{build.dsCliente}}</td>
+                                        <td>{{build.dsModalidade}}</td>
+                                        <td>{{build.dsTipoAtualizacao}}</td>
+                                        <td style="font-weight: bold" [ngClass]="{'text-danger': (build.dsMerge == 'Conflito'), 'text-success': (build.dsMerge == 'Merge'), 'text-muted': (build.dsMerge == 'Resolvido')}">
+                                            <i class="fa" [ngClass]="{'fa-support': (build.dsMerge == 'Conflito'), 'fa-check': (build.dsMerge == 'Resolvido'), 'fa-check': (build.dsMerge == 'Merge') }"></i> {{build.dsMerge}}
+                                        </td>
+                                        <td>{{build.dsNomeTag}}</td>
+                                        <td>{{build.dtInicioAtualizacao}}</td>
+                                        <td>{{build.dtFimAtualizacao}}</td>
+                                        <td style="font-weight: bold" [ngClass]="{'text-danger': (!build.dtFimAtualizacao || build.dsStatus == 'Erro'), 'text-success': (build.dtFimAtualizacao)}">
+                                            <i class="fa" [ngClass]="{'fa-times': (!build.dtFimAtualizacao), 'fa-code': (build.dsStatus == 'Erro'), 'fa-check-square-o': (build.dtFimAtualizacao) }">
+                                                <span *ngIf="build.dsStatus == 'Sucesso' ">Rodou</span>
+                                                <span *ngIf="build.dsStatus == 'Erro' ">Erros</span>
+                                                <span *ngIf="!build.dtFimAtualizacao">Pendente</span>
+                                            </i>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div *ngIf="!listBuilds || listBuilds.length == 0">
+                            <h6 class="alert alert-warning">Nenhum Build Gerado!</h6>
+                        </div>
+                    </div>
+                    <div id="atualizacoes" class="tab-pane fade in active">
+
+                        <a href="#builds" (click)="obterHistoricoBuilds()"></a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

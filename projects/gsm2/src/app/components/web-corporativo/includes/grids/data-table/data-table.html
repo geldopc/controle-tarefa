@@ -1,0 +1,21 @@
+<span *ngIf="rendered ? rendered : true">
+    <h4 class="titulo" *ngIf="titulo">{{titulo}}</h4>
+    <h6 class="titulo" *ngIf="subTitulo">{{subTitulo}}</h6>
+    <hr class="titulo" *ngIf="titulo || subTitulo"/>
+    <div class="table-responsive">
+        <table class="table table-striped table-condensed">
+            <thead *ngIf="columnsHeader && columnsHeader.length > 0">
+                <tr>
+                    <th *ngFor="let header of columnsHeader; let index = index;">
+                        <small>{{header}}</small>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let row of values; let index = index;" (click)="clickRow(row)">
+                    <ng-container *ngTemplateOutlet="lineContentTmpl, context: { $implicit: row }"></ng-container>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</span>

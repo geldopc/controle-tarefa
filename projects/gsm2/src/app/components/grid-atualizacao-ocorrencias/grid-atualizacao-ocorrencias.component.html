@@ -1,0 +1,67 @@
+<div class="row">
+    <button *ngIf="filtros.chamadosSelecionados && filtros.chamadosSelecionados.length > 0 && buildVersao"
+        type="button" class="btn btn-primary btn-margin" (click)="gerarVersao();">
+        <i class="fa fa-cogs"></i>&nbsp;Build
+        <span class="badge">
+            {{filtros.chamadosSelecionados.length}}
+        </span>
+    </button>
+    <div id="grid-principal-ocorrencia" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table-responsive">
+        <table *ngIf="chamadosTemp && chamadosTemp.length > 0"
+            id="gridPrincipalOcorrencia"
+            class="table table-striped">
+            <thead>
+                <tr>
+                    <th><i class="{{icone}} pull-left" (click)="addOrDelAll();" style="margin-top: 3px;"></i></th>
+                    <th>Ocorrência</th>
+                    <th>Produto</th>
+                    <th>Dt. Cadastro</th>
+                    <th>Cliente</th>
+                    <th>Responsável</th>
+                    <th>Funcionalidade</th>
+                    <th>Pri 01</th>
+                    <th>Pri 02</th>
+                    <th style="width: 26.66%">Descrição</th>
+                    <th>Status</th>
+                    <th>Data de entrega</th>
+                    <th>Versao</th>
+                    <th>Jenkins</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let chamado of chamadosTemp; let j = index;" class="text-left panel panel-default">
+                    <td>
+                        <i class="{{chamado.icon}} pull-left" (click)="addOrDelOcorrencia(chamado);"></i>
+                    </td>
+                    <td>
+                        <a id="btnCollapse"
+                            class="btn btn-{{chamado.cor}} btn-xs pull-left"
+                            role="button"
+                            (click)="ocorrenciaSelecionada = chamado; abrirPanel(ocorrenciaSelecionada); refreshFinalizarOcorrencia = true;"
+                            data-toggle="collapse"
+                            data-parent="#accordion"
+                            style="text-decoration: none;"
+                            href="#collapse{{chamado.idOcorrencia}}"
+                            aria-expanded="true"
+                            aria-controls="collapseOne">
+                            <i class="fa fa-hashtag"></i>{{chamado.idOcorrencia}}
+                        </a>
+                    </td>
+                    <td>{{chamado.dsProduto}}</td>
+                    <td>{{chamado.dtCadastro}}</td>
+                    <td>{{chamado.dsCliente}}</td>
+                    <td>{{chamado.dsUsuarioSolicitante}}</td>
+                    <td>{{chamado.dsFuncionalidade}}</td>
+                    <td>{{chamado.nrPrioridade1}}</td>
+                    <td>{{chamado.nrPrioridade2}}</td>
+                    <td class="clickable-row" [innerHTML]="chamado.dsOcorrencia"></td>
+                    <td>{{chamado.dsStatus}}</td>
+                    <td>{{util.formatarDataUS(chamado.dtPrevisaoEntrega, 'dd/MM/yyyy')}}</td>
+                    <td><button *ngIf="mostrarMerge(chamado)" class="btn btn-primary" (click)="gerarVersao(chamado)">Merge</button></td>
+                    <td><button *ngIf="mostrarBuild(chamado)" class="btn btn-default" (click)="callJenkins()">Build</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <painel-distribuicao [ocorrenciaSelecionada]="ocorrenciaSelecionada" [filtros]="filtros" [filtrosPesquisaTecnico]="filtrosPesquisaTecnico"></painel-distribuicao>
+</div>

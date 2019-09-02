@@ -1,0 +1,681 @@
+<cabecalho mostrar="true"></cabecalho>
+<div class="container-fluid principal">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <h3>Ocorrências Finalizadas</h3>
+        </div>
+        <!-- <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <button type="button" class="btn btn-success pull-right" style="margin-top: 10px;" data-toggle="modal"
+                data-target="#myModal" (click)="novaOcorrencia();">
+                <i class="fa fa-plus"></i>&nbsp;Nova Ocorrência
+            </button>
+        </div> -->
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
+            <label for="produto">Produto:
+                <span class="required-message">*&nbsp;{{reqMsgProd}}</span>
+            </label>
+            <div id="produto" class="dropdown">
+                <button id="produto" class="btn btn-default dropdown-toggle form-control" type="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="true">
+                    {{labelProduto}}
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li *ngFor="let key of produtos;">
+                        <a (click)="setProduto(key.select); filtrarPorStatus(status)">
+                            {{key.show}}
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
+            <label for="idDtInicio">
+                De:
+            </label>
+            <input id="idDtInicio" type="date" class="form-control pull-left" placeholder="De" [(ngModel)]="dtInicio" />
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
+            <label for="dtFinal">
+                Até:
+            </label>
+            <input id="dtFinal" type="date" class="form-control pull-left" placeholder="Até" [(ngModel)]="dtFim" />
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-3 col-lg-4">
+            <label for="idPesquisaRapida">
+                Pesquisa rápida:
+            </label>
+            <input id="idPesquisaRapida" type="text" class="form-control" placeholder="ID, Descrição, Usuário, Tipo..."
+                [(ngModel)]="dsPesq" (keyup)="filtrarDescricao($event);" />
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
+            <dropdown-multiselect *ngIf="listSolicitante"
+                [listaCombo]="listSolicitante"
+                label="Solicitante"
+                [(listaSelecionados)]="filtrosPesquisa.solicitanteSelecionado">
+            </dropdown-multiselect>
+        </div>
+        <!-- <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
+            <label for="status">
+                 Status:
+            </label>
+            <div id="status" class="dropdown">
+                <button id="dropdownMenu1" class="btn btn-default dropdown-toggle form-control" type="button"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    <i class="fa fa-circle text-{{status?.cor}}"></i>
+                    {{status?.label}}
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu clickable">
+                    <li *ngFor="let item of listStatus;">
+                        <a (click)="filtrarPorStatus(item);">
+                            <i class="fa fa-circle text-{{item.cor}}"></i>
+                            {{item.label}}
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div> -->
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-sm-8 col-md-6 col-lg-4">
+            <button type="button" class="btn btn-primary" (click)="filtrarData();">
+                <i class="fa fa-search"></i>&nbsp;Pesquisar
+            </button>
+            <button type="button" class="btn btn-default button-margin" (click)="limparFiltros();">
+                <i class="fa fa-close"></i>&nbsp;Limpar
+            </button>
+            <!-- <button class="btn btn-default btn-margin btn-danger" (click)="gerarCsv();">
+                <i class="fa fa-file-excel-o"></i>&nbsp;Gerar CSV
+            </button> -->
+        </div>
+        <!-- <div class="col-xs-12 col-sm-12 col-md-4 col-md-offset-8 col-lg-4 col-lg-offset-8">
+            <div class="pull-right">
+                <strong>Siapec3?</strong>
+                <label class="switch">
+                    <input type="checkbox" (click)="filtroStatus();" [(ngModel)]="ocorrenciaSiapec3">
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </div> -->
+    </div>
+    <!-- <div  class="row">
+        <div *ngFor="let status of listStatusView;" class="col-xs-12 col-sm-6 col-md-3 col-lg-4">
+            <div class="text-center">
+                <span style="font-size: small; font-weight: 500;">{{status.descricao}}</span>
+                <span class="badge">{{status.qtd}}</span>
+            </div>
+        </div>
+    </div> -->
+    <!-- <div *ngIf="ocorrenciaSiapec3" class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <span class="pull-right">
+                <i class="fa fa-circle icon-prioridade" style="color: #1b5e20;" data-toggle="tooltip"
+                    title="Prioridade Baixa">
+                </i>
+                &nbsp;
+                <small class="legend">Prioridade Baixa</small>
+            </span>
+            <span class="pull-right">
+                <i class="fa fa-circle icon-prioridade" style="color: #01579b;" data-toggle="tooltip"
+                    title="Prioridade Média">
+                </i>
+                &nbsp;
+                <small class="legend">Prioridade Média</small>
+            </span>
+            <span class="pull-right">
+                <i class="fa fa-circle icon-prioridade" style="color: #f57f17;" data-toggle="tooltip"
+                    title="Prioridade Alta">
+                </i>
+                &nbsp;
+                <small class="legend">Prioridade Alta</small>
+            </span>
+            <span class="pull-right">
+                <i class="fa fa-circle icon-prioridade" style="color: #b71c1c;" data-toggle="tooltip"
+                    title="Prioridade Máxima">
+                </i>
+                &nbsp;
+                <small class="legend">Prioridade Máxima</small>
+            </span>
+        </div>
+    </div> -->
+    <div class="row painel-principal">
+        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+            <button *ngIf="mySelection && mySelection.length" id="idPrioridade" type="button"
+                style="margin-bottom: 2px;" class="btn btn-warning btn-sm pull-left" data-toggle="modal"
+                data-target="#modalPrioridade">
+                <i class="fa fa-signal"></i>&nbsp;Definir Prioridade
+            </button>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <kendo-grid
+                [data]="gridView"
+                class="grid"
+                [selectable]="selectableSettings"
+                [kendoGridSelectBy]="'idOcorrencia'"
+                [selectedKeys]="mySelection"
+                [pageSize]="pageSize"
+                [skip]="skip"
+                [pageable]="true"
+                (pageChange)="pageChange($event);">
+                <ng-template kendoGridToolbarTemplate>
+                    <button type="button" kendoGridExcelCommand icon="file-excel">Exportar em Planilha</button>
+                </ng-template>
+                <kendo-grid-messages pagerPage="Página" pagerOf="de" pagerItems="items"
+                    pagerItemsPerPage="itens por página" noRecords="Nenhum resultado encontrado">
+                </kendo-grid-messages>
+                <!-- <kendo-grid-checkbox-column *ngIf="ocorrenciaSiapec3" width="80">
+                </kendo-grid-checkbox-column> -->
+                <kendo-grid-column width="120" field="idOcorrencia" title="Ocorrência">
+                </kendo-grid-column>
+                <!-- <kendo-grid-column
+                    *ngIf="ocorrenciaSiapec3 && (usuario.inGerenteProjeto || usuario.inFocalPoint || usuario.inVeterinarioResponsavel || usuario.inAgronomoResponsavel)"
+                    field="prioridade" width="110" title="Prioridade">
+                    <ng-template kendoGridCellTemplate let-row>
+                        <span class="text-center">
+                            <i class="fa fa-arrow-circle-o-down icon-prioridade"
+                                [style.color]="obterCorPrioridade(row.prioridade)" data-toggle="tooltip"
+                                [title]="obterPrioridade(row.prioridade)"
+                                (click)="diminuirPrioridade(row.idOcorrencia, row.prioridade)"></i>
+                            <i class="fa fa-arrow-circle-o-up icon-prioridade"
+                                [style.color]="obterCorPrioridade(row.prioridade)" data-toggle="tooltip"
+                                [title]="obterPrioridade(row.prioridade)"
+                                (click)="aumentarPrioridade(row.idOcorrencia, row.prioridade)">
+                            </i>
+                        </span>
+                    </ng-template>
+                </kendo-grid-column> -->
+                <kendo-grid-column *ngIf="!ocorrenciaSiapec3" field="produto" title="Produto">
+                </kendo-grid-column>
+                <kendo-grid-column field="dsUsuarioAbertura" title="Usuário abertura" class="text-capitalize">
+                </kendo-grid-column>
+                <kendo-grid-column field="dsProduto" title="Produto" class="text-capitalize">
+                </kendo-grid-column>
+                <kendo-grid-column field="dtAbertura" title="Data de abertura">
+                </kendo-grid-column>
+                <kendo-grid-column field="dtLimiteAtendimento" title="Data de Entrega">
+                </kendo-grid-column>
+                <kendo-grid-column field="tipoOcorrencia.dsTipoOcorrencia" title="Tipo" class="text-capitalize">
+                </kendo-grid-column>
+                <kendo-grid-column field="status" title="Status" class="text-capitalize">
+                </kendo-grid-column>
+                <ng-template kendoGridDetailTemplate let-row [kendoGridDetailTemplateShowIf]="showOnlyBeveragesDetails">
+                    <ul class="nav nav-pills">
+                        <li role="presentation" class="active">
+                            <a data-toggle="pill" href="#desc{{row.idOcorrencia}}">Descrição do Problema</a>
+                        </li>
+                        <li role="presentation">
+                            <a data-toggle="pill" href="#anexo{{row.idOcorrencia}}">Anexo</a>
+                        </li>
+                        <li role="presentation">
+                            <a data-toggle="pill" href="#hist{{row.idOcorrencia}}">Histórico</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <br />
+                        <div id="desc{{row.idOcorrencia}}" class="tab-pane fade in active">
+                            <p class="text-muted text-left lead" [innerHTML]="row.dsProblema">
+                            </p>
+                        </div>
+                        <div id="anexo{{row.idOcorrencia}}" class="tab-pane fade">
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <button id="idModalAnexo" *ngIf="row.inStatus != 'U'" type="button"
+                                        (click)="obterAnexo(row);" class="btn btn-success btn-sm pull-left"
+                                        data-toggle="modal" data-target="#modalAddAnexo">
+                                        <i class="fa fa-plus"></i>&nbsp;Adicionar Anexo
+                                    </button>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <table class="table table-striped"
+                                        *ngIf="row.listAnexo && row.listAnexo.length > 0">
+                                        <thead>
+                                            <tr>
+                                                <th><i class="fa fa-hashtag"></i></th>
+                                                <th>Descrição</th>
+                                                <th>Tipo</th>
+                                                <th *ngIf="row.inStatus != 'U'">Download</th>
+                                                <th *ngIf="row.inStatus != 'U' && !row.novoGsm">Excluir</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let anexo of row.listAnexo; let j = index;" class="text-left">
+                                                <td *ngIf="anexo.idOcorrenciaAnexo">{{j + 1}}</td>
+                                                <td *ngIf="anexo.idOcorrenciaAnexo">{{anexo.dsAnexo}}</td>
+                                                <td *ngIf="anexo.idOcorrenciaAnexo">{{anexo.dsExtensao}}</td>
+                                                <td *ngIf="row.inStatus != 'U' && anexo.idOcorrenciaAnexo">
+                                                    <button class="btn btn-info"
+                                                        (click)="downloadAnexo(row.idOcorrencia, anexo, row.novoGsm)">
+                                                        <span class="button-inner">
+                                                            <i class="fa fa-download"></i>
+                                                        </span>
+                                                    </button>
+                                                </td>
+                                                <td
+                                                    *ngIf="row.inStatus != 'U' && !row.novoGsm && anexo.idOcorrenciaAnexo">
+                                                    <button class="btn btn-danger"
+                                                        (click)="removerAnexo(anexo.idOcorrenciaAnexo, row.idOcorrencia);">
+                                                        <span class="button-inner">
+                                                            <i class="fa fa-trash"></i>
+                                                        </span>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div *ngIf="!row.listAnexo || row.listAnexo.length == 0">
+                                        <h6 class="alert alert-danger">Nenhum Arquivo Anexado!</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="hist{{row.idOcorrencia}}" class="tab-pane fade">
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <button id="idModalHistorico" *ngIf="row.inStatus != 'U'" type="button"
+                                        (click)="obterHistorico(row);" class="btn btn-success btn-sm pull-left"
+                                        data-toggle="modal" data-target="#modalHistorico">
+                                        <i class="fa fa-plus"></i>&nbsp;Adicionar Histórico
+                                    </button>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <table class="table table-striped"
+                                        *ngIf="row.listHistorico && row.listHistorico.length > 0">
+                                        <thead>
+                                            <tr>
+                                                <th><i class="fa fa-hashtag"></i></th>
+                                                <th>Descrição</th>
+                                                <th>Data</th>
+                                                <th>Responsável</th>
+                                                <th *ngIf="row.inStatus != 'U'">Excluir</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let hist of row.listHistorico; let j = index;"
+                                                class="text-left">
+                                                <td>{{j + 1}}</td>
+                                                <td>{{hist.dsAtendimento}}</td>
+                                                <td>{{hist.dtInicioAtendimento}}</td>
+                                                <td>{{hist.usuarioResponsavel}}</td>
+                                                <td *ngIf="row.inStatus != 'U'">
+                                                    <button class="btn btn-danger"
+                                                        (click)="removerHistorico(row.idOcorrencia, hist.idOcorrenciaHistorico, hist.dsAtendimento);">
+                                                        <span class="button-inner">
+                                                            <i class="fa fa-trash"></i>
+                                                        </span>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div *ngIf="!row.listHistorico || row.listHistorico.length == 0">
+                                        <h6 class="alert alert-danger">Nenhum Histórico!</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" *ngIf="row.inStatus == 'F'">
+                            <div
+                                class="col-xs-12 col-sm-4 col-md-4 col-lg-4 col-sm-offset-8 col-md-offset-8 col-lg-offset-8">
+                                <button (click)="preEncerrarOcorrencia(row);" type="button"
+                                    class="btn btn-success btn-sm pull-right" style="margin-left: 10px;">
+                                    Encerrar
+                                    <i class="fa fa-check"></i>
+                                </button>
+                                <button (click)="preReabrirOcorrencia(row);" type="button"
+                                    class="btn btn-primary btn-sm pull-right" data-toggle="modal"
+                                    data-target="#modalReabertura">
+                                    <i class="fa fa-arrow-circle-o-left"></i>
+                                    Reabrir
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </ng-template>
+                <kendo-grid-excel fileName="ocorrencias.xlsx" [fetchData]="allData">
+                    <kendo-excelexport-column field="idOcorrencia" title="Ocorrência"></kendo-excelexport-column>
+                    <kendo-excelexport-column field="dsUsuarioAbertura" title="Usuário abertura"></kendo-excelexport-column>
+                    <kendo-excelexport-column field="dsProduto" title="Produto"></kendo-excelexport-column>
+                    <kendo-excelexport-column field="dtAbertura" title="Data de abertura"></kendo-excelexport-column>
+                    <kendo-excelexport-column field="dtLimiteAtendimento" title="Data de Entrega"></kendo-excelexport-column>
+                    <kendo-excelexport-column field="tipoOcorrencia.dsTipoOcorrencia" title="Tipo"></kendo-excelexport-column>
+                    <kendo-excelexport-column field="status" title="Status"></kendo-excelexport-column>
+                    <kendo-excelexport-column field="descricaoProblema" title="Descrição">
+                    </kendo-excelexport-column>
+                </kendo-grid-excel>
+            </kendo-grid>
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+        </div>
+    </div>
+    <hr>
+</div>
+
+<!-- Modal Anexo
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    style="background-color:  rgba(0, 0, 0, 0.5);">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">Cadastrar Ocorrência</h4>
+            </div>
+            <div class="modal-body">
+                <ng4-loading-spinner> </ng4-loading-spinner>
+                <div class="row form-group">
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                        <label for="produto">Produto:
+                            <span class="required-message">*&nbsp;{{reqMsgProd}}</span>
+                        </label>
+                        <div class="dropdown">
+                            <button id="produto" class="btn btn-default dropdown-toggle form-control" type="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                {{labelProduto}}
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li *ngFor="let key of produtos;">
+                                    <a (click)="setProduto(key.select);">
+                                        {{key.show}}
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                        <label for="tipoOcorrencia">Tipo da Ocorrência:
+                            <span class="required-message">*&nbsp;{{reqMsgTipo}}</span>
+                        </label>
+                        <div class="dropdown">
+                            <button id="tipoOcorrencia" class="btn btn-default dropdown-toggle form-control"
+                                type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                {{labelTipoOcorrencia}}
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu scrollable-menu">
+                                <li *ngFor="let key of tiposOcorrencia;">
+                                    <a (click)="setTipoOcorrencia(key);">
+                                        {{key.dsTipoOcorrencia}}
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <div class="form-group">
+                            <label for="descricaoOrorrencia">Descrição:
+                                <span class="required-message">*&nbsp;{{reqMsgDesc}}</span>
+                            </label>
+                            <angular-editor placeholder="Descreva aqui o problema..." [config]="editorConfig"
+                                [(ngModel)]="ocorrencia.dsProblema"></angular-editor>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <span class="btn btn-default btn-file btn-block">
+                            <i class="fa fa-paperclip"></i>&nbsp;Adicionar Anexo
+                            <input type="file" name="img" class="form-control" (change)="lerUrlImagem($event)">
+                            <span class="badge">{{ocorrencia.listAnexo ? ocorrencia.listAnexo.length : 0}}</span>
+                        </span>
+                    </div>
+                    <hr>
+                    <div *ngFor="let anexo of ocorrencia.listAnexo; let index = index;"
+                        class="col-xs-2 col-sm-2 col-md-1 col-lg-1" style="min-height: 50px;">
+                        <span
+                           *ngIf="anexo.dsExtensao === 'png' || anexo.dsExtensao === 'jpg' || anexo.dsExtensao === 'jpeg' || anexo.dsExtensao === 'gif'" (click)="preRemove(index);"
+                            class="fa-stack fa-md" style="color: #ffd54f;" title="{{anexo.dsAnexo}}" data-toggle="tooltip">
+                            <i class="fa fa-file-image-o fa-3x"></i>
+                            <i class="fa fa-times fa-stack-1x icon-remove"></i>
+                        </span>
+                        <span
+                            *ngIf="anexo.dsExtensao === 'pdf'" (click)="preRemove(index);"
+                            class="fa-stack fa-md" style="color: #e57373;" title="{{anexo.dsAnexo}}" data-toggle="tooltip">
+                            <i class="fa fa-file-pdf-o fa-3x"></i>
+                            <i class="fa fa-times fa-stack-1x icon-remove"></i>
+                        </span>
+                        <span
+                            *ngIf="anexo.dsExtensao === 'xls' || anexo.dsExtensao === 'xlsx' || anexo.dsExtensao === 'xlsm' || anexo.dsExtensao === 'csv'"
+                            (click)="preRemove(index);" class="fa-stack fa-md" style="color: #81c784;" title="{{anexo.dsAnexo}}" data-toggle="tooltip">
+                            <i class="fa fa-file-excel-o fa-3x"></i>
+                            <i class="fa fa-times fa-stack-1x icon-remove"></i>
+                        </span>
+                        <span
+                            *ngIf="anexo.dsExtensao === 'doc' || anexo.dsExtensao === 'docx' || anexo.dsExtensao === 'docm' || anexo.dsExtensao === 'txt'"
+                            (click)="preRemove(index);" class="fa-stack fa-md" style="color: #64b5f6;" title="{{anexo.dsAnexo}}" data-toggle="tooltip">
+                            <i class="fa fa-file-word-o fa-3x"></i>
+                            <i class="fa fa-times fa-stack-1x icon-remove"></i>
+                        </span>
+                        <span
+                            *ngIf="anexo.dsExtensao === 'rar' || anexo.dsExtensao === 'zip'"
+                            (click)="preRemove(index);" class="fa-stack fa-md" style="color: #90a4ae;" title="{{anexo.dsAnexo}}" data-toggle="tooltip">
+                            <i class="fa fa-file-zip-o fa-3x"></i>
+                            <i class="fa fa-times fa-stack-1x icon-remove"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" (click)="salvarOcorrencia();">Gravar</button>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+<!-- <div id="modalAddAnexo" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    style="background-color:  rgba(0, 0, 0, 0.5);">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">Anexar Arquivo
+                    <span class="label label-default">#&nbsp;{{ocorrencia.idOcorrencia}}</span>
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div class="row form-group">
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                        <label for="produto">Produto:
+                            <span class="required-message">*&nbsp;{{reqMsgProd}}</span>
+                        </label>
+                        <div class="dropdown">
+                            <button id="produto" class="btn btn-default dropdown-toggle form-control disabled"
+                                type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                {{labelProduto}}
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li *ngFor="let key of produtos;">
+                                    <a (click)="setProduto(key.select);">
+                                        {{key.show}}
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                        <label for="tipoOcorrencia">Tipo da Ocorrência:
+                            <span class="required-message">*&nbsp;{{reqMsgTipo}}</span>
+                        </label>
+                        <div class="dropdown">
+                            <button id="tipoOcorrencia" class="btn btn-default dropdown-toggle form-control disabled"
+                                type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                {{labelTipoOcorrencia}}
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li *ngFor="let key of tiposOcorrencia;">
+                                    <a (click)="setTipoOcorrencia(key);">
+                                        {{key.dsTipoOcorrencia}}
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <div class="form-group">
+                            <label for="descricaoOrorrencia">Descrição:
+                                <span class="required-message">*&nbsp;{{reqMsgDesc}}</span>
+                            </label>
+                            <textarea disabled id="descricaoOrorrencia" class="form-control" rows="10"
+                                placeholder="Escreva Aqui..." [(ngModel)]="ocorrencia.dsProblema">
+                            </textarea>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <span class="btn btn-default btn-file btn-block">
+                            <i class="fa fa-paperclip"></i>&nbsp;Adicionar Anexo
+                            <input type="file" name="img" class="form-control" (change)="lerUrlImagem($event)">
+                            <span class="badge">{{ocorrencia.listAnexo ? ocorrencia.listAnexo.length : 0}}</span>
+                        </span>
+                    </div>
+                    <hr>
+                    <div *ngFor="let anexo of ocorrencia.listAnexo; let index = index;"
+                        class="col-xs-2 col-sm-2 col-md-1 col-lg-1" style="padding-bottom: 5px;">
+                        <span
+                            *ngIf="anexo.dsExtensao === 'png' || anexo.dsExtensao === 'jpg' || anexo.dsExtensao === 'jpeg' || anexo.dsExtensao === 'gif'" (click)="preRemove(index);"
+                            class="fa-stack fa-md" style="color: #ffd54f;" title="{{anexo.dsAnexo}}" data-toggle="tooltip">
+                            <i class="fa fa-file-image-o fa-3x"></i>
+                            <i class="fa fa-times fa-stack-1x icon-remove"></i>
+                        </span>
+                        <span *ngIf="anexo.dsExtensao === 'pdf'" (click)="preRemove(index);"
+                            class="fa fa-file-pdf-o fa-3x" style="color: #e57373;" title="{{anexo.dsAnexo}}"
+                            data-toggle="tooltip">
+                        </span>
+                        <span *ngIf="anexo.dsExtensao === 'xls' || anexo.dsExtensao === 'xlsx'"
+                            (click)="preRemove(index);" class="fa fa-file-excel-o fa-3x" style="color: #81c784;"
+                            title="{{anexo.dsAnexo}}" data-toggle="tooltip">
+                        </span>
+                        <span
+                            *ngIf="anexo.dsExtensao === 'doc' || anexo.dsExtensao === 'docx' || anexo.dsExtensao === 'txt'"
+                            (click)="preRemove(index);" class="fa fa-file-word-o fa-3x" style="color: #64b5f6;"
+                            title="{{anexo.dsAnexo}}" data-toggle="tooltip">
+                        </span>
+                        <span *ngIf="anexo.dsExtensao === 'rar' || anexo.dsExtensao === 'zip'"
+                            (click)="preRemove(index);" class="fa fa-file-zip-o fa-3x" style="color: #90a4ae;"
+                            title="{{anexo.dsAnexo}}" data-toggle="tooltip">
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" (click)="addAnexos();">Gravar</button>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+<!-- Modal Histórico-->
+<!-- <div class="modal fade" id="modalHistorico" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    style="background-color: rgba(0, 0, 0, 0.5);">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">Adicionar Histórico</h4>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <div>
+                        <textarea id="descricao" class="form-control" rows="10" maxlength="10000"
+                            placeholder="Escreva Aqui..." [(ngModel)]="descricaoHistorico">
+                        </textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" (click)="adicionarHistorico();">Adicionar</button>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+<!-- Modal Reabertura-->
+<!-- <div id="modalReabertura" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    style="background-color: rgba(0, 0, 0, 0.5);">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">Reabrir Ocorrência</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <label for="descricaoReabertura">Descrição:
+                            <span class="required-message">*&nbsp;{{reqMsgReabertura}}</span>
+                        </label>
+                        <textarea id="descricaoReabertura" class="form-control" rows="10" maxlength="10000"
+                            placeholder="Escreva Aqui o Motivo..." [(ngModel)]="descricaoHistorico">
+                        </textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" (click)="reabrirOcorrencia();">Gravar</button>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+<!-- Modal Prioridade-->
+<!-- <div id="modalPrioridade" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    style="background-color: rgba(0, 0, 0, 0.5);">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">Definir Prioridade</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <div class="alert alert-danger text-center h4">
+                            A <strong>Prioridade Máxima</strong> está no nível:
+                            <strong>{{usuario.inGerenteProjeto ? maxPrioridadeGP : maxPrioridadeFP}}</strong>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <label for="idNivelPrioridade">
+                            Nível de Prioridade
+                        </label>
+                        <div class="input-group input-group-lg">
+                            <span class="input-group-addon" id="sizing-addon1">
+                                <i class="fa fa-signal"></i>
+                            </span>
+                            <input id="idNivelPrioridade" type="number" class="form-control"
+                                placeholder="Digite aqui..." [(ngModel)]="nrPrioridade"
+                                aria-describedby="sizing-addon1">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" (click)="editarPrioridadeCliente();">Gravar</button>
+            </div>
+        </div>
+    </div>
+</div> -->

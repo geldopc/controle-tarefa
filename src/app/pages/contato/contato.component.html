@@ -1,0 +1,67 @@
+<app-cabecalho></app-cabecalho>
+
+<section class="bread wow fadeIn">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6">
+                <ul>
+                    <li>
+                        <a routerLink="/inicio" routerLinkActive="active">Home</a>
+                    </li>
+                    <li>Contato</li>
+                </ul>
+            </div>
+            <div class="col-sm-6 txt-right hidden-xs">
+                <h5>SM Soluções para Gestão da Informação LTDA</h5>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="standard contact wow fadeIn">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <h2>ENTRE EM CONTATO</h2>
+                <p>Se você está interessado em nosso produto ou gostaria de compartilhar algum comentário, por favor contacte-nos preenchendo formulário abaixo.</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-8">
+                <form id="formReativo" [formGroup]="reactiveForm">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <label>Nome*</label>
+                            <input type="text" maxlength="120" formControlName="dsNome" name="dsNome" placeholder="Digite o seu nome" >
+                            <label>Telefone</label>
+                            <input type="number" maxlength="15" formControlName="nrTelefone" name="nrTelefone" placeholder="Digite o seu telefone">
+                            <label>Email*</label>
+                            <input type="text" maxlength="50" formControlName="dsEmail" name="dsEmail" placeholder="Digite o seu email">
+                        </div>
+                        <div class="col-sm-6">
+                            <label>Assunto*</label>
+                            <input type="text" maxlength="30" formControlName="dsAssunto" name="dsAssunto" placeholder="Digite o assunto">
+                            <label>Escreva sua mensagem*</label>
+                            <textarea maxlength="500" formControlName="dsMensagem" name="dsMensagem" id="" cols="30" rows="6"></textarea>
+                        </div>
+                    </div>
+                    <div class="row">
+                            <re-captcha #captchaRef="reCaptcha" formControlName="recaptchaReactive" (resolved)="$event && submit($event)" ></re-captcha>
+                        <div class="col-sm-5 col-md-3">
+                            <br/>
+                            <input [disabled]="!reactiveForm.valid" type="submit" (click)="isValid()" value="Enviar" class="btn-normal btn-red">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-sm-4">
+                <div class="image">
+                    <img src="assets/img/logo-branca.png" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+  
+<app-onde-estamos></app-onde-estamos>
+<app-rodape></app-rodape>

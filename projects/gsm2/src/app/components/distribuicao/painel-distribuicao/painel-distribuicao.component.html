@@ -1,0 +1,409 @@
+<div *ngIf="ocorrenciaSelecionada" id="ocorrencia{{ocorrenciaSelecionada.idOcorrencia}}" class="panel-ocorrencia">
+        <div class="container-fluid">
+            <div class="row acoes">
+                <div class="col-xs-9 col-sm-9 col-md-9 col-lg-10">
+                    <h3 class="pull-left">
+                        <span class="label label-primary">
+                            <i class="fa fa-hashtag"></i>
+                            &nbsp;{{ocorrenciaSelecionada.idOcorrencia}}
+                        </span>
+                    </h3>
+                </div>
+                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+                    <h3 class="pull-left">
+                        <a type="button" class="btn btn-outline-default " (click)="fecharPanel(ocorrenciaSelecionada);"
+                            style="cursor: pointer; color: gray;">
+                            <i class="fa fa-times "></i> Fechar
+                        </a>
+                    </h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
+                    <div class="label-title">
+                        Produto
+                    </div>
+                    <h6>{{ocorrenciaSelecionada.dsProduto}}</h6>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
+                    <div class="label-title">
+                        Cliente
+                    </div>
+                    <h6>{{ocorrenciaSelecionada.dsCliente}}</h6>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-5 col-lg-5" *ngIf="tiposOcorrencia">
+                    <!-- <div class="label-title">
+                        Funcionalidade
+                    </div>
+                    <h6>{{ocorrenciaSelecionada.dsFuncionalidade}}</h6> -->
+                    <label for="homologador">Funcionalidade:</label>
+                    <div class="dropdown">
+                        <button class="btn btn-default dropdown-toggle form-control truncate" type="button"
+                            id="homologador" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            {{ocorrenciaSelecionada.dsFuncionalidade}}
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu scrollable-menu">
+                            <li *ngFor="let item of tiposOcorrencia;">
+                                <a
+                                    (click)="ocorrenciaSelecionada.cdFuncionalidade = item.select; ocorrenciaSelecionada.dsFuncionalidade = item.show;">
+                                    {{item.show}}
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                    <div class="label-title">
+                        Status
+                    </div>
+                    <h6>{{ocorrenciaSelecionada.dsStatus}}</h6>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
+                    <div class="label-title">
+                        Prioridade 1
+                    </div>
+                    <h6>{{ocorrenciaSelecionada.nrPrioridade1}}</h6>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
+                    <div class="label-title">
+                        Prioridade 2
+                    </div>
+                    <h6>{{ocorrenciaSelecionada.nrPrioridade2}}</h6>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-5 col-lg-5">
+                    <div class="label-title">
+                        Nível de solicitação
+                    </div>
+                    <h6>{{convertNivelSolicitacao(ocorrenciaSelecionada.inTipoSolicitacao)}}</h6>
+                </div>
+                <div *ngIf="ocorrenciaSelecionada.inAmbienteEntrada" class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                    <div class="label-title">
+                        Modalidade
+                    </div>
+                    <h6>{{ocorrenciaSelecionada.inAmbienteEntrada}}</h6>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="label-title">
+                        Descrição
+                    </div>
+                    <h6>
+                        <div [innerHTML]="ocorrenciaSelecionada.dsOcorrencia"></div>
+                    </h6>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-3">
+                    <label for="prioridadeUm">Prioridade 1:
+                        <span class="required-message">*&nbsp;{{filtrosPesquisaTecnico.reqMsgPrioridadeUm}}</span>
+                    </label>
+                    <div class="dropdown">
+                        <button id="prioridadeUm" class="btn btn-default dropdown-toggle form-control" type="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            <span *ngIf="filtros.prioridadeUm">{{filtros.prioridadeUm.show}}</span>
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li *ngFor="let key of filtros.listPrioridadeUmGrid;">
+                                <a
+                                    (click)="ocorrenciaSelecionada.nrPrioridade1 = key.select; filtros.prioridadeUm = key;">
+                                    {{key.show}}
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-3">
+                    <label for="prioridadeDois">Prioridade 2:
+                        <span class="required-message">*&nbsp;{{filtrosPesquisaTecnico.reqMsgPrioridadeDois}}</span>
+                    </label>
+                    <div class="dropdown">
+                        <button id="prioridadeDois" class="btn btn-default dropdown-toggle form-control" type="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            <span *ngIf="filtros.prioridadeDois">{{filtros.prioridadeDois.show}}</span>
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li *ngFor="let key of filtros.listPrioridadeDoisGrid;">
+                                <a
+                                    (click)="ocorrenciaSelecionada.nrPrioridade2 = key.select; filtros.prioridadeDois = key;">
+                                    {{key.show}}
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-3">
+                    <label for="prioridadeDois">Nível de solicitação:
+                        <span class="required-message">*&nbsp;{{filtrosPesquisaTecnico.reqMsgSeveridade}}</span>
+                    </label>
+                    <div class="dropdown">
+                        <button id="prioridadeDois" class="btn btn-default dropdown-toggle form-control" type="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            <span *ngIf="filtros.tipoSolicitacao">{{filtros.tipoSolicitacao.show}}</span>
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li *ngFor="let key of filtros.listTipoSolicitacao;">
+                                <a
+                                    (click)="ocorrenciaSelecionada.inTipoSolicitacao = key.select; filtros.tipoSolicitacao = key; gravarOcorrencia();">
+                                    {{key.show}}
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-3">
+                    <label for="prioridadeDois">Nível de complexidade:
+                        <span class="required-message">*&nbsp;{{filtrosPesquisaTecnico.reqMsgSeveridade}}</span>
+                    </label>
+                    <div class="dropdown">
+                        <button id="prioridadeDois" class="btn btn-default dropdown-toggle form-control" type="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            <span *ngIf="filtros.nivelComplexidade">{{filtros.nivelComplexidade.show}}</span>
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li *ngFor="let key of filtros.listNivelComplexidade;">
+                                <a
+                                    (click)="ocorrenciaSelecionada.inNivelComplexidade = key.select; filtros.nivelComplexidade = key; gravarOcorrencia();">
+                                    {{key.show}}
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-3">
+                    <label for="solicitadoCliente">Ocorrência interna?
+                        <span>{{reqMsgSolicitado}}</span>
+                        <span class="required-message">*&nbsp;</span>
+                    </label>
+                    <div class="dropdown">
+                        <button id="solicitadoCliente" class="btn btn-default dropdown-toggle form-control"
+                            type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            <span *ngIf="comboOcorrenciaInterna">{{comboOcorrenciaInterna}}</span>
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li *ngFor="let key of simNao;">
+                                <a
+                                    (click)="ocorrenciaSelecionada.inOcorrenciaInterna = key.select; comboOcorrenciaInterna = key.show;">
+                                    {{key.show}}
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- daqui pra baixo vai ser pro usuario da sm -->
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-3">
+                    <label for="dataSolicitacao">Data da solicitação:
+                        <span class="required-message">*&nbsp; {{reqMsgTipo}}</span>
+                    </label>
+                    <div class="dropdown">
+                        <input id="dataSolicitacao" class="form-control" type="date"
+                            [(ngModel)]="ocorrenciaSelecionada.dtSolicitacao">
+                    </div>
+                </div>
+
+
+                <div style="position: relative; top: 2vh" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <ul class="nav nav-pills">
+                        <li role="presentation" class="active">
+                            <a data-toggle="pill"
+                                href="#distribuicao{{ocorrenciaSelecionada.idOcorrencia}}">Distribuição</a>
+                        </li>
+                        <li role="presentation">
+                            <a data-toggle="pill" href="#anexo{{ocorrenciaSelecionada.idOcorrencia}}"
+                                (click)="obterAnexoOcorrencia(ocorrenciaSelecionada)">Anexo</a>
+                        </li>
+                        <li role="presentation">
+                            <a data-toggle="pill" href="#hist{{ocorrenciaSelecionada.idOcorrencia}}"
+                                (click)="obterHistoricoOcorrencia(ocorrenciaSelecionada)">Histórico</a>
+                        </li>
+                        <li role="presentation">
+                            <a data-toggle="pill" href="#builds{{ocorrenciaSelecionada.idOcorrencia}}"
+                                (click)="obterHistoricoBuilds(ocorrenciaSelecionada)">Builds {{ocorrenciaSelecionada.inControleVersao}}</a>
+                        </li>
+                        <li role="presentation" *ngIf="!ocorrenciaSelecionada.inControleVersao">
+                            <a data-toggle="pill" href="#commits{{ocorrenciaSelecionada.idOcorrencia}}"
+                                (click)="obterCommits(ocorrenciaSelecionada)">Commits</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <br />
+                        <div id="anexo{{ocorrenciaSelecionada.idOcorrencia}}" class="tab-pane fade">
+                            <div class="row">
+                                <anexar-arquivo [filtros]="filtros" [ocorrenciaGsm]="ocorrencia" *ngIf="ocorrencia">
+
+                                </anexar-arquivo>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-striped"
+                                    *ngIf="ocorrenciaSelecionada.anexos && ocorrenciaSelecionada.anexos.length > 0">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                <i class="fa fa-hashtag"></i>
+                                            </th>
+                                            <th>Descrição</th>
+                                            <th>Tipo</th>
+                                            <th *ngIf="ocorrenciaSelecionada.inStatus != 'U'">Download</th>
+                                            <!-- <th *ngIf="chamado.inStatus != 'U'">Excluir</th> -->
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let anexo of ocorrenciaSelecionada.anexos; let j = index;"
+                                            class="text-left">
+                                            <td>{{j + 1}}</td>
+                                            <td>{{anexo.dsNome}}</td>
+                                            <td>{{anexo.dsExtensao}}</td>
+                                            <td *ngIf="ocorrenciaSelecionada.inStatus != 'U'">
+                                                <button class="btn btn-info"
+                                                    (click)="downloadAnexo(anexo.idOcorrenciaAnexo, anexo.dsNome)">
+                                                    <span class="button-inner">
+                                                        <i class="fa fa-download"></i>
+                                                    </span>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div *ngIf="!ocorrenciaSelecionada.anexos || ocorrenciaSelecionada.anexos.length == 0">
+                                <h6 class="alert alert-warning">Nenhum Arquivo Anexado!</h6>
+                            </div>
+                        </div>
+                        <div id="hist{{ocorrenciaSelecionada.idOcorrencia}}" class="tab-pane fade">
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <button *ngIf="ocorrenciaSelecionada.inStatus != 'U'" type="button"
+                                        (click)="obterHistorico(ocorrenciaSelecionada)"
+                                        class="btn btn-success btn-sm pull-left" data-toggle="modal"
+                                        data-target="#modalHistorico">
+                                        <i class="fa fa-plus"></i>&nbsp;Adicionar Histórico
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <table id="listHistorico" class="table table-striped"
+                                    *ngIf="(ocorrenciaSelecionada.listHistorico && ocorrenciaSelecionada.listHistorico.length > 0)">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Descrição</th>
+                                            <th>Data</th>
+                                            <th>Responsável</th>
+                                            <!-- <th *ngIf="chamado.inStatus != 'U'">Excluir</th> -->
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let hist of ocorrenciaSelecionada.listHistorico; let j = index;"
+                                            class="text-left">
+                                            <td>{{j + 1}}</td>
+                                            <td [innerHTML]="hist.dsMensagem"></td>
+                                            <!-- <td>{{util.formatarDataUS(hist.dtInicioAtendimento, 'dd/MM/yyyy')}}</td>
+                                            <td>{{util.formatarDataUS(hist.dtFinalAtendimento, 'dd/MM/yyyy')}}</td> -->
+                                            <td>{{hist.dtCadastro}}</td>
+                                            <td>{{hist.usuario}}</td>
+                                            <!-- <td *ngIf="chamado.inStatus != 'U'">
+                                                <button class="btn btn-danger" (click)="removerHistorico(chamado.idOcorrencia, hist.idOcorrenciaHistorico, hist.dsAtendimento);">
+                                                    <span class="button-inner">
+                                                        <i class="fa fa-trash"></i>
+                                                    </span>
+                                                </button>
+                                            </td> -->
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div
+                                *ngIf="!ocorrenciaSelecionada.listHistorico || ocorrenciaSelecionada.listHistorico.length == 0">
+                                <h6 class="alert alert-warning">Nenhum Histórico!</h6>
+                            </div>
+                        </div>
+                        <div id="builds{{ocorrenciaSelecionada.idOcorrencia}}" class="tab-pane fade">
+                            <div class="table-responsive">
+                                <table class="table table-striped"
+                                    *ngIf="(ocorrenciaSelecionada.listBuilds && ocorrenciaSelecionada.listBuilds.length > 0)">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Cliente</th>
+                                            <th>Modalidade</th>
+                                            <th>Versão</th>
+                                            <th>Status</th>
+                                            <th>Tag</th>
+                                            <th>Inicio</th>
+                                            <th>Fim</th>
+                                            <th>Jenkins</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let build of ocorrenciaSelecionada.listBuilds; let j = index;"
+                                            class="text-left">
+
+                                            <td>{{build.idControleAtualizacao}}</td>
+                                            <td>{{build.dsCliente}}</td>
+                                            <td>{{build.dsModalidade}}</td>
+                                            <td>{{build.dsTipoAtualizacao}}</td>
+                                            <td style="font-weight: bold"
+                                                [ngClass]="{'text-danger': (build.dsMerge == 'Conflito'), 'text-success': (build.dsMerge == 'Merge'), 'text-muted': (build.dsMerge == 'Resolvido')}">
+                                                <i class="fa"
+                                                    [ngClass]="{'fa-support': (build.dsMerge == 'Conflito'), 'fa-check': (build.dsMerge == 'Resolvido'), 'fa-check': (build.dsMerge == 'Merge') }"></i>
+                                                {{build.dsMerge}}
+                                            </td>
+                                            <td>{{build.dsNomeTag}}</td>
+                                            <td>{{build.dtInicioAtualizacao}}</td>
+                                            <td>{{build.dtFimAtualizacao}}</td>
+                                            <td style="font-weight: bold"
+                                                [ngClass]="{'text-danger': (!build.dtFimAtualizacao), 'text-success': (build.dtFimAtualizacao)}">
+                                                <i class="fa"
+                                                    [ngClass]="{'fa-times': (!build.dtFimAtualizacao), 'fa-check': (build.dtFimAtualizacao) }">
+                                                    <span *ngIf="build.dtFimAtualizacao">Rodou</span>
+                                                    <span *ngIf="!build.dtFimAtualizacao">Pendente</span>
+                                                </i>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div
+                                *ngIf="!ocorrenciaSelecionada.listBuilds || ocorrenciaSelecionada.listBuilds.length == 0">
+                                <h6 class="alert alert-warning">Nenhum Build Gerado!</h6>
+                            </div>
+                        </div>
+                        <div id="distribuicao{{ocorrenciaSelecionada.idOcorrencia}}" class="tab-pane fade in active">
+                            <distribuicao *ngIf="ocorrenciaSelecionada"
+                                [filtrosPesquisaTecnico]="filtrosPesquisaTecnico" modoGravacao="false"
+                                [ocorrenciaGsm]="ocorrenciaSelecionada" (carregarGridChange)="reCarregarGrid($event);">
+                            </distribuicao>
+                        </div>
+                        <div class="panel-footer" *ngIf="ocorrenciaSelecionada.inStatus == 'F'">
+                            <div class="row">
+                                <div
+                                    class="col-xs-12 col-sm-4 col-md-4 col-lg-4 col-sm-offset-8 col-md-offset-8 col-lg-offset-8">
+                                    <button *ngIf="ocorrenciaSelecionada.inStatus == 'F'"
+                                        (click)="preEncerrarOcorrencia(ocorrenciaSelecionada);" type="button"
+                                        class="btn btn-success btn-sm pull-right" style="margin-left: 10px;">
+                                        Encerrar
+                                        <i class="fa fa-check"></i>
+                                    </button>
+                                    <button *ngIf="ocorrenciaSelecionada.inStatus == 'F'"
+                                        (click)="preReabrirOcorrencia(ocorrenciaSelecionada);" type="button"
+                                        class="btn btn-primary btn-sm pull-right" data-toggle="modal"
+                                        data-target="#modalReabertura">
+                                        <i class="fa fa-arrow-circle-o-left"></i>
+                                        Reabrir
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

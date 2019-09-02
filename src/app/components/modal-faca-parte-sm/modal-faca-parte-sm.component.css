@@ -1,0 +1,21 @@
+.image-upload > input
+{
+    display: none;
+}
+
+:before, :after {
+    margin-bottom: -5% !important;
+}
+
+/* #equip-label {
+    color: #fff;
+    font-weight: 300;
+    font-size: 14px;
+    letter-spacing: 6px;
+    margin-top: 16px;
+    text-transform: uppercase;
+    display: inline-block;
+    max-width: 100%;
+    margin-bottom: 5px;
+    font-weight: 700;
+} */

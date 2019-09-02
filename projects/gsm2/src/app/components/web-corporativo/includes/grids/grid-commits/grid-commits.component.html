@@ -1,0 +1,64 @@
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="btn-group" role="group" aria-label="...">
+            <button *ngIf="ocorrencia.inStatus != 'U'" type="button"
+                (click)="obterCommits(ocorrencia);" class="btn btn-success btn-sm"
+                data-toggle="modal" data-target="#modalAddCommits">
+                <i class="fa fa-plus"></i>&nbsp;Adicionar Commit
+            </button>
+            <button *ngIf="ocorrencia?.commits?.length && ocorrencia.inStatus != 'U'" type="button"
+                (click)="preDelTodosCommit(ocorrencia);" class="btn btn-danger btn-sm"
+                data-toggle="modal">
+                <i class="fa fa-trash"></i>&nbsp;Remover Todos Commits
+            </button>
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <hr>
+    </div>
+    <div *ngFor="let item of ocorrencia.commits;" class="col-xs-4 col-sm-4 col-md-2 col-lg-2">
+        <div class="btn-group btn-block" role="group" aria-label="...">
+            <button type="button" class="btn btn-default btn-sm btn-toolbar" style="width: 80%">
+                <i class="fa fa-hashtag"></i>&nbsp;{{item.nrCommit}}
+            </button>
+            <button type="button" class="btn btn-default btn-sm btn-toolbar" style="width: 20%" (click)="preDelCommit(item);">
+                <i class="fa fa-trash-o text-danger"></i>
+            </button>
+        </div>
+    </div>
+    <div *ngIf="!ocorrencia?.commits || !ocorrencia?.commits?.length" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <app-empty-grid message="Nenhum Commit">
+        </app-empty-grid>
+    </div>
+</div>
+<!-- Modal Commits-->
+<div id="modalAddCommits"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="myModalLabel"
+    style="background-color: rgba(0, 0, 0, 0.5);">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">Adicionar Commit</h4>
+            </div>
+            <div class="modal-body">
+                <textarea id="descricao"
+                    class="form-control"
+                    rows="10"
+                    maxlength="10000"
+                    placeholder="Informe o número do Commit. Para adicionar vários, coloque os commits separados por ';'. Exemplo: 222;111;333"
+                    [(ngModel)]="commits">
+                </textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" (click)="gravarCommit();">Adicionar</button>
+            </div>
+        </div>
+    </div>
+</div>

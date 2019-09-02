@@ -1,0 +1,128 @@
+<!-- Modal  Faça Parte da SM-->
+<div class="modal fade" id="equip" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="close-abs" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </div>
+                <div class="row">
+                    <div class="col-sm-5 col-md-6 bg-white no-padding">
+                        <div class="box">
+                            <div class="txt-center">
+                                <img src="assets/img/icon-workplace.png" alt="FAÇA PARTE DA NOSSA EQUIPE">
+                                <h3>FAÇA PARTE DA NOSSA EQUIPE</h3>
+                                <hr>
+                            </div>
+                            <p>Estamos abrindo vagas para o cargo de Desenvolvedores Web que estejam cursando o 5º período em
+                                diante ou já estejam formados na área de Sistema da Informação ou afins e atendam aos seguintes
+                                requisitos:
+                            </p>
+                            <ul>
+                                <li>Conhecimento Avançado em SQL;</li>
+                                <li>Conhecimento na Linguagem JAVA;</li>
+                                <li>Conhecimento em JavaScript;</li>
+                                <li>Conhecimento em CSS;</li>
+                                <li>Conhecimento em JSF;</li>
+                                <li>Conhecimento em HTML;</li>
+                                <li>Conhecimento em iReport;</li>
+                                <li>Conhecimento em Angular;</li>
+                                <li>Conhecimento em Ionic;</li>
+                            </ul>
+                            <p>
+                                Outros requisitos desejáveis (opcional):
+                            </p>
+                            <ul>
+                                <li>Conhecimento em WebService;</li>
+                                <li>Conhecimento em WebIntegrator;</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-sm-7 col-md-6 no-padding">
+                        <div class="box" style="margin-top: -2%;">
+                            <h6>Em caso de interesse, preencha o formulário abaixo.</h6>
+                            <form id="formReativo" [formGroup]="reactiveForm">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <label>Nome*</label>
+                                        <input type="text" maxlength="120" formControlName="dsNome" placeholder="Digite o seu nome">
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <label>Email*</label>
+                                        <input type="text" maxlength="50" formControlName="dsEmail" placeholder="Digite o seu email">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <label>Tel. Celular*</label>
+                                        <input type="number" maxlength="15" class="telefone" formControlName="nrTelefoneCelular" placeholder="Digite o seu telefone celular">
+                                    </div>
+
+                                    <div class="col-sm-6">
+                                        <label>Tel. Residencial</label>
+                                        <input type="number" maxlength="15" class="telefone" formControlName="nrTelefoneResidencial" placeholder="Digite o seu telefone residencial">
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <label>Formação</label>
+                                        <input type="text" maxlength="60" formControlName="dsFormacao" placeholder="Digite a sua formação">
+                                    </div>
+
+                                    <div class="col-sm-6">
+                                        <label>Estado</label>
+                                        <span class="select">
+                                            <select formControlName="dsSiglaEstado">
+                                                <option *ngFor="let item of estados" [value]="item.sigla">
+                                                    {{item.descricao}}
+                                                </option>
+                                            </select>
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+
+                                    <div class="col-sm-6">
+                                        <label>Curriculum*</label>
+
+                                        <div class="image-upload" style="margin-top: -4%;">
+                                            <label for="file-input">
+                                                <i style="color: white" class="fa fa-upload fa-3x"></i>
+                                            </label>
+
+                                            <input id="file-input" type="file" (change)="lerUrlImagem($event)" />
+                                            <p *ngIf="!trabalheConosco.curriculoAnexado" style="color: white">
+                                                Somente arquivos no formato PDF.
+                                            </p>
+                                            <p *ngIf="trabalheConosco.curriculoAnexado" style="color: white">
+                                                Anexado com sucesso.
+                                            </p>
+                                        </div>
+
+                                        <!-- icone indicando que o arquivo foi enviado -->
+                                        <!--<ion-icon *ngIf="!iOS && doc.base64Image" item-right class="{{doc.iconeCheckUpload}}" style="margin-right: 28px; color: #32db64;"></ion-icon>-->
+                                        <!-- <ion-icon *ngIf="!iOS && !doc.base64Image" item-right class="{{doc.iconeCheckUpload}}" style="margin-right: 28px;"></ion-icon> -->
+                                    </div>
+
+                                    <div class="col-sm-6">
+                                        <label>Cidade</label>
+                                        <input type="text" maxlength="60" formControlName="dsCidade" placeholder="Digite a sua cidade">
+                                    </div>
+                                </div>
+                                <div class="row" style="padding-left: 25%; padding-top: 3%;">
+                                    <re-captcha #captchaRef="reCaptcha" formControlName="recaptchaReactive" (resolved)="$event && submit($event)"></re-captcha>
+                                    <div class="col-sm-6">
+                                        <input type="submit" [disabled]="!reactiveForm.valid" (click)="isValid()" value="Enviar" class="btn-normal btn-blue" style="margin-left: 25%">
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

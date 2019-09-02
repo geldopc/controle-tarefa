@@ -1,0 +1,37 @@
+.principal {
+    height: 100%;
+    margin: 50px 0;
+    overflow: auto;
+    padding-bottom: 10vh;
+}
+.margin-b10 {
+    margin-bottom: 10px;
+}
+.opcao-grid {
+    color: rgba(0,0,0,0.54);
+    margin: 2px;
+    cursor: pointer;
+}
+i.opcao-grid:hover {
+    color: rgba(0,0,0,0.84);
+}
+.opcao-focal {
+    color: rgba(0,0,0,0.54);
+    margin: 0px 10px 0px 10px;
+    cursor: pointer;
+}
+i.opcao-focal:hover {
+    color: rgba(0,0,0,0.84);
+}
+.clickable {
+    cursor: pointer;
+}
+.grau45 {
+    transform: rotate(45deg) !important;
+}
+.icon-prioridade {
+    margin: 5px;
+}
+.legend {
+    font-size: smaller;
+}

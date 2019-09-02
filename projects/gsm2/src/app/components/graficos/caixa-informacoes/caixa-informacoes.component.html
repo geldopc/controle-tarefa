@@ -1,0 +1,14 @@
+<ion-card *ngIf="informacoes.length > 0">
+    <ion-card-header style="text-align: center; white-space: normal;">
+        <strong><i class="fa fa-bar-chart" aria-hidden="true"></i> {{titulocaixa}}</strong>
+      </ion-card-header>
+  <ion-grid>
+    <ion-row>
+      <ion-col *ngFor="let item of informacoes" col-6>
+        <span class="count_top">
+          <i class="fa fa-{{item.icone}}"></i> {{item.titulo}}</span>
+        <div class="count" id="{{item.titulo}}">{{item.dados}}</div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-card>

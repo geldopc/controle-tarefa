@@ -1,0 +1,13 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-searchbar placeholder="{{placeholder}}" [(ngModel)]="autocomplete" [showCancelButton]="false" (ionInput)="updateSearch()"></ion-searchbar>
+    <button ion-button block full small color="danger" (click)="dismiss()">Cancelar</button>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-list [virtualScroll]="autocompleteItems" approxItemHeight="40px">
+    <ion-item style="padding-left: 10px !important; padding-right: 10px !important;" *virtualItem="let item" (click)="chooseItem(item)">
+      {{item.show}}
+    </ion-item>
+  </ion-list>
+</ion-content>

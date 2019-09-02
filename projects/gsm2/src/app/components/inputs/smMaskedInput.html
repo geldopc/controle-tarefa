@@ -1,0 +1,14 @@
+<div class="{{class}}" [ngClass]="{'has-error' :(incorreto || invalido)}" id="{{id}}">
+    <ng-content></ng-content>
+    <div class="form-group">
+        <label id="{{id}}Label" floating>
+            <small>{{label}}
+               <span color="required-message">{{required == true ? '*' : ''}}</span>
+            </small>
+        </label>
+        <input focuser type="{{type}}" id="{{id}}Input" name="{{name}}" [(ngModel)]="screenValue " minlength="{{minlength}}" [(maxlength)]="maxlength"
+            [(required)]="required "/>
+    </div>
+    <span color="required-message ">{{msg}}</span>
+</div>
+

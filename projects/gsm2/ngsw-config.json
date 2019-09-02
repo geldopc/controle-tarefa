@@ -1,0 +1,24 @@
+{
+  "index": "/index.html",
+  "assetGroups": [{
+    "name": "app",
+    "installMode": "prefetch",
+    "resources": {
+      "files": [
+        "/gsm/favicon.ico",
+        "/gsm/index.html",
+        "/gsm/*.css",
+        "/gsm/*.js"
+      ]
+    }
+  }, {
+    "name": "assets",
+    "installMode": "lazy",
+    "updateMode": "prefetch",
+    "resources": {
+      "files": [
+        "/gsm/assets/**"
+      ]
+    }
+  }]
+}

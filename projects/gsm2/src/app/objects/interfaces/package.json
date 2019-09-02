@@ -1,0 +1,15 @@
+{
+  "name": "siapec3-portal-servicos",
+  "author": "SM Soluções para gestão da informação",
+  "homepage": "http://ionicframework.com/",
+  "dependencies": {
+    
+  },
+  "devDependencies": {
+   
+  },
+  "cordovaPlugins": [
+   
+  ],  
+  "description": "portal_servicos_ionic2: Um projeto da SM Soluções para Gestão da Informação LTDA"
+}

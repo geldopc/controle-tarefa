@@ -1,0 +1,141 @@
+.panel-no-selected {
+    background-color: #ffffff;
+}
+.idchamado{
+    width: 5%;
+}
+#acoes-grid{
+    background: #ddd;
+    height: 5vh;
+    padding: 10px 15px;
+    border-bottom: 1px solid #adadad;
+    margin: 0px;
+}
+#grid-principal-ocorrencia {
+    height: 55vh;
+    overflow-y: auto;
+}
+.panel-selected {
+    background-color: #e8f5e9;
+}
+.prioridade small{
+    float: left;
+    top: 0.5vh;
+    position: relative;
+}
+.prioridade input{
+    width: 5.6vh;
+    height: 28px;
+}
+.btn-desenvolvimento{
+    background-color: #e2e2e2;
+    color: #406577;
+}
+// .btn-primary {
+//     color: #8a4430;
+//     background-color: #e8ea4b;
+// }
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+.panel-default>.panel-heading+.panel-collapse>.panel-body {
+    border-color: #ddd;
+    width: 52%;
+    position: fixed;
+    top: 0vh;
+    right: 0;
+    height: 500vh;
+    background: #fff;
+    z-index: 1030;
+    border-left: 1px solid #ddd;
+}
+.label-title {
+    font-size: smaller;
+    color: #aaa;
+    font-weight: bold;
+    margin-bottom: -15px;
+}
+
+.btn-margin {
+    margin: 5px 5px 0px 0px;
+}
+.panel-ocorrencia hr{
+    color: #d6d6d6;
+    border: 1px solid;
+    margin: 0 0 20px;
+    box-sizing: unset;
+}
+
+.panel-ocorrencia .acoes {
+    background-color: #f0f0f0;
+    border: 1px solid #ddd;
+    height: 6vh;
+}
+.panel-ocorrencia h3 {
+    margin-top: 0.6rem;
+}
+.panel-ocorrencia h3 span {
+    font-size: 1.5rem;
+    margin-right: 2vh;
+}
+h6, table, .table {
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+}
+#listHistorico td{
+    white-space: pre;
+}
+@media only screen and (min-width: 601px) {
+    .panel-ocorrencia {
+        border-color: #ddd;
+        width: 67%;
+        position: fixed;
+        top: 0vh;
+        right: 0;
+        height: 500vh;
+        background: #fff;
+        z-index: 1030;
+        border-left: 1px solid #ddd;
+        height: 100%;
+        overflow-y: scroll;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .panel-ocorrencia {
+        border-color: #ddd;
+        width: 100%;
+        position: fixed;
+        top: 0vh;
+        right: 0;
+        height: 500vh;
+        background: #fff;
+        z-index: 1030;
+        border-left: 1px solid #ddd;
+        height: 100%;
+        overflow-y: scroll;
+    }
+}
+@media (min-width: 1200px){
+    .col-lg-10 {
+        width: 79.333333%;
+    }
+}

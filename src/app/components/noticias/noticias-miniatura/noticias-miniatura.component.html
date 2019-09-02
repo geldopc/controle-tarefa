@@ -1,0 +1,14 @@
+<div class="col-sm-4 post">
+  <div class="image">
+      <img src="{{noticia.imagem_destaque}}" alt="{{noticia.titulo_destaque}}" height="240" width="360" title="{{noticia.titulo_destaque}}">
+      <div class="date"> <span>{{noticia.data.getDate()}}</span> {{converterData(noticia.data)}}<br>{{noticia.data.getFullYear()}}</div>
+      <h3>{{noticia.titulo_destaque}}</h3>
+      <hr>
+      <p>{{noticia.subtitulo_destaque}}</p>
+      <div class="hover">
+          <a (click)="lerNoticia(noticia)" routerLinkActive="active">
+              <div class="btn-normal btn-border">Ler notícia</div>
+          </a>
+      </div>
+  </div>
+</div>

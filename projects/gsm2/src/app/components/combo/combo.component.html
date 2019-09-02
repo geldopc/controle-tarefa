@@ -1,0 +1,22 @@
+<label [for]="id">
+    {{label}}
+    <span class="required-message">*&nbsp;{{reqMsg}}</span>
+</label>
+<div class="dropdown">
+    <button [id]="id"
+        class="btn btn-default dropdown-toggle form-control"
+        type="button"
+        data-toggle="dropdown"
+        aria-haspopup="true"
+        aria-expanded="true">
+        {{descricao}}
+        <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" *ngIf="itens && itens.length">
+        <li *ngFor="let item of itens;">
+            <a (click)="setValue(item);">
+                {{getDesc(item)}}
+            </a>
+        </li>
+    </ul>
+</div>

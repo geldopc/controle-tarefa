@@ -1,0 +1,14 @@
+<div class="{{class}}" [ngClass]="{'has-error' :(incorreto || invalido)}" id="{{id}}">
+    <ng-content></ng-content>
+    <ion-item class="form-group">
+        <ion-label id="{{id}}Label" floating>
+            <small>{{label}}
+                <span color="required-message">{{required == true ? '*' : ''}}</span>
+            </small>
+        </ion-label>
+        <ion-input type="{{type}}" id="{{id}}Input" name="{{name}}" [(ngModel)]="value" [(maxlength)]="maxlength" [(minlength)]="minlength"
+            [(required)]="required" (change)="isValid()" (keyup)="isValid()" (ionBlur)="onBlur()" readonly="{{readonly ? readonly : false}}" clearInput>
+        </ion-input>
+    </ion-item>
+    <span color="required-message">{{msg}}</span>
+</div>

@@ -1,0 +1,55 @@
+body{
+    padding-top: 50px;
+}
+span.text-wrapper{
+    word-wrap: break-word;
+}
+.label-id {
+    min-width: 50px;
+    font-weight: 600;
+}
+.btn-check-all {
+    margin-left: 8px;
+}
+.label-severidade {
+    min-width: 75px;
+}
+ul>li.active>a {
+    // font-size: x-large;
+    font-weight: 600;
+    font-style: italic;
+}
+.btn-toolbar {
+    font-style: italic;
+    font-weight: 600;
+}
+.icon-toolbar {
+    font-weight: 600;
+}
+.label-status {
+    min-width: 115px;
+}
+.label-complexidade {
+    min-width: 40px;
+}
+.navbar-brand {
+    font-weight: 900;
+    font-size: xx-large;
+}
+.filtro {
+    border: 1px solid #adadad;
+}
+.label-combo {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 90%;
+    height: 21px;
+    float: left;
+}
+::ng-deep body {
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+}

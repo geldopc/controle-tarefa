@@ -1,0 +1,79 @@
+<div *ngIf="ocorrenciasSelecionadas"
+    id="modalAlterarTecnico"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="myModalLabel"
+    style="background-color: rgba(0, 0, 0, 0.5);">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="onClose();">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">Realocar para outro Técnico</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row form-group">
+                    <!-- <sm-mensagem [mensagem]="mensagem" cor="red"></sm-mensagem> -->
+                    <span *ngIf="mensagem" class="alert alert-danger">
+                        <strong>{{mensagem}}</strong>
+                    </span>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" *ngIf="listFuncionarioDe && listFuncionarioDe.length > 0">
+                        <label for="usuario">De</label>
+                        &nbsp;
+                        <span *ngIf="!funcionarioDe?.modalidade?.valor && !funcionarioDe?.usuario?.nome" class="text-danger">
+                            Campo Obrigatório
+                        </span>
+                        <div class="dropdown">
+                            <button class="btn btn-default dropdown-toggle form-control" type="button" id="usuario" data-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="true">
+                                <div class="label-combo">
+                                    {{funcionarioDe.modalidade.valor}}: {{funcionarioDe.usuario.nome}}
+                                </div>
+                                <div class="pull-right">
+                                    <span class="caret"></span>
+                                </div>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li *ngFor="let item of listFuncionarioDe;">
+                                    <a (click)="funcionarioDe = item; setFuncionarioPara(item)">
+                                       {{item.modalidade?.valor}}: {{item.usuario?.nome}}
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" *ngIf="listFuncionarioPara && listFuncionarioPara.length > 0">
+                        <label for="usuario">Para</label>
+                        <span *ngIf="!funcionarioPara?.modalidade?.valor && !funcionarioPara?.usuario?.nome" class="text-danger">
+                            Campo Obrigatório
+                        </span>
+                        <div class="dropdown">
+                            <button class="btn btn-default dropdown-toggle form-control" type="button" id="usuario" data-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="true">
+                                <div class="label-combo">
+                                    {{funcionarioPara.modalidade.valor}}: {{funcionarioPara.usuario.nome}}
+                                </div>
+                                <div class="pull-right">
+                                    <span class="caret"></span>
+                                </div>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li *ngFor="let item of listFuncionarioPara;">
+                                    <a (click)="funcionarioPara = item;">
+                                        {{item.modalidade.valor}}: {{item.usuario.nome}}
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" (click)="onClose();">Cancelar</button>
+                <button *ngIf="!mensagem" type="button" class="btn btn-primary" (click)="alterarTecnico();">Confirmar</button>
+            </div>
+        </div>
+    </div>
+</div>

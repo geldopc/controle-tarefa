@@ -1,0 +1,33 @@
+ <!-- Modal -->
+ <div id="gsm" class="modal fade in" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <!-- <button type="button" id="fecharmodal" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button> -->
+          <h4 class="modal-title" id="myModalLabel">Logar-se ao <span>GSM</span></h4>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+              <div id="login" class="col-sm-4 col-sm-offset-4">
+                  <form id="formReativo" [formGroup]="reactiveForm" >
+                    <sm-mensagem [mensagem]="mensagem" [cor]="cor"></sm-mensagem>
+                    <label for="">Usuário</label>
+                    <input type="text" name="username" formControlName="username" name="tmp.senha.nm_login" plcadeholde="Digite o seu usuário">
+                    <label for="">Senha</label>
+                    <input type="password" name="password" formControlName="password" id="password1" plcadeholde="Digite sua senha">
+                    <input id="password2" name="tmp.senha.ds_senha" type="hidden">
+                    <!-- <re-captcha #captchaRef="reCaptcha" formControlName="recaptchaReactive" (resolved)="$event && submit($event)" ></re-captcha> -->
+                    <input type="submit"  (click)="submit($event);" value="Fazer login" class="btn-normal btn-red">
+                    <!-- <input type="submit"  (click)="captchaRef.execute(); " value="Fazer login" class="btn-normal btn-red"> -->
+                    <div class="txt-right">
+                        <a (click)="esqueceuSenha()" title="Esqueceu sua senha?">Esqueceu sua senha?</a>
+                    </div>
+                    <!-- <p>Form value: {{ reactiveForm.value | json }}</p>
+                    <p>Form status: {{ reactiveForm.status | json }}</p> -->
+                  </form>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>

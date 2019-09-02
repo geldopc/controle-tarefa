@@ -1,0 +1,11 @@
+.label-combo {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 90%;
+    height: 21px;
+    float: left;
+}
+textarea {
+    resize: vertical;
+}

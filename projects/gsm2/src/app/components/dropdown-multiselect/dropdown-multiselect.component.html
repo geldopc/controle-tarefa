@@ -1,0 +1,12 @@
+<label>{{label}} </label>
+<ng-multiselect-dropdown
+  placeholder="Selecione ..."
+  [data]="listaCombo"
+  [(ngModel)]="listaSelecionados"
+  [settings]="dropdownSettings"
+  [disabled]="disabled"
+  (onSelect)="onItemSelect($event); "
+  (onSelectAll)="onSelectAll($event)"
+  (onDeSelectAll)="onDeSelectAll($event)"
+>
+</ng-multiselect-dropdown>

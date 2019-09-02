@@ -1,0 +1,287 @@
+<div *ngIf="funcionalidades && funcionalidades.length" id="ocorrencia{{ocorrencia?.idOcorrencia}}" class="panel-ocorrencia">
+    <nav class="navbar navbar-default navbar-static-top">
+        <div class="container-fluid">
+            <div class="navbar-brand">Ocorrência</div>
+            <div class="btn-group">
+                <button type="button" class="btn btn-primary btn-sm navbar-btn navbar-left">
+                    <strong>#{{ocorrencia?.idOcorrencia}}</strong>
+                </button>
+                <button *ngIf="ocorrencia?.dsUsuarioAlteracao"
+                    type="button"
+                    title="Última Atualização"
+                    class="btn btn-default btn-sm navbar-btn navbar-left">
+                    {{ocorrencia?.dsUsuarioAlteracao}} - Em:&nbsp;{{ocorrencia?.dtAlteracao.toLocaleDateString()}}
+                </button>
+            </div>
+            <button type="button"
+                class="btn btn-danger btn-sm navbar-btn navbar-right"
+                (click)="fechar();">
+                Fechar&nbsp;<i class="fa fa-close"></i>
+            </button>
+            <button type="button"
+                class="btn btn-success btn-sm navbar-btn navbar-right"
+                style="margin-right: 5px;"
+                (click)="editarOcorrencia();">
+                Salvar&nbsp;<i class="fa fa-check"></i>
+            </button>
+        </div>
+    </nav>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                <label>Produto</label>
+                <p>{{ocorrencia?.dsProduto}}</p>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                <label>Cliente</label>
+                <p>{{ocorrencia?.dsCliente}}</p>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                <label>Data da Solicitação</label>
+                <p>{{ocorrencia?.dtSolicitacao.toLocaleDateString()}}</p>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                <label>Status</label>
+                <p>{{ocorrencia?.dsStatus}}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                <label>
+                    Funcionalidade
+                </label>
+                &nbsp;
+                <span *ngIf="!ocorrencia?.cdFuncionalidade" class="text-danger">
+                    Campo Obrigatório
+                </span>
+                <div class="btn-group btn-block">
+                    <button type="button"
+                        class="btn btn-default btn-block dropdown-toggle"
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false">
+                        <div class="label-combo">
+                            {{ocorrencia?.dsFuncionalidade}}
+                        </div>
+                        <div class="pull-right">
+                            <span class="caret"></span>
+                        </div>
+                    </button>
+                    <ul class="dropdown-menu scrollable-menu">
+                        <li *ngFor="let item of funcionalidades;" class="clickable">
+                            <a (click)="ocorrencia.cdFuncionalidade = item.select; ocorrencia.dsFuncionalidade = item.show;">
+                                {{item.show}}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                <label>
+                    Tipo de Ocorrência
+                </label>
+                &nbsp;
+                <span *ngIf="!ocorrencia?.inTipoSolicitacao" class="text-danger">
+                    Campo Obrigatório
+                </span>
+                <div class="btn-group btn-block">
+                    <button type="button"
+                        class="btn btn-default btn-block dropdown-toggle"
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false">
+                        <div class="label-combo">
+                            {{tipoSolicitacao?.show}}
+                        </div>
+                        <div class="pull-right">
+                            <span class="caret"></span>
+                        </div>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li *ngFor="let item of listTipoSolicitacao;" class="clickable">
+                            <a (click)="ocorrencia.inTipoSolicitacao = item.select; tipoSolicitacao = item;">
+                                {{item.show}}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                <label>
+                    Nível de Complexidade
+                </label>
+                &nbsp;
+                <span *ngIf="!ocorrencia?.inNivelComplexidade" class="text-danger">
+                    Campo Obrigatório
+                </span>
+                <div class="btn-group btn-block">
+                    <button type="button" class="btn btn-default btn-block dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false">
+                        <div class="label-combo">
+                            {{complexidade?.show}}
+                        </div>
+                        <div class="pull-right">
+                            <span class="caret"></span>
+                        </div>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li *ngFor="let item of listNivelComplexidade;" class="clickable">
+                            <a (click)="ocorrencia.inNivelComplexidade = item.select; complexidade = item;">
+                                {{item.show}}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                <label>
+                    Nível de Severidade
+                </label>
+                &nbsp;
+                <span *ngIf="!ocorrencia?.cdNivelSeveridade" class="text-danger">
+                    Campo Obrigatório
+                </span>
+                <div class="btn-group btn-block">
+                    <button type="button" class="btn btn-default btn-block dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false">
+                        <div class="label-combo">
+                            {{severidade?.show}}
+                        </div>
+                        <div class="pull-right">
+                            <span class="caret"></span>
+                        </div>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li *ngFor="let item of listNivelSeveridade;" class="clickable">
+                            <a (click)="ocorrencia.cdNivelSeveridade = item.select; severidade = item;">
+                                {{item.show}}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                <label>
+                    1ª Prioridade
+                </label>
+                &nbsp;
+                <span *ngIf="ocorrencia?.nrPrioridade1 < 0" class="text-danger">
+                    Campo Obrigatório
+                </span>
+                <div class="btn-group btn-block">
+                    <button type="button" class="btn btn-default btn-block dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false">
+                        <div class="label-combo">
+                            {{prioridade1?.show}}
+                        </div>
+                        <div class="pull-right">
+                            <span class="caret"></span>
+                        </div>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li *ngFor="let item of listNivelPrioridade;" class="clickable">
+                            <a (click)="ocorrencia.nrPrioridade1 = item.select; prioridade1 = item;">
+                                {{item.show}}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                <label>
+                    2ª Prioridade
+                </label>
+                &nbsp;
+                <span *ngIf="ocorrencia?.nrPrioridade2 < 0" class="text-danger">
+                    Campo Obrigatório
+                </span>
+                <div class="btn-group btn-block">
+                    <button type="button" class="btn btn-default btn-block dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false">
+                        <div class="label-combo">
+                            {{prioridade2?.show}}
+                        </div>
+                        <div class="pull-right">
+                            <span class="caret"></span>
+                        </div>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li *ngFor="let item of listNivelPrioridade;" class="clickable">
+                            <a (click)="ocorrencia.nrPrioridade2 = item.select; prioridade2 = item;">
+                                {{item.show}}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <label>Descrição</label>
+                <p [innerHTML]="ocorrencia?.dsOcorrencia"></p>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <ul id="tabsDetalhe" class="nav nav-pills nav-justified">
+                    <li role="presentation" class="active">
+                        <a data-toggle="pill" href="#distribuicao">
+                            Distribuição
+                        </a>
+                    </li>
+                    <li role="presentation">
+                        <a data-toggle="pill" href="#anexo">
+                            Anexo
+                        </a>
+                    </li>
+                    <li role="presentation">
+                        <a data-toggle="pill" href="#hist">
+                            Histórico
+                        </a>
+                    </li>
+                    <li role="presentation">
+                        <a data-toggle="pill" href="#builds">
+                            Builds
+                        </a>
+                    </li>
+                    <li *ngIf="!ocorrencia?.inControleVersao" role="presentation">
+                        <a data-toggle="pill" href="#commits">
+                            Commits
+                        </a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <br />
+                    <div id="distribuicao" class="tab-pane fade in active">
+                        <app-grid-distribuicao-ocorrencia
+                            [ocorrencia]="ocorrencia"
+                            (refresh)="obterHistoricoAnexo();">
+                        </app-grid-distribuicao-ocorrencia>
+                    </div>
+                    <div id="anexo" class="tab-pane fade">
+                        <app-grid-anexo-ocorrencia
+                            [ocorrencia]="ocorrencia">
+                        </app-grid-anexo-ocorrencia>
+                    </div>
+                    <div id="hist" class="tab-pane fade">
+                        <app-grid-historico-ocorrencia
+                            [ocorrencia]="ocorrencia"
+                            (refresh)="obterHistoricoAnexo();">
+                        </app-grid-historico-ocorrencia>
+                    </div>
+                    <div id="builds" class="tab-pane fade">
+                        <app-grid-builds-ocorrencia
+                            [ocorrencia]="ocorrencia"
+                            (refresh)="obterHistoricoAnexo();">
+                        </app-grid-builds-ocorrencia>
+                    </div>
+                    <div *ngIf="!ocorrencia?.inControleVersao" id="commits" class="tab-pane fade">
+                        <app-grid-commits [ocorrencia]="ocorrencia"></app-grid-commits>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+    </div>
+</div>

@@ -1,0 +1,12 @@
+<label>
+    {{label}}
+</label>
+<br/>
+<div class="btn-group btn-block" role="group" aria-label="...">
+    <button type="button" class="btn btn-{{value ? 'success' : 'default'}}" style="width: 50%;" (click)="valueChanged(true);">
+        {{labelTrue}}
+    </button>
+    <button type="button" class="btn btn-{{value ? 'default' : 'danger'}}" style="width: 50%;" (click)="valueChanged(false);">
+        {{labelFalse}}
+    </button>
+</div>

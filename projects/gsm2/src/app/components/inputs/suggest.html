@@ -1,0 +1,11 @@
+<ion-item>
+    <ion-label id="{{id}}Label" floating>
+        <small>{{label}}
+                <span color="required-message">{{required == true ? '*':''}}</span>
+            </small>
+    </ion-label>
+    <ion-input disabled="{{disabled()}}" readonly="true" (click)="showModal()" (ionFocus)="showModal()" [(ngModel)]="value.show"
+        type="text" [(required)]="required">
+    </ion-input>
+</ion-item>
+<span color="required-message">{{msg}}</span>

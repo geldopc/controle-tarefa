@@ -1,0 +1,8 @@
+<div class="btn-group mr-3">
+    <div class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">
+        <button class="btn btn-outline-primary" ngbDropdownToggle>{{descricao}}</button>
+        <div class="dropdown-menu" ngbDropdownMenu>
+            <button class="dropdown-item" *ngFor="let item of listaItens;" (click)="valueChanged(item);">{{item.show}}</button>
+        </div>
+    </div>
+</div>

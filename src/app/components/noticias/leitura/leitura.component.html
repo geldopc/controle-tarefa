@@ -1,0 +1,65 @@
+<section class="bread wow fadeIn">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <ul>
+                    <li>
+                        <a routerLink="/inicio" routerLinkActive="active">Home</a>
+                    </li>
+                    <li>
+                        <a routerLink="/noticias" routerLinkActive="active">Notícias</a>
+                    </li>
+                    <li>{{noticia.titulo_destaque}}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="standard notice-reading wow fadeIn">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <h2>{{noticia.titulo_destaque}} </h2>
+                <h3>{{noticia.subtitulo_destaque}}</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <img src="{{noticia.imagem_leitura}}" alt="" class="img-responsive">
+            </div>
+            
+            <div class="col-sm-6" style="text-align: justify;">
+                    <div [innerHTML]="noticia.texto_noticia_interno"></div>
+                <!-- {{noticia.texto_noticia_interno}} -->
+ 
+                <div *ngIf="noticia.tem_fonte=='true'">
+                    <p>Fontes:
+                        <br>
+                        <a href="{{noticia.url_fonte}}" target="_blank">{{noticia.url_fonte}}</a>
+                        <!-- <br><a href="http://www.faepanet.com.br/index.php?s=faepa&c=447" target="_blank"> http://www.faepanet.com.br/index.php?s=faepa&c=447 </a>   -->
+                    </p>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="row">
+            <div class="col-sm-12">
+                <ul>
+                    <li class="title">Compartilhar</li>
+                    <li>
+                        <a href="" title="">
+                            <i class="fa fa-facebook"></i>
+                            <span>105</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="" title="">
+                            <i class="fa fa-twitter"></i>
+                            <span>98</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div> -->
+    </div>
+</section>

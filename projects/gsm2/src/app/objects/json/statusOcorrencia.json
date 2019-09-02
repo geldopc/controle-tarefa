@@ -1,0 +1,21 @@
+[
+    {"descricao": "Aguardando Viabilidade", "sigla": "AV"},
+    {"descricao": "Aguardando Atualização Alpha", "sigla": "AA"},
+    {"descricao": "Gerando Versão Alpha", "sigla": "VA"},
+    {"descricao": "Em Homologação Alpha", "sigla": "HA"},
+    {"descricao": "Gerando Versão Beta", "sigla": "VB"},
+    {"descricao": "Aguardando Atualização Beta", "sigla": "AB"},
+    {"descricao": "Em Homologação Beta", "sigla": "HB"},
+    {"descricao": "Em Homologação Cliente", "sigla": "HC"},
+    {"descricao": "Aguardando Atualização Produção", "sigla": "AP"},
+    {"descricao": "Gerando Versão Produção", "sigla": "VP"},
+    {"descricao": "Duplicada", "sigla": "TD"},
+    {"descricao": "Finalizada", "sigla": "TF"},
+    {"descricao": "Inviabilizada", "sigla": "TI"},
+    {"descricao": "Aguardando Definição Contratual", "sigla": "AC"},
+    {"descricao": "Aguardando Distribuição", "sigla": "AD"},
+    {"descricao": "Em desenvolvimento", "sigla": "DE"},
+    {"descricao": "Aguardando Regularização dos Pagamentos", "sigla": "AR"},
+    {"descricao": "Aguardando Informações do Cliente", "sigla": "AI"},
+    {"descricao": "Em Análise", "sigla": "EA"}
+]

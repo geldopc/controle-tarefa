@@ -1,0 +1,99 @@
+<cabecalho>
+</cabecalho>
+<div class="container-fluid principal">
+    <br/>
+    <ng4-loading-spinner [loadingText]="'Carregando...'"> </ng4-loading-spinner>
+    <div id="acoes" class="row">
+        <h4>Estatísticas dos atendimentos</h4>
+        <label></label>
+        <sm-button id="mobile" color="primary" faIcon="search" (click)="pesquisar(true)" label="Pesquisar"></sm-button>
+        <label></label>
+        <sm-button color="default" faIcon="trash" (click)="limpar()" label="Limpar"></sm-button>
+        <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+            <dropdown-multiselect *ngIf="produtos"
+                [listaCombo]="produtos"
+                label="Produto"
+                (itemSelectChange)="pesquisar();"
+                [(listaSelecionados)]="listProdutosSelecionados">
+            </dropdown-multiselect>
+        </div>
+        <ul class="tags">
+            <li *ngFor="let item of request.produtos; " (click)="porProduto(null, item)" > {{item}} <span>x</span></li>
+            <li *ngFor="let item of request.clientes; " (click)="porCliente(null, item)" > {{item}} <span>x</span></li>
+            <li *ngFor="let item of request.tipoSolicitacao; " (click)="porTiposSolicitacao(null, item)"> {{item}} <span>x</span></li>
+            <li *ngFor="let item of request.nivelComplexidades; " (click)="porNiveisComplexidade(null, item)"> {{item}} <span>x</span></li>
+            <li *ngFor="let item of request.grupoFuncionalidades; " (click)="porGruposFuncionalidade(null, item)"> {{item}} <span>x</span></li>
+            <li *ngFor="let item of request.tecnicos; " (click)="porTecnicos(null, item)"> {{item}} <span>x</span></li>
+            <li *ngFor="let item of request.modalidades; " (click)="porModalidades(null, item)"> {{item}} <span>x</span></li>
+            <li *ngFor="let item of request.prioridades; " (click)="porPrioridade(null, item)"> {{item}} <span>x</span></li>
+            <li *ngFor="let item of request.tarefasFinalizadas; " (click)="porTarefasFinalizadas(null, item)"> {{item}} <span>x</span></li>
+        </ul>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <app-grafico-doughnut *ngIf="dadosOcorrenciasNaoDistribuidos.length > 0" titulocaixa="Ocorrências não distribuídas" [(labelsCustoms)]="labelsOcorrenciasNaoDistribuidos"
+                [(dadosCustoms)]="dadosOcorrenciasNaoDistribuidos"></app-grafico-doughnut>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <app-grafico-doughnut *ngIf="labelsOcorrenciasAguardandoViabilidade.length > 0" (selecionadoChange)="porCliente($event)" titulocaixa="Ocorrências Aguardando Viabilidade" [(labelsCustoms)]="labelsOcorrenciasAguardandoViabilidade"
+                [(dadosCustoms)]="dadosOcorrenciasAguardandoViabilidade"></app-grafico-doughnut>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <app-grafico-doughnut *ngIf="labelsOcorrenciasEmDesenvolvimentoCliente.length > 0" (selecionadoChange)="porCliente($event)" titulocaixa="Ocorrências em desenvolvimento" [(labelsCustoms)]="labelsOcorrenciasEmDesenvolvimentoCliente"
+                [(dadosCustoms)]="dadosOcorrenciasEmDesenvolvimentoCliente"></app-grafico-doughnut>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                <app-grafico-doughnut *ngIf="labelsOcorrenciasAguardandoAtualizacaoPorCliente.length > 0" (selecionadoChange)="porCliente($event)" titulocaixa="Ocorrências em Aguardando Atualização" [(labelsCustoms)]="labelsOcorrenciasAguardandoAtualizacaoPorCliente"
+                    [(dadosCustoms)]="dadosOcorrenciasAguardandoAtualizacaoPorCliente"></app-grafico-doughnut>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <app-grafico-doughnut *ngIf="labelsOcorrenciasEmDesenvolvimentoPorTipoSolicitacao.length > 0" (selecionadoChange)="porTiposSolicitacao($event)" titulocaixa="Ocorrências por tipo de solicitação" [(labelsCustoms)]="labelsOcorrenciasEmDesenvolvimentoPorTipoSolicitacao"
+                [(dadosCustoms)]="dadosOcorrenciasEmDesenvolvimentoPorTipoSolicitacao"></app-grafico-doughnut>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <app-grafico-doughnut *ngIf="labelsOcorrenciasEmDesenvolvimentoPorNivelComplexidade.length > 0" (selecionadoChange)="porNiveisComplexidade($event)" titulocaixa="Ocorrências por nível de complexidade" [(labelsCustoms)]="labelsOcorrenciasEmDesenvolvimentoPorNivelComplexidade"
+                [(dadosCustoms)]="dadosOcorrenciasEmDesenvolvimentoPorNivelComplexidade"></app-grafico-doughnut>
+        </div>
+    </div>
+    <div class="row">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <app-grafico-barra *ngIf="labelsOcorrenciasFinalizadasUltimosDias.length > 0" isDupla="true" (selecionadoChange)="porOcorrenciasUltimosDias($event)"  titulocaixa="Ocorrências abertas vs finalizadas"  [(labelsCustoms)]="labelsOcorrenciasFinalizadasUltimosDias"
+                    [(dadosCustoms)]="dadosOcorrenciasFinalizadasUltimosDias"></app-grafico-barra>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <app-grafico-barra *ngIf="labelsOcorrenciasEmDesenvolvimentoPorNivelPrioridade.length > 0" (selecionadoChange)="porPrioridade($event)" titulocaixa="Ocorrências por nível de Prioridade"  [(labelsCustoms)]="labelsOcorrenciasEmDesenvolvimentoPorNivelPrioridade"
+                [(dadosCustoms)]="dadosOcorrenciasEmDesenvolvimentoPorNivelPrioridade"></app-grafico-barra>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+            <app-grafico-doughnut *ngIf="labelsTarefasEmDesenvolvimentoFuncionalidade.length > 0" (selecionadoChange)="porGruposFuncionalidade($event)" titulocaixa="Tarefas por Grupo de Funcionalidade" [(labelsCustoms)]="labelsTarefasEmDesenvolvimentoFuncionalidade"
+                [(dadosCustoms)]="dadosTarefasEmDesenvolvimentoFuncionalidade"></app-grafico-doughnut>
+        </div>
+
+        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+            <app-grafico-doughnut *ngIf="labelsTarefasEmDesenvolvimentoTecnico.length > 0" (selecionadoChange)="porTecnicos($event)" titulocaixa="Tarefas em desenvolvimento por Técnico" [(labelsCustoms)]="labelsTarefasEmDesenvolvimentoTecnico"
+                [(dadosCustoms)]="dadosTarefasEmDesenvolvimentoTecnico"></app-grafico-doughnut>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+            <app-grafico-doughnut *ngIf="labelsTarefasEmDesenvolvimentoModalidade.length > 0" (selecionadoChange)="porModalidades($event)" titulocaixa="Tarefas por Modalidade" [(labelsCustoms)]="labelsTarefasEmDesenvolvimentoModalidade"
+                [(dadosCustoms)]="dadosTarefasEmDesenvolvimentoModalidade"></app-grafico-doughnut>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <app-grafico-barra *ngIf="labelsTarefasFinalizadasUltimosDias.length > 0"
+                isDupla="true"
+                (selecionadoChange)="porTarefasFinalizadas($event)"
+                titulocaixa="Tarefas abertas vs finalizadas"
+                [(labelsCustoms)]="labelsTarefasFinalizadasUltimosDias"
+                [(dadosCustoms)]="dadosTarefasFinalizadasUltimosDias"></app-grafico-barra>
+        </div>
+    </div>
+</div>

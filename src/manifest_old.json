@@ -1,0 +1,27 @@
+{
+  "short_name": "SMSGI",
+  "name": "Siapec3 | SM Soluções para Gestão da Informação LTDA",
+  "theme_color": "#f53d3d",
+  "background_color": "#fafafa",
+  "display": "standalone",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "assets/images/launcher-icon-1x.png",
+      "type": "image/png",
+      "sizes": "48x48"
+    },
+    {
+      "src": "assets/images/launcher-icon-2x.png",
+      "type": "image/png",
+      "sizes": "96x96"
+    },
+    {
+      "src": "assets/images/launcher-icon-4x.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    }
+  ],
+  "start_url": "/novosite/index.html?launcher=true"
+
+}

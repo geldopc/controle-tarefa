@@ -1,0 +1,15 @@
+<!-- Ver documentacao: https://valor-software.com/ng2-charts/ -->
+<ion-card>
+    <ion-card-header style="text-align: center; white-space: normal;">
+        <strong><i class="fa fa-bar-chart" aria-hidden="true"></i> {{titulocaixa}}</strong>
+      </ion-card-header>
+  <!-- Grafico aqui -->
+  <div style="display: block" *ngIf="dadosCustoms.length > 0">
+    <canvas baseChart [data]="polarAreaChartData" [labels]="polarAreaChartLabels" [legend]="polarAreaLegend" [chartType]="polarAreaChartType"
+      (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+  </div>
+  <div style="display: block" *ngIf="dadosCustoms.length == 0 || !dadosCustoms" >
+      Nenhum dado retornado para esta pesquisa
+  </div>
+  <!-- Grafico aqui -->
+</ion-card>

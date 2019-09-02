@@ -1,0 +1,112 @@
+<div class="row">
+    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
+        <dropdown-multiselect *ngIf="filtros.produtos"
+            [listaCombo]="filtros.produtos"
+            label="Produto"
+            (itemSelectChange)="pesquisarWS();"
+            [(listaSelecionados)]="filtros.listProdutosSelecionados">
+        </dropdown-multiselect>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
+        <dropdown-multiselect *ngIf="filtros.tiposOcorrencia"
+            [listaCombo]="filtros.tiposOcorrencia"
+            label="Funcionalidade"
+            [(listaSelecionados)]="filtros.listFuncionalidadeSelecionada">
+        </dropdown-multiselect>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
+        <dropdown-multiselect *ngIf="filtros.clientes"
+            [listaCombo]="filtros.clientes"
+            label="Cliente"
+            tempo="3000"
+            (itemSelectChange)="pesquisarWS();"
+            [(listaSelecionados)]="filtros.listClientesSelecionados">
+        </dropdown-multiselect>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
+        <dropdown-multiselect *ngIf="filtros.modalidades"
+            [listaCombo]="filtros.modalidades"
+            label="Modalidade"
+            [(listaSelecionados)]="filtros.listModalidadesSelecionados ">
+        </dropdown-multiselect>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
+        <dropdown-multiselect *ngIf="filtros.listPrioridadeUm"
+            [listaCombo]="filtros.listPrioridadeUm"
+            label="Prioridade 1"
+            tempo="4000"
+            (itemSelectChange)="pesquisarWS();"
+            [(listaSelecionados)]="filtros.prioridades1Selecionados">
+        </dropdown-multiselect>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
+        <dropdown-multiselect *ngIf="filtros.listPrioridadeDois"
+            [listaCombo]="filtros.listPrioridadeDois"
+            label="Prioridade 2"
+            tempo="4000"
+            (itemSelectChange)="pesquisarWS();"
+            [(listaSelecionados)]="filtros.prioridades2Selecionados " >
+        </dropdown-multiselect>
+    </div>
+
+    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
+        <dropdown-multiselect *ngIf="filtros.desenvolvedoresTarefasEmDesenvolvimento"
+            [listaCombo]="filtros.desenvolvedoresTarefasEmDesenvolvimento"
+            label="Técnico"
+            [(listaSelecionados)]="filtros.listDesenvolvedoresSelecionado">
+        </dropdown-multiselect>
+    </div>
+
+    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
+        <dropdown-multiselect *ngIf="filtros.listTipoSolicitacao"
+            [listaCombo]="filtros.listTipoSolicitacao"
+            label="Tipo Solicitação"
+            [(listaSelecionados)]="filtros.listTipoSolicitacaoSelecionado">
+        </dropdown-multiselect>
+    </div>
+
+    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
+        <dropdown-multiselect *ngIf="filtros.listNivelComplexidade"
+            [listaCombo]="filtros.listNivelComplexidade"
+            label="Nível complexidade"
+            [(listaSelecionados)]="filtros.listNivelComplexidadeSelecionado">
+        </dropdown-multiselect>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
+        <dropdown-multiselect *ngIf="filtros.listStatusTemp"
+            [listaCombo]="filtros.listStatusTemp"
+            label="Status"
+            [(listaSelecionados)]="filtros.listStatusSelecionado">
+        </dropdown-multiselect>
+    </div>
+    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-2">
+        <label for="solicitadoCliente">Ocorrência Interna?
+            <span>{{reqMsgSolicitado}}</span>
+            <span class="required-message">*&nbsp;</span>
+        </label>
+        <div class="dropdown">
+            <button id="solicitadoCliente" class="btn btn-default dropdown-toggle form-control" type="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="true">
+                <span *ngIf="filtros.inOcorrenciaInterna == true"> Sim</span>
+                <span *ngIf="filtros.inOcorrenciaInterna == false"> Não</span>
+                <span *ngIf="filtros.inOcorrenciaInterna == null"> Todos</span>
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+                <li *ngFor="let key of filtros.simNao;">
+                    <a (click)="filtros.inOcorrenciaInterna = key.select; comboOcorrenciaInterna = key.show; " >
+                        {{key.show}}
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
+        <dropdown-multiselect *ngIf="filtros.listSolicitante"
+            [listaCombo]="filtros.listSolicitante"
+            label="Solicitante"
+            [(listaSelecionados)]="filtros.solicitanteSelecionado">
+        </dropdown-multiselect>
+    </div>
+</div>
+

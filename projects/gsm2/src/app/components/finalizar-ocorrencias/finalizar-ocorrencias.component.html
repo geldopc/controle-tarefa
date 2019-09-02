@@ -1,0 +1,70 @@
+<div id="modalFinalizarOcorrencia" *ngIf="ocorrencias" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="background-color: rgba(0, 0, 0, 0.5);">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">Alterar Status Ocorrência</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row form-group">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <label for="usuario">Status</label>
+                        <div class="dropdown">
+                            <button id="usuario"
+                                class="btn btn-default dropdown-toggle form-control"
+                                type="button"
+                                data-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="true">
+                                {{statusSelecionado.descricao}}
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li *ngFor="let status of listStatus;">
+                                    <a (click)="statusSelecionado = status;">
+                                        {{status.descricao}}
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                            *ngIf="statusSelecionado && (statusSelecionado.sigla == 'TD' || statusSelecionado.sigla == 'TI' ||
+                                statusSelecionado.sigla == 'TF' || statusSelecionado.sigla == 'AV' || statusSelecionado.sigla == 'AI')">
+                        <label for="motivo">Motivo:
+                            <span *ngIf="statusSelecionado && (statusSelecionado.sigla !== 'TD' || statusSelecionado.sigla !== 'TI')"
+                                class="required-message">
+                                *&nbsp;{{reqMsgMotivo}}
+                            </span>
+                        </label>
+                        <textarea id="motivo"
+                            class="form-control"
+                            rows="5"
+                            maxlength="600"
+                            placeholder="Escreva Aqui o Motivo..."
+                            [(ngModel)]="motivo">
+                        </textarea>
+                    </div>
+                    <!-- <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                            *ngIf="statusSelecionado && statusSelecionado.sigla == 'AV'">
+                        <label for="motivo">Motivo 2:
+                        </label>
+                        <textarea id="motivo"
+                            class="form-control"
+                            rows="5"
+                            maxlength="600"
+                            placeholder="Escreva Aqui o Motivo..."
+                            [(ngModel)]="motivo">
+                        </textarea>
+                    </div> -->
+                </div>
+            </div>
+            <div class="modal-footer footer-full-page">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" (click)="alterar();">Confirmar</button>
+            </div>
+        </div>
+    </div>
+</div>

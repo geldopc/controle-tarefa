@@ -1,0 +1,33 @@
+.sm-mensagem {
+    border: solid 1px;
+    border-radius: 5px;
+    font-weight: bold;
+    text-align: center;
+    padding: 5px;
+    color: white;
+}
+
+
+.sm-mensagem.red {
+    color: white;
+    background: #671919;
+    border-color: red;
+    width: 95%;
+    margin: 0 auto;
+}
+
+.sm-mensagem.blue {
+    color: white;
+    background: rgba(0, 0, 255, 0.2);
+    border-color: rgb(0, 0, 255);
+    width: 95%;
+    margin: 0 auto;
+}
+
+.sm-mensagem.green {
+    color: white;
+    background: rgba(0, 255, 0, 0.2);
+    border-color: rgb(0, 255, 0);
+    width: 95%;
+    margin: 0 auto;
+}

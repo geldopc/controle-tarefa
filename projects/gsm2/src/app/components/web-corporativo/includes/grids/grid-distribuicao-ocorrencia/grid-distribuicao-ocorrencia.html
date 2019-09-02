@@ -1,0 +1,275 @@
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <button *ngIf="checkPermiteDistribuir();"
+            type="button"
+            class="btn btn-success btn-sm"
+            data-toggle="modal"
+            data-target="#modalDistribuirOcorrencia"
+            (click)="preAddDistribuicao();">
+            <i class="fa fa-plus"></i>&nbsp;Adicionar Distribuição
+        </button>
+    </div>
+    <div *ngIf="!ocorrencia?.distribuicoes || !ocorrencia?.distribuicoes.length" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="jumbotron">
+            <h1 class="text-center">
+                <span class="iconify" data-icon="mdi:grid-off" data-inline="false" data-width="120" data-height="120"></span>
+            </h1>
+            <h3 class="text-center">
+                Nenhuma Distribuição
+            </h3>
+        </div>
+    </div>
+    <div *ngIf="ocorrencia?.distribuicoes && ocorrencia?.distribuicoes.length"
+        class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table-responsive">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Modalidade</th>
+                    <th>Responsável</th>
+                    <th>Descrição</th>
+                    <th>Previsão de entrega</th>
+                    <th>Branch</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody *ngIf="ocorrencia?.distribuicoes">
+                <tr *ngFor="let dist of ocorrencia.distribuicoes; let i = index;" class="text-left">
+                    <td>{{dist?.tipoTarefa}}</td>
+                    <td>{{dist?.dsUsuarioAtendimento}}</td>
+                    <td>{{dist?.dsComentarioTecnico}}</td>
+                    <td>{{getDataFormatada(dist?.dtprevisaoEntrega)}}</td>
+                    <td>{{dist?.dsBranch ? dist.dsBranch : '-'}}</td>
+                    <td *ngIf="ocorrencia.inStatus === 'TF' ||!checkResponsavelLogado(dist) && !usuarioLogado.inSituacao">
+                        <button type="button"
+                            class="btn btn-danger btn-xs btn-block"
+                            title="Sem Permissão">
+                            <i class="fa fa-ban"></i>
+                        </button>
+                    </td>
+                    <td *ngIf="ocorrencia.inStatus !== 'TF' && (checkResponsavelLogado(dist) || usuarioLogado.inSituacao)">
+                        <div *ngIf="dist.idOcorrenciaDistribuicao" class="btn-group" role="group" aria-label="...">
+                            <!-- {{dist.inStatus}} -->
+                            <button type="button"
+                                class="btn btn-primary btn-xs"
+                                title="Editar"
+                                data-toggle="modal"
+                                data-target="#modalDistribuirOcorrencia"
+                                (click)="distribuicao = dist; preEditDistribuicao();">
+                                <i class="fa fa-pencil"></i>
+                            </button>
+                            <button *ngIf="dist.inStatus === 'A'"
+                                type="button"
+                                title="Iniciar"
+                                class="btn btn-primary btn-xs"
+                                (click)="iniciarDistribuicao(dist.idOcorrenciaDistribuicao)">
+                                <i class="fa fa-play"></i>
+                            </button>
+                            <button *ngIf="dist.inStatus === 'I'"
+                                type="button"
+                                title="Finalizar"
+                                class="btn btn-primary btn-xs"
+                                (click)="finalizarDistribuicao(dist.idOcorrenciaDistribuicao)">
+                                <i class="fa fa-check"></i>
+                            </button>
+                            <button *ngIf="dist.inStatus === 'P'"
+                                type="button"
+                                title="Reiniciar"
+                                class="btn btn-primary btn-xs"
+                                (click)="reiniciarDistribuicao(dist.idOcorrenciaDistribuicao)">
+                                <i class="fa fa-refresh"></i>
+                            </button>
+                            <button *ngIf="dist.inStatus !== 'F'"
+                                type="button"
+                                title="Parar"
+                                class="btn btn-primary btn-xs"
+                                (click)="pararDistribuicao(dist.idOcorrenciaDistribuicao)">
+                                <i class="fa fa-stop"></i>
+                            </button>
+                            <button *ngIf="dist.inStatus !== 'F'"
+                                type="button"
+                                title="Excluir"
+                                class="btn btn-primary btn-xs"
+                                (click)="preDel(dist);">
+                                <i class="fa fa-trash-o"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div *ngIf="distribuicao"
+    id="modalDistribuirOcorrencia"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="myModalLabel"
+    style="background-color: rgba(0, 0, 0, 0.5);">
+    <div class="modal-dialog modal-lg " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                    (click)="distribuicao = null">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">Distribuição de Ocorrência</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                        <label for="comboModalidade">
+                            Modalidade
+                        </label>
+                        &nbsp;
+                        <span *ngIf="!distribuicao?.cdTipoTarefa" class="text-danger">
+                            Campo Obrigatório
+                        </span>
+                        <div class="btn-group btn-block">
+                            <button id="comboModalidade"
+                                type="button"
+                                class="btn btn-default btn-block dropdown-toggle"
+                                data-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="false">
+                                <div class="label-combo">
+                                    {{distribuicao?.tipoTarefa}}
+                                </div>
+                                <div class="pull-right">
+                                    <span class="caret"></span>
+                                </div>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li *ngFor="let item of listModalidade;" class="clickable">
+                                    <a (click)="distribuicao.cdTipoTarefa = item.codigo; carregarDadosDistribuicao(item);">
+                                        {{item.valor}}
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div *ngIf="listTecnico && listTecnico.length > 0" class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                        <label for="usuario">
+                            Técnico
+                        </label>
+                        &nbsp;
+                        <span *ngIf="!distribuicao?.usuarioAtendimento?.idUsuario" class="text-danger">
+                            Campo Obrigatório
+                        </span>
+                        <div class="btn-group btn-block">
+                            <button id="usuario"
+                                type="button"
+                                class="btn btn-default btn-block dropdown-toggle"
+                                data-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="false">
+                                <div class="label-combo">
+                                    {{distribuicao?.usuarioAtendimento?.nome}}
+                                </div>
+                                <div class="pull-right">
+                                    <span class="caret"></span>
+                                </div>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li *ngFor="let item of listTecnico;" class="clickable">
+                                    <a (click)="distribuicao.usuarioAtendimento = item; distribuicao.cdUsuarioAtendimento = item.nrDocumento;">
+                                        {{item.nome}}
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" *ngIf="distribuicao">
+                        <label for="usuario">
+                            Data Prevista para entrega
+                        </label>
+                        <input type="date"
+                            class="form-control pull-left"
+                            [(ngModel)]="distribuicao.dtprevisaoEntrega"/>
+                    </div>
+                    <div *ngIf="branches && branches.length > 0" class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                        <label for="branch">Branch</label>
+                        <div class="btn-group btn-block">
+                            <button id="branch"
+                                type="button"
+                                class="btn btn-default btn-block dropdown-toggle"
+                                data-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-panded="true">
+                                <div class="label-combo">
+                                    {{branch?.valor}}
+                                </div>
+                                <div class="pull-right">
+                                    <span class="caret"></span>
+                                </div>
+                            </button>
+                            <ul class="dropdown-menu" style="max-height: 38vh; overflow-y: auto;">
+                                <li *ngFor="let item of branches;" class="clickable">
+                                    <a (click)="branch = item; distribuicao.cdBranch = item.codigo;">
+                                        {{item.valor}}
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" *ngIf="distribuicao">
+                        <label for="descricaoReabertura">Descrição:
+                        </label>
+                        <textarea id="descricaoReabertura"
+                            class="form-control"
+                            rows="5"
+                            maxlength="10000"
+                            placeholder="Escreva Aqui o Comentário Técnico..."
+                            [(ngModel)]="distribuicao.dsComentarioTecnico">
+                        </textarea>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" *ngIf="distribuicao?.cdTipoTarefa == 4">
+                        <label for="instalarQueryBanco">Script de Instalação do banco de dados:
+                        </label>
+                        <textarea id="instalarQueryBanco"
+                            class="form-control"
+                            rows="5"
+                            maxlength="100000"
+                            placeholder="Cole o script que será executado durante a instalação"
+                            [(ngModel)]="distribuicao.instalarQueryBanco">
+                        </textarea>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" *ngIf="distribuicao?.cdTipoTarefa == 4">
+                        <label for="desinstalarQueryBanco">Script de Desinstalação do banco de dados:
+                        </label>
+                        <textarea id="desinstalarQueryBanco"
+                            class="form-control"
+                            rows="5"
+                            maxlength="100000"
+                            placeholder="Cole o script que será executado durante a desinstalação"
+                            [(ngModel)]="distribuicao.desinstalarQueryBanco">
+                        </textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button"
+                    class="btn btn-default"
+                    data-dismiss="modal"
+                    (click)="distribuicao = null">
+                    Fechar
+                </button>
+                <button *ngIf="!distribuicao.idOcorrenciaDistribuicao"
+                    type="button"
+                    class="btn btn-primary"
+                    (click)="distribuir();">
+                    Distribuir
+                </button>
+                <button *ngIf="distribuicao.idOcorrenciaDistribuicao"
+                    type="button"
+                    class="btn btn-primary"
+                    (click)="editarDistribuicao();">
+                    Editar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
